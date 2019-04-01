@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+
+include "./admin_area/includes/db.php";
+
+?>
+
 <head>
 
   <meta charset="utf-8">
@@ -10,43 +16,13 @@
 
   <title>Shop Homepage - Start Bootstrap Template</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link href="css/shop-homepage.css" rel="stylesheet">
+  <?php include("styles.php");  ?>
 
 </head>
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./admin_area/insert_product.php">Admin</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php include("navigation.php");  ?>
 
   <!-- Page Content -->
   <div class="container">
@@ -97,21 +73,45 @@
 
         <div class="row">
 
-          <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100">
-              <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#">Item One</a>
+<?php
+        $get_pro = "select * from products order by inserted_on desc LIMIT 0,9";
+
+$run_pro = mysqli_query($con, $get_pro); 
+
+while($row_pro=mysqli_fetch_array($run_pro)){
+
+  $pro_id = $row_pro['product_id'];
+  $pro_cat = $row_pro['product_cat'];
+  $pro_brand = $row_pro['product_brand'];
+  $pro_title = $row_pro['product_title'];
+  $pro_price = $row_pro['product_price'];
+  $pro_image = $row_pro['product_image'];
+  $pro_desc = $row_pro['product_desc'];
+
+  echo "
+          <div class='col-lg-4 col-md-6 mb-4'>
+            <div class='card h-100'>
+              <a href='#'><img class='card-img-top' src='./admin_area/uploads/product_images/$pro_image' alt=''></a>
+              <div class='card-body'>
+                <h4 class='card-title'>
+                  <a href='#'>$pro_title</a>
                 </h4>
-                <h5>$24.99</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                <h5>$pro_price</h5>
+                <p class='card-text'>$pro_desc</p>
               </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              <div class='card-footer'>
+                <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
           </div>
+
+";
+}
+?>
+
+
+
+
 
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
