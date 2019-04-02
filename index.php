@@ -18,6 +18,8 @@ include "./admin_area/includes/db.php";
 
   <?php include("styles.php");  ?>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -32,7 +34,6 @@ include "./admin_area/includes/db.php";
       <div class="col-lg-3">
 
         <h1 class="my-4">Shop Name</h1>
-        <h1 class="my-4"><?php echo date("Y-m-d H:i:s") ?></h1>
         <div class="list-group">
           <a href="#" class="list-group-item">Category 1</a>
           <a href="#" class="list-group-item">Category 2</a>
@@ -113,7 +114,7 @@ while($row_pro=mysqli_fetch_array($run_pro)){
 
 
 
-          <div class="col-lg-4 col-md-6 mb-4">
+          <!-- <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
               <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
               <div class="card-body">
@@ -191,7 +192,7 @@ while($row_pro=mysqli_fetch_array($run_pro)){
                 <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
-          </div>
+          </div> -->
 
         </div>
         <!-- /.row -->
@@ -213,10 +214,11 @@ while($row_pro=mysqli_fetch_array($run_pro)){
     <!-- /.container -->
   </footer>
 
+  <script type="text/javascript" src="./js/myscripts.js"></script>
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/jquery/jquery.min.js"></script> 
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  
 </body>
 
 </html>
