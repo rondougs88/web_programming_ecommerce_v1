@@ -1,10 +1,8 @@
 <!DOCTYPE>
 
-<?php
+<?php include "includes/db.php"; ?>
+<?php include_once "../functions/functions.php"; ?>
 
-include "includes/db.php";
-
-?>
 <html>
 	<head>
 		<title>Inserting Product</title>

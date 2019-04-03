@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php include "./admin_area/includes/db.php"; ?>
+<?php include "./functions/functions.php"; ?>
 
 <head>
 
@@ -24,6 +25,37 @@
 
     <!-- Page Content -->
     <div class="container">
+
+        <div class="row">
+            <!-- notification message -->
+            <?php if (isset($_SESSION['success'])) : ?>
+            <!-- <div class="error success"> -->
+                <h3>
+                    <?php 
+                    echo $_SESSION['success'];
+                    unset($_SESSION['success']);
+                    ?>
+                </h3>
+            <!-- </div> -->
+            <?php endif ?>
+            <!-- logged in user information -->
+            <!-- <div class="profile_info"> -->
+                <!-- <img src="images/user_profile.png"> -->
+
+                <div>
+                    <?php if (isset($_SESSION['user'])) : ?>
+                    <strong><?php echo $_SESSION['user']['username']; ?></strong>
+
+                    <small>
+                        <i style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i>
+                        <br>
+                        <a href="index.php?logout='1'" style="color: red;">logout</a>
+                    </small>
+
+                    <?php endif ?>
+                </div>
+            <!-- </div> -->
+        </div>
 
         <div class="row">
 
@@ -77,15 +109,15 @@
 
                     while ($row_pro = mysqli_fetch_array($run_pro)) {
 
-                      $pro_id = $row_pro['product_id'];
-                      $pro_cat = $row_pro['product_cat'];
-                      $pro_brand = $row_pro['product_brand'];
-                      $pro_title = $row_pro['product_title'];
-                      $pro_price = $row_pro['product_price'];
-                      $pro_image = $row_pro['product_image'];
-                      $pro_desc = $row_pro['product_desc'];
+                        $pro_id = $row_pro['product_id'];
+                        $pro_cat = $row_pro['product_cat'];
+                        $pro_brand = $row_pro['product_brand'];
+                        $pro_title = $row_pro['product_title'];
+                        $pro_price = $row_pro['product_price'];
+                        $pro_image = $row_pro['product_image'];
+                        $pro_desc = $row_pro['product_desc'];
 
-                      echo "
+                        echo "
                       <div class='col-lg-4 col-md-6 mb-4'>
                         <div class='card h-100'>
                           <a href='product_detail.php?pro_id=$pro_id''><img class='card-img-top' 

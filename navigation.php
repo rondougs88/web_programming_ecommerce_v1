@@ -19,8 +19,22 @@
             <a class="nav-link" href="#">Services</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./admin_area/insert_product.php">Admin</a>
+            <a class="nav-link" href="http://localhost/web_programming_ecommerce_v1/admin_area/insert_product.php">Admin</a>
           </li>
+
+        <?php 
+        
+        if (!isLoggedIn()) {
+          echo "
+          <li class='nav-item'>
+            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/register.php'>Register</a>
+          </li>
+          ";
+        }
+        
+        ?>
+
+          
         </ul>
       </div>
     </div>

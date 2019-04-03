@@ -1,0 +1,9 @@
+
+form, .content {
+	width: 60%;
+	margin: 40px auto;
+	padding: 20px;
+	border: 1px solid #B0C4DE;
+	background: white;
+	border-radius: 0px 0px 10px 10px;
+}
