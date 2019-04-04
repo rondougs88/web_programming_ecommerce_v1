@@ -136,6 +136,7 @@
     <?php 
     if (isset($_SESSION['success'])) {
         $msg = $_SESSION['success'];
+        unset($_SESSION['success']);
         echo '<script type="text/javascript">alert("'.$msg.'");</script>';
     }
     ?>
