@@ -13,6 +13,7 @@
 
     <title>Shop Homepage</title>
 
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <?php include "styles.php"; ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -25,37 +26,6 @@
 
     <!-- Page Content -->
     <div class="container">
-
-        <div class="row">
-            <!-- notification message -->
-            <?php if (isset($_SESSION['success'])) : ?>
-            <!-- <div class="error success"> -->
-                <h3>
-                    <?php 
-                    echo $_SESSION['success'];
-                    unset($_SESSION['success']);
-                    ?>
-                </h3>
-            <!-- </div> -->
-            <?php endif ?>
-            <!-- logged in user information -->
-            <!-- <div class="profile_info"> -->
-                <!-- <img src="images/user_profile.png"> -->
-
-                <div>
-                    <?php if (isset($_SESSION['user'])) : ?>
-                    <strong><?php echo $_SESSION['user']['username']; ?></strong>
-
-                    <small>
-                        <i style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i>
-                        <br>
-                        <a href="index.php?logout='1'" style="color: red;">logout</a>
-                    </small>
-
-                    <?php endif ?>
-                </div>
-            <!-- </div> -->
-        </div>
 
         <div class="row">
 
@@ -161,6 +131,14 @@
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Alert user he has been logged in -->
+    <?php 
+    if (isset($_SESSION['success'])) {
+        $msg = $_SESSION['success'];
+        echo '<script type="text/javascript">alert("'.$msg.'");</script>';
+    }
+    ?>
 
 </body>
 

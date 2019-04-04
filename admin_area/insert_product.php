@@ -18,6 +18,7 @@
 <script>
         tinymce.init({selector:'textarea'});
 </script>
+
 	</head>
 
 <body bgcolor="skyblue">
@@ -118,7 +119,9 @@ while ($row_brands = mysqli_fetch_array($run_brands)) {
 
 	</form>
 
-
+    <!-- Bootstrap core JavaScript -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 <?php

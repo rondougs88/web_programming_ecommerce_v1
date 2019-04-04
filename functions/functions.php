@@ -51,12 +51,14 @@ function login(){
 			$logged_in_user = mysqli_fetch_assoc($results);
 			if ($logged_in_user['user_type'] == 'admin') {
 
-				$_SESSION['user'] = $logged_in_user;
-				$_SESSION['success']  = "You are now logged in";
+                $_SESSION['user'] = $logged_in_user;
+                $uname = $_SESSION['user']['username'];
+				$_SESSION['success']  = "You are now logged in as $uname.";
 				header('location: index.php');		  
 			}else{
 				$_SESSION['user'] = $logged_in_user;
-				$_SESSION['success']  = "You are now logged in";
+				$uname = $_SESSION['user']['username'];
+				$_SESSION['success']  = "You are now logged in as $uname.";
 
 				header('location: index.php');
 			}
@@ -103,7 +105,7 @@ function register()
 					  VALUES('$username', '$email', '$user_type', '$password')";
             mysqli_query($con, $query);
             $_SESSION['success']  = "New user successfully created!!";
-            header('location: home.php');
+            header('location: create_user.php');
         } else {
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', 'user', '$password')";
@@ -157,6 +159,15 @@ function isLoggedIn()
     } else {
         return false;
     }
+}
+
+function isAdmin()
+{
+	if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
+		return true;
+	}else{
+		return false;
+	}
 }
 
 function getPro()
