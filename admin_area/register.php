@@ -1,19 +1,23 @@
+<?php include "./includes/db.php"; ?>
+<?php include "../functions/functions.php" ?>
+
 <!DOCTYPE html>
 <html>
 
-<?php include "./admin_area/includes/db.php"; ?>
-<?php include "./functions/functions.php" ?>
-
 <head>
-    <title>Registration system PHP and MySQL</title>
+    <title>Register</title>
 
-    <?php include "styles.php"; ?>
-    <link rel="stylesheet" href="http://localhost/web_programming_ecommerce_v1/css/register_style.css">
+    <?php include "../styles.php"; ?>
+    <link rel="stylesheet" href="<?= $siteroot; ?>/css/register_style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
+    <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-    <?php include "navigation.php"; ?>
+    <?php include "../navigation.php"; ?>
     <div class="container">
 
         <form method="post" action="register.php">
@@ -49,4 +53,4 @@
     </div>
 </body>
 
-</html> 
+</html>

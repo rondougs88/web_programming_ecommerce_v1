@@ -1,10 +1,10 @@
+<?php
+include "./admin_area/includes/db.php";
+include "./functions/functions.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
-<?php 
-include "./admin_area/includes/db.php"; 
-include "./functions/functions.php"; 
-?>
 
 <head>
 
@@ -23,15 +23,15 @@ include "./functions/functions.php";
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!-- Bootstrap core JavaScript -->
+    <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
+    <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
     <?php include "navigation.php"; ?>
     <?php getPro(); ?>
-    
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
-</html> 
+</html>

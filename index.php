@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php include "./admin_area/includes/db.php"; ?>
 <?php include "./functions/functions.php"; ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 

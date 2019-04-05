@@ -25,10 +25,10 @@
                 if (!isLoggedIn()) {
                   echo "
           <li class='nav-item'>
-            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/register.php'><i class='fa fa-user-plus'></i>Register</a>
+            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/admin_area/register.php'><i class='fa fa-user-plus'></i>Register</a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/login.php'><i class='fa fa-fw fa-user'></i>Login</a>
+            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/admin_area/login.php'><i class='fa fa-fw fa-user'></i>Login</a>
           </li>
           ";
                 }
@@ -36,7 +36,7 @@
                 if (isLoggedIn() && isAdmin()) {
                   echo "
           <li class='nav-item'>
-            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/create_user.php'>Create User</a>
+            <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/admin_area/create_user.php'>Create User</a>
           </li>
           <li class='nav-item'>
             <a class='nav-link' href='http://localhost/web_programming_ecommerce_v1/admin_area/insert_product.php'>Admin</a>

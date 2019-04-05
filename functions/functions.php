@@ -25,7 +25,7 @@ if (isset($_POST['login_btn'])) {
 
 // LOGIN USER
 function login(){
-	global $con, $username, $errors;
+	global $con, $username, $errors, $siteroot;
 
 	// grap form values
 	$username = e($_POST['username']);
@@ -54,13 +54,13 @@ function login(){
                 $_SESSION['user'] = $logged_in_user;
                 $uname = $_SESSION['user']['username'];
 				$_SESSION['success']  = "You are now logged in as $uname.";
-				header('location: index.php');		  
+				header("location: $siteroot/index.php");		  
 			}else{
 				$_SESSION['user'] = $logged_in_user;
 				$uname = $_SESSION['user']['username'];
 				$_SESSION['success']  = "You are now logged in as $uname.";
 
-				header('location: index.php');
+				header("location: $siteroot/index.php");
 			}
 		}else {
 			array_push($errors, "Wrong username/password combination");
@@ -72,7 +72,7 @@ function login(){
 function register()
 {
     // call these variables with the global keyword to make them available in function
-    global $con, $errors, $username, $email;
+    global $con, $errors, $username, $email, $siteroot;
 
     // receive all input values from the form. Call the e() function
     // defined below to escape form values
@@ -105,7 +105,7 @@ function register()
 					  VALUES('$username', '$email', '$user_type', '$password')";
             mysqli_query($con, $query);
             $_SESSION['success']  = "New user successfully created!!";
-            header('location: create_user.php');
+            header("location: $siteroot/admin_area/create_user.php");
         } else {
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', 'user', '$password')";
@@ -115,8 +115,9 @@ function register()
             $logged_in_user_id = mysqli_insert_id($con);
 
             $_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
-            $_SESSION['success']  = "You are now logged in";
-            header('location: index.php');
+            $un = $_SESSION['user']['username'];
+            $_SESSION['success']  = "You are now logged in as $un.";
+            header("location: $siteroot/index.php");
         }
     }
 }

@@ -1,8 +1,7 @@
-<!DOCTYPE>
-
 <?php include "includes/db.php"; ?>
 <?php include_once "../functions/functions.php"; ?>
 
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -23,9 +22,9 @@
 		});
 	</script>
 
-	<!-- Bootstrap core JavaScript -->
-	<script src="../vendor/jquery/jquery.min.js"></script>
-	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
+    <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -33,11 +32,11 @@
 
 	<?php include "../navigation.php"; ?>
 	<?php
-    if (!isLoggedIn() || !isAdmin()) {
-        echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
-        exit();
-    }
-    ?>
+	if (!isLoggedIn() || !isAdmin()) {
+		echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
+		exit();
+	}
+	?>
 
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
 
