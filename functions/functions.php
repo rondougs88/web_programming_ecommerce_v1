@@ -7,6 +7,7 @@ $username = "";
 $email    = "";
 $errors   = array();
 
+
 // call the register() function if register_btn is clicked
 if (isset($_POST['register_btn'])) {
     register();
@@ -20,52 +21,56 @@ if (isset($_GET['logout'])) {
 }
 
 if (isset($_POST['login_btn'])) {
-	login();
+    login();
 }
 
+// Get the total items to be displayed for the cart
+$cart_count = cart_items_count();
+
 // LOGIN USER
-function login(){
-	global $con, $username, $errors, $siteroot;
+function login()
+{
+    global $con, $username, $errors, $siteroot;
 
-	// grap form values
-	$username = e($_POST['username']);
-	$password = e($_POST['password']);
+    // grap form values
+    $username = e($_POST['username']);
+    $password = e($_POST['password']);
 
-	// make sure form is filled properly
-	if (empty($username)) {
-		array_push($errors, "Username is required");
-	}
-	if (empty($password)) {
-		array_push($errors, "Password is required");
-	}
+    // make sure form is filled properly
+    if (empty($username)) {
+        array_push($errors, "Username is required");
+    }
+    if (empty($password)) {
+        array_push($errors, "Password is required");
+    }
 
-	// attempt login if no errors on form
-	if (count($errors) == 0) {
-		$password = md5($password);
+    // attempt login if no errors on form
+    if (count($errors) == 0) {
+        $password = md5($password);
 
-		$query = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
-		$results = mysqli_query($con, $query);
+        $query = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
+        $results = mysqli_query($con, $query);
 
-		if (mysqli_num_rows($results) == 1) { // user found
-			// check if user is admin or user
-			$logged_in_user = mysqli_fetch_assoc($results);
-			if ($logged_in_user['user_type'] == 'admin') {
+        if (mysqli_num_rows($results) == 1) { // user found
+            // check if user is admin or user
+            $logged_in_user = mysqli_fetch_assoc($results);
+            if ($logged_in_user['user_type'] == 'admin') {
 
                 $_SESSION['user'] = $logged_in_user;
                 $uname = $_SESSION['user']['username'];
-				$_SESSION['success']  = "You are now logged in as $uname.";
-				header("location: $siteroot/index.php");		  
-			}else{
-				$_SESSION['user'] = $logged_in_user;
-				$uname = $_SESSION['user']['username'];
-				$_SESSION['success']  = "You are now logged in as $uname.";
+                $_SESSION['success']  = "You are now logged in as $uname.";
+                header("location: $siteroot/index.php");
+            } else {
+                $_SESSION['user'] = $logged_in_user;
+                $uname = $_SESSION['user']['username'];
+                $_SESSION['success']  = "You are now logged in as $uname.";
 
-				header("location: $siteroot/index.php");
-			}
-		}else {
-			array_push($errors, "Wrong username/password combination");
-		}
-	}
+                header("location: $siteroot/index.php");
+            }
+        } else {
+            array_push($errors, "Wrong username/password combination");
+        }
+    }
 }
 
 // REGISTER USER
@@ -164,11 +169,11 @@ function isLoggedIn()
 
 function isAdmin()
 {
-	if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
-		return true;
-	}else{
-		return false;
-	}
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin') {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function getPro()
@@ -178,7 +183,7 @@ function getPro()
 
         $pro_id = $_GET['pro_id'];
 
-        global $con;
+        global $con, $siteroot;
 
         $get_pro = "select * from products where product_id = $pro_id";
 
@@ -193,6 +198,7 @@ function getPro()
             $pro_price = $row_pro['product_price'];
             $pro_image = $row_pro['product_image'];
             $pro_desc = $row_pro['product_desc'];
+            $self_page = $_SERVER['PHP_SELF'];
 
             echo "
                 
@@ -203,7 +209,7 @@ function getPro()
                     <div class='preview col-md-6'>
 
                         <div class='preview-pic tab-content'>
-                            <div class='tab-pane active' id='pic-1'><img src='./admin_area/uploads/product_images/$pro_image' /></div>
+                            <div class='tab-pane active' id='pic-1'><img src='$siteroot/admin_area/uploads/product_images/$pro_image' /></div>
                             <div class='tab-pane' id='pic-2'><img src='http://placekitten.com/400/252' /></div>
                             <div class='tab-pane' id='pic-3'><img src='http://placekitten.com/400/252' /></div>
                             <div class='tab-pane' id='pic-4'><img src='http://placekitten.com/400/252' /></div>
@@ -235,7 +241,8 @@ function getPro()
                         <p class='vote'><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
                         
                         <div class='action'>
-                            <button class='add-to-cart btn btn-default' type='button'>add to cart</button>
+                            <button class='add-to-cart btn btn-default my-cart-btn' 
+                            type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</button>
                             <button class='like btn btn-default' type='button'><span class='fa fa-heart'></span></button>
                         </div>
                     </div>
@@ -248,4 +255,64 @@ function getPro()
 		";
         }
     }
+}
+
+// getting the user IP address
+function getIp()
+{
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+
+    return $ip;
+}
+
+//creating the shopping cart
+function cart()
+{
+
+    if (isset($_GET['add_cart'])) {
+
+        global $con;
+
+        $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+        $pro_id = $_GET['add_cart'];
+
+        $check_pro = "select * from cart where username='$uname' AND p_id='$pro_id'";
+
+        $run_check = mysqli_query($con, $check_pro);
+
+        if (mysqli_num_rows($run_check) > 0) {
+
+            echo "<script>alert('Product not added - already in the cart!')</script>";
+        } else {
+
+            $insert_pro = "INSERT INTO cart (username, p_id, qty) VALUES('$uname', '$pro_id', '1')";
+
+            mysqli_query($con, $insert_pro);
+
+            echo "<script>alert('Product has been added to cart!')</script>";
+        }
+    }
+}
+
+//Get items count for cart
+function cart_items_count()
+{
+    global $con;
+
+    $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+    $get_count = "select count(*) as total from cart where username='$uname'";
+
+    $run_q = mysqli_query($con, $get_count);
+    $data = mysqli_fetch_assoc($run_q);
+    $count = $data['total'];
+
+    return $count > 0 ? $count : "";
 }

@@ -6,3 +6,12 @@
 body {
   padding-top: 56px;
 }
+
+button { cursor: pointer; }
+
+.badge-notify{
+  background:rgb(238, 42, 58);
+  position:relative;
+  top: -22px;
+  left: -8px;
+ }

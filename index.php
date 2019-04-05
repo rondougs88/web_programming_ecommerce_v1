@@ -17,6 +17,7 @@
     <?php include "styles.php"; ?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">var cart_count = "<?= $cart_count ?>";</script>
 
 </head>
 
@@ -127,20 +128,20 @@
         <!-- /.container -->
     </footer>
 
-    <script type="text/javascript" src="./js/myscripts.js"></script>
+    <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Alert user he has been logged in -->
-    <?php 
+    <?php
     if (isset($_SESSION['success'])) {
         $msg = $_SESSION['success'];
         unset($_SESSION['success']);
-        echo '<script type="text/javascript">alert("'.$msg.'");</script>';
+        echo '<script type="text/javascript">alert("' . $msg . '");</script>';
     }
     ?>
 
 </body>
 
-</html> 
+</html>

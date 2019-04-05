@@ -26,12 +26,17 @@ include "./functions/functions.php";
     <!-- Bootstrap core JavaScript -->
     <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
     <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    
+
 </head>
 
 <body>
     <?php include "navigation.php"; ?>
+    <?php cart(); ?>
     <?php getPro(); ?>
 
+    <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
 </body>
 
 </html>
