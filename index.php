@@ -1,149 +1,22 @@
 <?php include "./admin_area/includes/db.php"; ?>
-<?php include "./functions/functions.php"; ?>
+<?php $pagetitle = "Geek Gadget"; ?>
+<?php include "header.php"; ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<?php include "navigation.php"; ?>
 
-<head>
+<?php include "homepage.php"; ?>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
 
-    <title>Shop Homepage</title>
+<!-- Alert user he has been logged in -->
+<?php
+if (isset($_SESSION['success'])) {
+    $msg = $_SESSION['success'];
+    unset($_SESSION['success']);
+    echo '<script type="text/javascript">alert("' . $msg . '");</script>';
+}
+?>
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <?php include "styles.php"; ?>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript">var cart_count = "<?= $cart_count ?>";</script>
-
-</head>
-
-<body>
-
-    <?php include "navigation.php"; 
-    echo 'test';
-    ?>
-
-    <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-lg-3">
-
-                <h1 class="my-4">Shop Name</h1>
-                <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
-                </div>
-
-            </div>
-            <!-- /.col-lg-3 -->
-
-            <div class="col-lg-9">
-
-                <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="./admin_area/uploads/img/slide1.jpg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="./admin_area/uploads/img/slide2.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="./admin_area/uploads/img/slide3.jpg" alt="Third slide">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-
-                <div class="row">
-
-                    <?php
-                    $get_pro = "select * from products order by inserted_on desc LIMIT 0,9";
-
-                    $run_pro = mysqli_query($con, $get_pro);
-
-                    while ($row_pro = mysqli_fetch_array($run_pro)) {
-
-                        $pro_id = $row_pro['product_id'];
-                        $pro_cat = $row_pro['product_cat'];
-                        $pro_brand = $row_pro['product_brand'];
-                        $pro_title = $row_pro['product_title'];
-                        $pro_price = $row_pro['product_price'];
-                        $pro_image = $row_pro['product_image'];
-                        $pro_desc = $row_pro['product_desc'];
-
-                        echo "
-                      <div class='col-lg-4 col-md-6 mb-4'>
-                        <div class='card h-100'>
-                          <a href='product_detail.php?pro_id=$pro_id''><img class='card-img-top' 
-                          src='./admin_area/uploads/product_images/$pro_image' alt=''></a>
-                          <div class='card-body'>
-                            <h4 class='card-title'>
-                              <a href='#'>$pro_title</a>
-                            </h4>
-                            <h5>$pro_price</h5>
-                            <p class='card-text'>$pro_desc</p>
-                          </div>
-                          <div class='card-footer'>
-                            <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                          </div>
-                        </div>
-                      </div>
-                      ";
-                    }
-                    ?>
-                </div>
-                <!-- /.row -->
-
-            </div>
-            <!-- /.col-lg-9 -->
-
-        </div>
-        <!-- /.row -->
-
-    </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-
-    <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Alert user he has been logged in -->
-    <?php
-    if (isset($_SESSION['success'])) {
-        $msg = $_SESSION['success'];
-        unset($_SESSION['success']);
-        echo '<script type="text/javascript">alert("' . $msg . '");</script>';
-    }
-    ?>
-
-</body>
+<?php include "footer.php"; ?>
 
 </html>

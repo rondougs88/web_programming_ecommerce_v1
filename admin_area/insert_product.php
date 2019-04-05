@@ -1,50 +1,33 @@
-<?php include "includes/db.php"; ?>
-<?php include_once "../functions/functions.php"; ?>
+<?php include "./includes/db.php"; ?>
+<?php $pagetitle = "Insert Product"; ?>
+<?php include "../header.php"; ?>
 
-<!DOCTYPE html>
-<html>
+<!-- Custom styles for this template -->
+<link href="../css/insert_product.css" rel="stylesheet">
 
-<head>
-	<title>Inserting Product</title>
+<!-- Script for Text area input -->
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>
+	tinymce.init({
+		selector: 'textarea'
+	});
+</script>
 
-	<!-- Bootstrap core CSS -->
-	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-	<!-- Custom styles for this template -->
-	<link href="../css/shop-homepage.css" rel="stylesheet">
-	<link href="../css/insert_product.css" rel="stylesheet">
-
-
-	<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-	<script>
-		tinymce.init({
-			selector: 'textarea'
-		});
-	</script>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
-    <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</head>
-
-<body bgcolor="skyblue">
-
-	<?php include "../navigation.php"; ?>
-	<?php
-	if (!isLoggedIn() || !isAdmin()) {
-		echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
-		exit();
-	}
-	?>
-
+<?php include "../navigation.php"; ?>
+<?php
+if (!isLoggedIn() || !isAdmin()) {
+	echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
+	exit();
+}
+?>
+<div class="container">
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
 
-		<table align="center" width="795" border="2" bgcolor="#187eae">
+		<table align="center" width="795">
 
 			<tr align="center">
 				<td colspan="7">
-					<h2>Insert New Post Here</h2>
+					<h2>Insert New Product Here</h2>
 				</td>
 			</tr>
 
@@ -131,32 +114,31 @@
 
 
 	</form>
-
-
-</body>
+</div>
+<?php include "../footer.php"; ?>
 
 </html>
 <?php
 
-						if (isset($_POST['insert_post'])) {
+if (isset($_POST['insert_post'])) {
 
-							//getting the text data from the fields
-							$product_title = $_POST['product_title'];
-							$product_cat = $_POST['product_cat'];
-							$product_brand = $_POST['product_brand'];
-							$product_price = $_POST['product_price'];
-							$product_desc = $_POST['product_desc'];
-							$product_keywords = $_POST['product_keywords'];
-							$product_keywords = $_POST['product_keywords'];
-							$inserted_on = date("Y-m-d H:i:s");
+	//getting the text data from the fields
+	$product_title = $_POST['product_title'];
+	$product_cat = $_POST['product_cat'];
+	$product_brand = $_POST['product_brand'];
+	$product_price = $_POST['product_price'];
+	$product_desc = $_POST['product_desc'];
+	$product_keywords = $_POST['product_keywords'];
+	$product_keywords = $_POST['product_keywords'];
+	$inserted_on = date("Y-m-d H:i:s");
 
-							//getting the image from the field
-							$product_image = $_FILES['product_image']['name'];
-							$product_image_tmp = $_FILES['product_image']['tmp_name'];
+	//getting the image from the field
+	$product_image = $_FILES['product_image']['name'];
+	$product_image_tmp = $_FILES['product_image']['tmp_name'];
 
-							move_uploaded_file($product_image_tmp, "uploads/product_images/$product_image");
+	move_uploaded_file($product_image_tmp, "uploads/product_images/$product_image");
 
-							$insert_product = "insert into products
+	$insert_product = "insert into products
 								 (product_cat,
 								 product_brand,
 								 product_title,
@@ -175,13 +157,13 @@
 								 '$product_keywords',
 								 '$inserted_on')";
 
-							$insert_pro = mysqli_query($con, $insert_product);
+	$insert_pro = mysqli_query($con, $insert_product);
 
-							if ($insert_pro) {
+	if ($insert_pro) {
 
-								echo "<script>alert('Product Has been inserted!')</script>";
-								echo "<script>window.open('insert_product.php','_self')</script>";
-							}
-						}
+		echo "<script>alert('Product Has been inserted!')</script>";
+		echo "<script>window.open('insert_product.php','_self')</script>";
+	}
+}
 
-						?>
+?>
