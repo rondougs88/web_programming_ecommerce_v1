@@ -23,7 +23,9 @@
 
 <body>
 
-    <?php include "navigation.php"; ?>
+    <?php include "navigation.php"; 
+    echo 'test';
+    ?>
 
     <!-- Page Content -->
     <div class="container">
