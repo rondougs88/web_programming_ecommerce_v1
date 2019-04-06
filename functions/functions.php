@@ -316,3 +316,56 @@ function cart_items_count()
 
     return $count > 0 ? $count : "";
 }
+
+//Get cart items for the user
+function get_cart_items()
+{
+    global $con, $siteroot;
+
+    $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+    $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
+
+    $run_q = mysqli_query($con, $get_items);
+    while ($row_pro = mysqli_fetch_array($run_q)) {
+
+        $pro_id = $row_pro['product_id'];
+        $pro_image = $row_pro['product_image'];
+        $pro_title = $row_pro['product_title'];
+        $pro_desc = $row_pro['product_desc'];
+        $pro_price = $row_pro['product_price'];
+        $pro_qty = $row_pro['qty'];
+
+        echo "
+        <div class='row'>
+                <div class='col-12 col-sm-12 col-md-2 text-center'>
+                    <img class='img-responsive' src='$siteroot/admin_area/uploads/product_images/$pro_image' alt='prewiew' width='120' height='80'>
+                </div>
+                <div class='col-12 text-sm-center col-sm-12 text-md-left col-md-6'>
+                    <h4 class='product-name'><strong>$pro_title</strong></h4>
+                    <h4>
+                        <small>$pro_desc</small>
+                    </h4>
+                </div>
+                <div class='col-12 col-sm-12 text-sm-center col-md-4 text-md-right row'>
+                    <div class='col-3 col-sm-3 col-md-6 text-md-right' style='padding-top: 5px'>
+                        <h6><strong>NZD $pro_price <span class='text-muted'>x</span></strong></h6>
+                    </div>
+                    <div class='col-4 col-sm-4 col-md-4'>
+                        <input type='number' 
+                        value='$pro_qty' 
+                        class='cartqty'
+                        data-id='$pro_id'
+                        min='0' max='99' step='1'/>
+                    </div>
+                    <div class='col-2 col-sm-2 col-md-2 text-right'>
+                        <button type='button' class='btn btn-outline-danger btn-xs'>
+                            <i class='fa fa-trash' aria-hidden='true'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        ";
+    }
+}

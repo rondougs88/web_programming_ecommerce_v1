@@ -6,6 +6,7 @@
 
 <?php include "homepage.php"; ?>
 
+<!-- Main JS file for this project -->
 <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
 
 <!-- Alert user he has been logged in -->

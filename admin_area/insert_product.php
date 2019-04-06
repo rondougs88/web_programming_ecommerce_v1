@@ -22,19 +22,30 @@ if (!isLoggedIn() || !isAdmin()) {
 ?>
 <div class="container">
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
+		<h2>Insert New Product Here</h2>
 
-		<table align="center" width="795">
+		<div class="form-group row">
+			<label for="protitle" class="col-sm-2 col-form-label">Product Title</label>
+			<div class="col-sm-10">
+				<input type="text" name="product_title" id="protitle" size="60" class="form-control" required>
+			</div>
+		</div>
 
-			<tr align="center">
+
+
+		<table class="table" align="center" width="795">
+
+			<!-- <tr align="center">
 				<td colspan="7">
 					<h2>Insert New Product Here</h2>
 				</td>
-			</tr>
+			</tr> -->
 
-			<tr>
+			<!-- <tr>
 				<td align="right"><b>Product Title:</b></td>
 				<td><input type="text" name="product_title" size="60" required /></td>
-			</tr>
+			</tr> -->
+
 
 			<tr>
 				<td align="right"><b>Product Category:</b></td>

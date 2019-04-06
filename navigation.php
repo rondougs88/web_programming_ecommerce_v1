@@ -64,7 +64,7 @@
           }
           ?>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="<?= $siteroot ?>/admin_area/shopping_cart.php">
               <span class="fa fa-2x fa-shopping-cart my-cart-icon">
                 <!-- <span class="badge badge-notify my-cart-badge"></span> -->
                 <span class="badge badge-notify" id="my-cart-badge" style="font-size:12px;"></span>
