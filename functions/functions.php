@@ -1,12 +1,19 @@
 <?php
 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // variable declaration
 $username = "";
 $email    = "";
 $errors   = array();
+$prev_page = $siteroot;
 
+// Remember previous page
+if (isset($_POST['get_prev_site'])) {
+    $prev_page = $_POST['get_prev_site'];
+}
 
 // call the register() function if register_btn is clicked
 if (isset($_POST['register_btn'])) {
@@ -320,7 +327,7 @@ function cart_items_count()
 //Get cart items for the user
 function get_cart_items()
 {
-    global $con, $siteroot;
+    global $con, $siteroot, $total_price;
 
     $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
 
@@ -335,9 +342,10 @@ function get_cart_items()
         $pro_desc = $row_pro['product_desc'];
         $pro_price = $row_pro['product_price'];
         $pro_qty = $row_pro['qty'];
+        $total_price += $pro_price * $pro_qty;
 
         echo "
-        <div class='row'>
+        <div class='row' id='cart_$pro_id'>
                 <div class='col-12 col-sm-12 col-md-2 text-center'>
                     <img class='img-responsive' src='$siteroot/admin_area/uploads/product_images/$pro_image' alt='prewiew' width='120' height='80'>
                 </div>
@@ -359,7 +367,10 @@ function get_cart_items()
                         min='0' max='99' step='1'/>
                     </div>
                     <div class='col-2 col-sm-2 col-md-2 text-right'>
-                        <button type='button' class='btn btn-outline-danger btn-xs'>
+                        <button type='button' 
+                                class='btn btn-outline-danger btn-xs delcartitem'
+                                data-id='$pro_id'>
+                                
                             <i class='fa fa-trash' aria-hidden='true'></i>
                         </button>
                     </div>
@@ -368,4 +379,12 @@ function get_cart_items()
             <hr>
         ";
     }
+}
+
+//Compute for the total price in the cart
+function get_cart_total_price()
+{
+    global $total_price;
+    $total_price = number_format($total_price, 2);
+    return $total_price;
 }

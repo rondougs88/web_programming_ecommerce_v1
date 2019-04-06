@@ -21,7 +21,7 @@
         <div class="card-header bg-dark text-light">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             Shopping cart
-            <a href="" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+            <a href="<?= $siteroot."/index.php" ?>" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
             <div class="clearfix"></div>
         </div>
         <div class="card-body">
@@ -38,7 +38,7 @@
             <div class="pull-right" style="margin: 10px">
                 <a href="" class="btn btn-success pull-right">Checkout</a>
                 <div class="pull-right" style="margin: 5px">
-                    Total price: <b>50.00€</b>
+                    Total price: <b>$ <?= get_cart_total_price() ?></b>
                 </div>
             </div>
         </div>
