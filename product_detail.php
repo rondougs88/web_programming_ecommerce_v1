@@ -12,9 +12,6 @@
 <?php cart(); ?>
 <?php getPro(); ?>
 
-<!-- Main JS file for this project -->
-<script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
-
 <?php include "footer.php"; ?>
 
 </html>

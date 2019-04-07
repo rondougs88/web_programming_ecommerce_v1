@@ -8,12 +8,6 @@ if (session_status() == PHP_SESSION_NONE) {
 $username = "";
 $email    = "";
 $errors   = array();
-$prev_page = $siteroot;
-
-// Remember previous page
-if (isset($_POST['get_prev_site'])) {
-    $prev_page = $_POST['get_prev_site'];
-}
 
 // call the register() function if register_btn is clicked
 if (isset($_POST['register_btn'])) {

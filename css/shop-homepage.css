@@ -13,6 +13,34 @@ button {
   cursor: pointer;
 }
 
+.loading{
+  position: fixed;
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+  z-index: 2000;
+  /* background: url(/link/to/your/image);
+  background-size: 100%; */
+}
+
+.json-overlay {
+  background-color: #333;
+  opacity: 0.8;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1999;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-image: url('ajax-loader.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .badge-notify {
   background: rgb(238, 42, 58);
   position: relative;
@@ -28,3 +56,4 @@ button {
   line-height: 60px;
   background-color: #575555;
 }
+

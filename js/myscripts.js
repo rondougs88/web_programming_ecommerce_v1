@@ -1,5 +1,15 @@
 jQuery(document).ready(function () {
 
+
+    $('.loading').hide();
+    $('.json-overlay').hide();
+
+    $(window).on("beforeunload", function () {
+        $('.loading').show();
+        $('.json-overlay').show();
+    });
+
+
     $(".list-group a").click(function () {
         $(this).addClass('active').siblings().removeClass('active');
     });
@@ -24,9 +34,10 @@ jQuery(document).ready(function () {
     });
 
     // Update remote db via ajax php call for qty change - cart events.
-    $('#updatecart').click(function () {
+    // $('#updatecart').click(function () {
+    $('#updatecart').one('click', function () {
         var filtered_array = array_update_cart.filter(function (v) { return v !== '' });
-        if (filtered_array) {
+        if (filtered_array.length > 0) {
             $.ajax({
                 type: "POST",
                 url: siteroot + "/updatecart.php",
@@ -35,14 +46,17 @@ jQuery(document).ready(function () {
                 alert("Data Saved: " + msg);
             });
         }
+        else {
+            alert("Nothing to update in this cart.");
+        }
         array_update_cart = [];
     });
 
     // Update remote db via ajax php call for deleting items - cart events.
-    $(".delcartitem").click(function()  {
+    $(".delcartitem").click(function () {
         var prod_id = $(this).attr("data-id");
         // var prod_id = $(this).val();
-        var idname = "#cart_"+prod_id;
+        var idname = "#cart_" + prod_id;
         $(idname).empty();  // This will remove the item row from the cart.
 
         array_update_cart.push({ 'prod_id': prod_id, 'qty': '0', 'delete': true });

@@ -2,6 +2,13 @@
 
 <body>
 
+  <div class="json-overlay">
+    <div class="spinner-border text-primary loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">

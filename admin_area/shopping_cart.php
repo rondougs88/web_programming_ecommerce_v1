@@ -12,7 +12,6 @@
 <script>
     var siteroot = "<?= $siteroot ?>";
 </script>
-<script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
 
 <?php include "../navigation.php"; ?>
 

@@ -8,4 +8,3 @@
 
 <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
 </body>
-

@@ -33,7 +33,7 @@
             <input type="password" class="form-control" name="password_2">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn" name="register_btn">Register</button>
+            <button type="submit" class="btn btn-primary" name="register_btn">Register</button>
         </div>
         <p>
             Already a member? <a href="login.php">Sign in</a>

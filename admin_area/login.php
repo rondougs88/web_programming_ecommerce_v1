@@ -22,7 +22,7 @@
             <input type="password" class="form-control" name="password">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn" name="login_btn">Login</button>
+            <button type="submit" class="btn btn-primary" name="login_btn">Login</button>
         </div>
         <p>
             Not yet a member? <a href="register.php">Sign up</a>
