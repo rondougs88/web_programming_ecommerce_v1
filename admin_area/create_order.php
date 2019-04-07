@@ -5,7 +5,7 @@
 <?php include "../navigation.php"; ?>
 
 <div class="container">
-    <!-- <div id="create-order"> -->
+    <div id="create-order" style="margin-top: 40px">
         <?php
         // if (isset($_POST['checkout-form'])) {
         //     creating orde r...
@@ -25,7 +25,7 @@
                 <a class="btn btn-primary btn-sm" href="https://bootstrapcreative.com/" role="button">Continue to homepage</a>
             </p>
         </div>
-    <!-- </div> -->
+    </div>
 </div>
 
 <?php include "../footer.php"; ?>

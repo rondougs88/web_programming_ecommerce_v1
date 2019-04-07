@@ -453,22 +453,15 @@ function create_order()
         while ($row_pro = mysqli_fetch_array($run_q)) {
 
             $pro_id = $row_pro['product_id'];
-            // $pro_image = $row_pro['product_image'];
-            // $pro_title = $row_pro['product_title'];
-            // $pro_desc = $row_pro['product_desc'];
-            // $pro_price = $row_pro['product_price'];
-            // $pro_qty = $row_pro['qty'];
-            // $sub_total = $pro_qty * $pro_price;
-            // $total_price += $pro_price * $pro_qty;
-            // $pro_price = number_format($pro_price, 2); // Format this to have 2 decimal places.
-            // $sub_total = number_format($sub_total, 2); // Format this to have 2 decimal places.
 
             $query = "INSERT INTO order_items (order_id, p_id)
 					  VALUES('$order_id', '$pro_id')";
             mysqli_query($con, $query);
+
+            // Now, delete that item from the cart.
+            $del_item = "DELETE FROM cart WHERE username = '$uname' AND p_id = '$pro_id'";
+            mysqli_query($con, $del_item);
         }
-
-
         return $order_id;
     }
 }

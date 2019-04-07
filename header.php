@@ -34,4 +34,5 @@
     <!-- Pass variable to js for the items count for the cart. -->
     <script type="text/javascript">
         var cart_count = "<?= $cart_count ?>";
+        var siteroot = "<?= $siteroot ?>";
     </script>

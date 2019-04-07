@@ -14,7 +14,9 @@ jQuery(document).ready(function () {
     });
 
     // $("#my-cart-badge").text(cart_count);
-    $(".my-cart-badge").html(cart_count);
+    // $(".my-cart-badge").html(cart_count);
+
+    update_cart_count();
 
     // This part is for handling the shopping cart amount events.
     var array_update_cart = [];
@@ -150,4 +152,31 @@ jQuery(document).ready(function () {
         }
     });
 
+    // Update the shopping cart badge.
+    function update_cart_count() {
+        $('.loading').show();           // show loading spinner
+        $('.json-overlay').show();      // disable screen
+        $.ajax({
+            type: "POST",
+            url: siteroot + "/get_cart_count.php",
+            async: false,
+            // data: { update_cart: filtered_array },
+            success: function (count) {
+                // Do stuff
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                $(".my-cart-badge").html(count);
+            },
+            error: function (request, status, errorThrown) {
+                // There's been an error, do something with it!
+                // Only use status and errorThrown.
+                // Chances are request will not have anything in it.
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert("Update Cart Ajax Error: " + status + errorThrown);
+            }
+
+        });
+    }
 });
+
