@@ -309,17 +309,18 @@ function cart_items_count()
 
     $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
 
-    $get_count = "select count(*) as total from cart where username='$uname'";
+    $get_count = "select sum(qty) from cart where username='$uname'";
 
     $run_q = mysqli_query($con, $get_count);
+    // $data = mysqli_fetch_assoc($run_q);
     $data = mysqli_fetch_assoc($run_q);
-    $count = $data['total'];
+    $count = $data['sum(qty)'];
 
     return $count > 0 ? $count : "";
 }
 
 //Get cart items for the user
-function get_cart_items()
+function display_shopping_cart_items()
 {
     global $con, $siteroot, $total_price;
 
@@ -337,6 +338,7 @@ function get_cart_items()
         $pro_price = $row_pro['product_price'];
         $pro_qty = $row_pro['qty'];
         $total_price += $pro_price * $pro_qty;
+        $pro_price_formatted = number_format($pro_price, 2); // Format this to have 2 decimal places.
 
         echo "
         <div class='row' id='cart_$pro_id'>
@@ -351,7 +353,7 @@ function get_cart_items()
                 </div>
                 <div class='col-12 col-sm-12 text-sm-center col-md-4 text-md-right row'>
                     <div class='col-3 col-sm-3 col-md-6 text-md-right' style='padding-top: 5px'>
-                        <h6><strong>NZD $pro_price <span class='text-muted'>x</span></strong></h6>
+                        <h6><strong>NZD $pro_price_formatted <span class='text-muted'>x</span></strong></h6>
                     </div>
                     <div class='col-4 col-sm-4 col-md-4'>
                         <input type='number' 
@@ -373,6 +375,43 @@ function get_cart_items()
             <hr>
         ";
     }
+}
+
+// Display shopping cart items.
+function display_checkout_cart_items()
+{
+    global $con, $siteroot, $total_price;
+
+    $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+    $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
+
+    $run_q = mysqli_query($con, $get_items);
+    while ($row_pro = mysqli_fetch_array($run_q)) {
+
+        $pro_id = $row_pro['product_id'];
+        $pro_image = $row_pro['product_image'];
+        $pro_title = $row_pro['product_title'];
+        $pro_desc = $row_pro['product_desc'];
+        $pro_price = $row_pro['product_price'];
+        $pro_qty = $row_pro['qty'];
+        $sub_total = $pro_qty*$pro_price;
+        $total_price += $pro_price * $pro_qty;
+        $pro_price = number_format($pro_price, 2); // Format this to have 2 decimal places.
+        $sub_total = number_format($sub_total, 2); // Format this to have 2 decimal places.
+
+        echo "
+        <li class='list-group-item d-flex justify-content-between lh-condensed'>
+        <div>
+            <h6 class='my-0'>$pro_title</h6>
+            <small class='text-muted'>$pro_qty x $$pro_price</small>
+        </div>
+        <span class='text-muted'>$$sub_total</span>
+        </li>
+        ";
+    }
+    // Formatting outside the loop to avoid dump.
+    // $total_price = number_format($total_price, 2); // Format this to have 2 decimal places.
 }
 
 //Compute for the total price in the cart

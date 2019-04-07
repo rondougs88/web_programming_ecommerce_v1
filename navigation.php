@@ -12,7 +12,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <a class="navbar-brand" href="<?= $siteroot ?>">Geek Gadget</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -59,12 +59,13 @@
             $username = $_SESSION['user']['username'];
             echo "
                     <li class='nav-link'>|</li>
-                    <li class='dropdown'><a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>Welcome, $username <b class='caret'></b></a>
+                    <li class='dropdown'>
+                      <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>Welcome, $username <b class='caret'></b></a>
                         <ul class='dropdown-menu'>
-                            <li><a href='/user/preferences'><i class='icon-cog'></i> Preferences</a></li>
-                            <li><a href='/help/support'><i class='icon-envelope'></i> Contact Support</a></li>
-                            <li class='divider'></li>
-                            <li><a href='$siteroot/index.php?logout='1''><i class='icon-off'></i> Logout</a></li>
+                            <li class='dropdown-item'><a href='/user/preferences'><i class='icon-cog'></i> Preferences</a></li>
+                            <li class='dropdown-item'><a href='/help/support'><i class='icon-envelope'></i> Contact Support</a></li>
+                            <li class='dropdown-divider'></li>
+                            <li class='dropdown-item'><a href='$siteroot/index.php?logout='1''><i class='icon-off'></i> Logout</a></li>
                         </ul>
                     </li>
                     ";

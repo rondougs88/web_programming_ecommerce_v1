@@ -62,4 +62,59 @@ jQuery(document).ready(function () {
         array_update_cart.push({ 'prod_id': prod_id, 'qty': '0', 'delete': true });
     });
 
+    // Validate the checkout form
+    $('#checkout-form').validate({
+        rules: {
+            firstName: {
+                minlength: 2,
+                required: true
+            },
+            lastName: {
+                minlength: 2,
+                required: true
+            },
+            // username: {
+            //     required: true,
+            //     username: true
+            // },
+            email: {
+                required: true,
+                email: true
+            },
+            address: {
+                required: true,
+            },
+            country: {
+                required: true,
+            },
+            state: {
+                required: true,
+            },
+            zip: {
+                required: true,
+            },
+            // message: {
+            //     minlength: 2,
+            //     required: true
+            // }
+        },
+        highlight: function (element) {
+            $(element)
+            .closest('.form-group')
+            // .siblings('input')
+            .removeClass('alert alert-success')
+            .addClass('alert alert-danger text-danger');
+        },
+        success: function (element) {
+            element
+            // .text('Ok!')
+            // .removeClass('error')
+            // .addClass('alert alert-success')
+            .closest('.form-group')
+            // .siblings('input')
+            .removeClass('alert alert-danger text-danger')
+            .addClass('alert alert-success');
+        }
+    });
+
 });

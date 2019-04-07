@@ -8,7 +8,7 @@
 <!-- FA javascript for this page -->
 <script src="https://use.fontawesome.com/c560c025cf.js"></script>
 
-<!-- Main JS file for this project -->
+<!-- Pass this php variable to the main js file included in the footer. -->
 <script>
     var siteroot = "<?= $siteroot ?>";
 </script>
@@ -20,12 +20,12 @@
         <div class="card-header bg-dark text-light">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             Shopping cart
-            <a href="<?= $siteroot."/index.php" ?>" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+            <a href="<?= $siteroot . "/index.php" ?>" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
             <div class="clearfix"></div>
         </div>
         <div class="card-body">
             <!-- Get all cart items from db. -->
-            <?php get_cart_items(); ?>
+            <?php display_shopping_cart_items(); ?>
 
             <div class="pull-right">
                 <a href="" class="btn btn-outline-secondary pull-right" id="updatecart">
@@ -35,7 +35,7 @@
         </div>
         <div class="card-footer">
             <div class="pull-right" style="margin: 10px">
-                <a href="" class="btn btn-success pull-right">Checkout</a>
+                <a href="<?= $siteroot ?>/admin_area/checkout.php" class="btn btn-success pull-right">Checkout</a>
                 <div class="pull-right" style="margin: 5px">
                     Total price: <b>$ <?= get_cart_total_price() ?></b>
                 </div>

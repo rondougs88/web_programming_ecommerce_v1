@@ -1,7 +1,5 @@
 /*!
- * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
- * Copyright 2013-2019 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ * This is the main css file for this ecommerce web application.
  */
 
 body {
@@ -13,10 +11,10 @@ button {
   cursor: pointer;
 }
 
-.loading{
+.loading {
   position: fixed;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   top: 50%;
   left: 50%;
   margin-left: -50px;
@@ -29,16 +27,16 @@ button {
 .json-overlay {
   background-color: #333;
   opacity: 0.8;
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   z-index: 1999;
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-image: url('ajax-loader.gif');
+  /* background-image: url('ajax-loader.gif');
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 
 .badge-notify {
@@ -46,6 +44,10 @@ button {
   position: relative;
   top: -22px;
   left: -8px;
+}
+
+.checkout-page {
+  margin-top: 40 px;
 }
 
 .footer {
@@ -56,4 +58,3 @@ button {
   line-height: 60px;
   background-color: #575555;
 }
-

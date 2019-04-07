@@ -28,6 +28,9 @@
     <script src="<?= $siteroot ?>/vendor/jquery/jquery.min.js"></script>
     <script src="<?= $siteroot ?>/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- This js plugin needs to be loaded for validation. -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
     <!-- Pass variable to js for the items count for the cart. -->
     <script type="text/javascript">
         var cart_count = "<?= $cart_count ?>";
