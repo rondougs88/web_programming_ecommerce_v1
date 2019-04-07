@@ -45,7 +45,7 @@
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" id="checkout-form" action="./create_order.php" novalidate>
+                <form class="needs-validation" method="post" id="checkout-form" action="./create_order.php" novalidate>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
@@ -197,7 +197,7 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button class="btn btn-primary btn-lg btn-block" name="create-order" type="submit">Place my order</button>
                 </form>
             </div>
         </div>

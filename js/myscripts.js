@@ -9,7 +9,6 @@ jQuery(document).ready(function () {
         $('.json-overlay').show();
     });
 
-
     $(".list-group a").click(function () {
         $(this).addClass('active').siblings().removeClass('active');
     });
@@ -36,18 +35,52 @@ jQuery(document).ready(function () {
     // Update remote db via ajax php call for qty change - cart events.
     // $('#updatecart').click(function () {
     $('#updatecart').one('click', function () {
+        $('.loading').show();           // show loading spinner
+        $('.json-overlay').show();      // disable screen
         var filtered_array = array_update_cart.filter(function (v) { return v !== '' });
         if (filtered_array.length > 0) {
+
             $.ajax({
                 type: "POST",
                 url: siteroot + "/updatecart.php",
-                data: { update_cart: filtered_array }
-            }).done(function (msg) {
-                alert("Data Saved: " + msg);
-            });
+                async: false,
+                data: { update_cart: filtered_array },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Success: " + result);
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Error: " + status + errorThrown);
+                }
+                // ,
+                // complete: function () {
+                //     $('.loading').hide();
+                //     $('.json-overlay').hide();
+                // }
+            })
+            // .done(function (msg) {
+            //     alert("Data Saved: " + msg);
+            // })
+            // .success(function (result) {
+            //     // Do stuff
+            //     console.log("Update Cart Ajax Success: ", result);
+            // }).error(function (request, status, errorThrown) {
+            //         // There's been an error, do something with it!
+            //         // Only use status and errorThrown.
+            //         // Chances are request will not have anything in it.
+            //         console.log("Update Cart Ajax Error: ", status, errorThrown);
+            // });
         }
         else {
             alert("Nothing to update in this cart.");
+            exit
         }
         array_update_cart = [];
     });
@@ -100,20 +133,20 @@ jQuery(document).ready(function () {
         },
         highlight: function (element) {
             $(element)
-            .closest('.form-group')
-            // .siblings('input')
-            .removeClass('alert alert-success')
-            .addClass('alert alert-danger text-danger');
+                .closest('.form-group')
+                // .siblings('input')
+                .removeClass('alert alert-success')
+                .addClass('alert alert-danger text-danger');
         },
         success: function (element) {
             element
-            // .text('Ok!')
-            // .removeClass('error')
-            // .addClass('alert alert-success')
-            .closest('.form-group')
-            // .siblings('input')
-            .removeClass('alert alert-danger text-danger')
-            .addClass('alert alert-success');
+                // .text('Ok!')
+                // .removeClass('error')
+                // .addClass('alert alert-success')
+                .closest('.form-group')
+                // .siblings('input')
+                .removeClass('alert alert-danger text-danger')
+                .addClass('alert alert-success');
         }
     });
 

@@ -395,7 +395,7 @@ function display_checkout_cart_items()
         $pro_desc = $row_pro['product_desc'];
         $pro_price = $row_pro['product_price'];
         $pro_qty = $row_pro['qty'];
-        $sub_total = $pro_qty*$pro_price;
+        $sub_total = $pro_qty * $pro_price;
         $total_price += $pro_price * $pro_qty;
         $pro_price = number_format($pro_price, 2); // Format this to have 2 decimal places.
         $sub_total = number_format($sub_total, 2); // Format this to have 2 decimal places.
@@ -420,4 +420,55 @@ function get_cart_total_price()
     global $total_price;
     $total_price = number_format($total_price, 2);
     return $total_price;
+}
+
+
+//Create order after checkout
+function create_order()
+{
+    if (isset($_POST['create-order'])) {
+        global $con;
+        // $user_type = e($_POST['user_type']);
+        $username = $_SESSION['user']['username'];
+        $fname = $_POST['firstName'];
+        $lname = $_POST['lastName'];
+        $email = $_POST['email'];
+        $address1 = $_POST['address'];
+        $address2 = $_POST['address2'];
+        $country = $_POST['country'];
+        $state_c = $_POST['state'];
+        $zip = $_POST['zip'];
+        $query = "INSERT INTO order_header (username, fname, lname, email, address1, address2, country, state_c, zip) 
+					  VALUES('$username', '$fname', '$lname', '$email', '$address1', '$address2', '$country', '$state_c', '$zip')";
+        mysqli_query($con, $query);
+        $order_id = mysqli_insert_id($con);
+        // $_SESSION['success']  = "New user successfully created!!";
+        // header("location: $siteroot/admin_area/create_user.php");
+
+        $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+        $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
+
+        $run_q = mysqli_query($con, $get_items);
+        while ($row_pro = mysqli_fetch_array($run_q)) {
+
+            $pro_id = $row_pro['product_id'];
+            // $pro_image = $row_pro['product_image'];
+            // $pro_title = $row_pro['product_title'];
+            // $pro_desc = $row_pro['product_desc'];
+            // $pro_price = $row_pro['product_price'];
+            // $pro_qty = $row_pro['qty'];
+            // $sub_total = $pro_qty * $pro_price;
+            // $total_price += $pro_price * $pro_qty;
+            // $pro_price = number_format($pro_price, 2); // Format this to have 2 decimal places.
+            // $sub_total = number_format($sub_total, 2); // Format this to have 2 decimal places.
+
+            $query = "INSERT INTO order_items (order_id, p_id)
+					  VALUES('$order_id', '$pro_id')";
+            mysqli_query($con, $query);
+        }
+
+
+        return $order_id;
+    }
 }
