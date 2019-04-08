@@ -2,6 +2,11 @@
 <?php $pagetitle = "Shopping Cart"; ?>
 <?php include "../header.php"; ?>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".my-cart-badge").html(""); // This will reset the cart badge to none.
+</script>
+
 <?php include "../navigation.php"; ?>
 
 <div class="container">

@@ -14,9 +14,10 @@ jQuery(document).ready(function () {
     });
 
     // $("#my-cart-badge").text(cart_count);
-    // $(".my-cart-badge").html(cart_count);
+    $(".my-cart-badge").html(cart_count);
 
-    update_cart_count();
+    // Call this only after creating an order or adding to cart.
+    // update_cart_count();
 
     // This part is for handling the shopping cart amount events.
     var array_update_cart = [];
@@ -173,7 +174,7 @@ jQuery(document).ready(function () {
                 // Chances are request will not have anything in it.
                 $('.loading').hide();
                 $('.json-overlay').hide();
-                alert("Update Cart Ajax Error: " + status + errorThrown);
+                alert("Update Cart Count Ajax Error: " + status + errorThrown);
             }
 
         });

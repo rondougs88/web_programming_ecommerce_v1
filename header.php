@@ -31,6 +31,8 @@
     <!-- This js plugin needs to be loaded for validation. -->
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
+    <script type="text/javascript" src="<?= $siteroot ?>/js/myscripts.js"></script>
+
     <!-- Pass variable to js for the items count for the cart. -->
     <script type="text/javascript">
         var cart_count = "<?= $cart_count ?>";
