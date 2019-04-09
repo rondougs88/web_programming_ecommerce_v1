@@ -15,7 +15,13 @@
         // if (isset($_POST['checkout-form'])) {
         //     creating orde r...
         // }
-        $order_number = create_order();
+        $order_details = create_order();
+        $order_number = $order_details->getOrderid();
+        if(!empty($order_number))
+        {
+            $email_body = create_email_body($order_details);
+            send_email($order_details, $email_body);
+        }
         ?>
         <div class="jumbotron text-xs-center">
             <h1 class="display-3">Thank You!</h1>

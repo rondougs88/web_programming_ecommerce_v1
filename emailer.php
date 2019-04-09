@@ -5,26 +5,26 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 //Load composer's autoloader
-require './vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
     //Server settings
-    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
-    $mail->Username = 'rondougs88@gmail.com';                 // SMTP username
-    $mail->Password = 'Kiwi2018';                           // SMTP password
+    $mail->Username = 'geekgadget.2019@gmail.com';                 // SMTP username
+    $mail->Password = 'Webprog2019';                           // SMTP password
     $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
     $mail->Port = 465;                                    // TCP port to connect to
 
     //Recipients
-    $mail->setFrom('rondougs88@gmail.com', 'Mailer');
-    $mail->addAddress('rondougs88@gmail.com', 'Test Recipient');     // Add a recipient
+    $mail->setFrom('geekgadget.2019@gmail.com', 'Mailer@GeekGadget');
+    $mail->addAddress($email);     // Add a recipient
     // $mail->addAddress('ellen@example.com');               // Name is optional
-    $mail->addReplyTo('info@example.com', 'Information');
-    // $mail->addCC('cc@example.com');
+    // $mail->addReplyTo('info@example.com', 'Information');
+    $mail->addCC('rondougs88@gmail.com');
     // $mail->addBCC('bcc@example.com');
 
     //Attachments
@@ -34,11 +34,11 @@ try {
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+    $mail->Body    = $email_body;
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
-    echo 'Message has been sent';
+    echo 'We have sent you an email message.';
 } catch (Exception $e) {
     echo 'Message could not be sent.';
     echo 'Mailer Error: ' . $mail->ErrorInfo;

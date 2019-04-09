@@ -426,22 +426,27 @@ function get_cart_total_price()
 //Create order after checkout
 function create_order()
 {
+    require_once "../classes/order_details.php";
+
     if (isset($_POST['create-order'])) {
         global $con;
         // $user_type = e($_POST['user_type']);
         $username = $_SESSION['user']['username'];
-        $fname = $_POST['firstName'];
-        $lname = $_POST['lastName'];
-        $email = $_POST['email'];
+        $fname    = $_POST['firstName'];
+        $lname    = $_POST['lastName'];
+        $email    = $_POST['email'];
         $address1 = $_POST['address'];
         $address2 = $_POST['address2'];
-        $country = $_POST['country'];
-        $state_c = $_POST['state'];
-        $zip = $_POST['zip'];
+        $country  = $_POST['country'];
+        $state_c  = $_POST['state'];
+        $zip      = $_POST['zip'];
         $query = "INSERT INTO order_header (username, fname, lname, email, address1, address2, country, state_c, zip) 
 					  VALUES('$username', '$fname', '$lname', '$email', '$address1', '$address2', '$country', '$state_c', '$zip')";
         mysqli_query($con, $query);
         $order_id = mysqli_insert_id($con);
+        if (!empty($order_id)) {
+            $order_details = new OrderDetails($username, $fname, $lname, $email, $address1, $address2, $country, $state_c, $zip, $order_id);
+        }
         // $_SESSION['success']  = "New user successfully created!!";
         // header("location: $siteroot/admin_area/create_user.php");
 
@@ -462,6 +467,148 @@ function create_order()
             $del_item = "DELETE FROM cart WHERE username = '$uname' AND p_id = '$pro_id'";
             mysqli_query($con, $del_item);
         }
-        return $order_id;
+        // return $order_id;
+        return $order_details;
     }
 }
+
+function send_email($order_details, $email_body) 
+{
+    $email = $order_details->getEmail();
+
+    require_once "../emailer.php";
+}
+
+function create_email_body($order_details)
+{
+    $username = $order_details->getUsername();
+    $order_id = $order_details->getOrderid();
+
+    return "
+    <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+<head style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+    <meta name='viewport' content='width=device-width' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+
+    <!-- For development, pass document through inliner -->
+
+
+    <style type='text/css' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+
+    /* Your custom styles go here */
+    * { margin: 0; padding: 0; font-size: 100%; font-family: 'Avenir Next', 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; line-height: 1.65; }
+
+img { max-width: 100%; margin: 0 auto; display: block; }
+
+body, .body-wrap { width: 100% !important; height: 100%; background: #f8f8f8; }
+
+a { color: #71bc37; text-decoration: none; }
+
+a:hover { text-decoration: underline; }
+
+.text-center { text-align: center; }
+
+.text-right { text-align: right; }
+
+.text-left { text-align: left; }
+
+.button { display: inline-block; color: white; background: #71bc37; border: solid #71bc37; border-width: 10px 20px 8px; font-weight: bold; border-radius: 4px; }
+
+.button:hover { text-decoration: none; }
+
+h1, h2, h3, h4, h5, h6 { margin-bottom: 20px; line-height: 1.25; }
+
+h1 { font-size: 32px; }
+
+h2 { font-size: 28px; }
+
+h3 { font-size: 24px; }
+
+h4 { font-size: 20px; }
+
+h5 { font-size: 16px; }
+
+p, ul, ol { font-size: 16px; font-weight: normal; margin-bottom: 20px; }
+
+.container { display: block !important; clear: both !important; margin: 0 auto !important; max-width: 580px !important; }
+
+.container table { width: 100% !important; border-collapse: collapse; }
+
+.container .masthead { padding: 80px 0; background: #71bc37; color: white; }
+
+.container .masthead h1 { margin: 0 auto !important; max-width: 90%; text-transform: uppercase; }
+
+.container .content { background: white; padding: 30px 35px; }
+
+.container .content.footer { background: none; }
+
+.container .content.footer p { margin-bottom: 0; color: #888; text-align: center; font-size: 14px; }
+
+.container .content.footer a { color: #888; text-decoration: none; font-weight: bold; }
+
+.container .content.footer a:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;height: 100%;background: #f8f8f8;width: 100% !important;'>
+<table class='body-wrap' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;height: 100%;background: #f8f8f8;width: 100% !important;'>
+    <tr style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+        <td class='container' style='margin: 0 auto !important;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;display: block !important;clear: both !important;max-width: 580px !important;'>
+
+            <!-- Message start -->
+            <table style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;border-collapse: collapse;width: 100% !important;'>
+                <tr style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+                    <td align='center' class='masthead' style='margin: 0;padding: 80px 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;background: #71bc37;color: white;'>
+
+                        <h1 style='margin: 0 auto !important;padding: 0;font-size: 32px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.25;margin-bottom: 20px;max-width: 90%;text-transform: uppercase;'>Thank you!</h1>
+                        <h2 style='margin: 0;padding: 0;font-size: 28px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.25;margin-bottom: 20px;'> Your order with reference number <strong style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>GG-$order_id</strong> is now being processed.</h2>
+                    </td>
+                </tr>
+                <tr style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+                    <td class='content' style='margin: 0;padding: 30px 35px;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;background: white;'>
+
+                        <h2 style='margin: 0;padding: 0;font-size: 28px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.25;margin-bottom: 20px;'>Hi $username,</h2>
+
+                        <p style='margin: 0;padding: 0;font-size: 16px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;font-weight: normal;margin-bottom: 20px;'>We appreciate your business and we are continually expanding our product range with the latest in the market to serve you better. Please visit us often and browse our range for all your gadget needs.</p>
+
+                        <!-- <table>
+                            <tr>
+                                <td align='center'>
+                                    <p>
+                                        <a href='#' class='button'>Share the Awesomeness</a>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p>By the way, if you're wondering where you can find more of this fine meaty filler, visit <a href='http://baconipsum.com'>Bacon Ipsum</a>.</p>
+
+                        <p><em>– Mr. Pen</em></p> -->
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+        <td class='container' style='margin: 0 auto !important;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;display: block !important;clear: both !important;max-width: 580px !important;'>
+
+            <!-- Message start -->
+            <table style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;border-collapse: collapse;width: 100% !important;'>
+                <tr style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;'>
+                    <td class='content footer' align='center' style='margin: 0;padding: 30px 35px;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;background: none;'>
+                        <p style='margin: 0;padding: 0;font-size: 14px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;font-weight: normal;margin-bottom: 0;color: #888;text-align: center;'>Sent by <a href='#' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;color: #888;text-decoration: none;font-weight: bold;'>Geek Gadget</a>, 1234 Yellow Brick Road, OZ, 99999</p>
+                        <p style='margin: 0;padding: 0;font-size: 14px;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;font-weight: normal;margin-bottom: 0;color: #888;text-align: center;'><a href='mailto:' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;color: #888;text-decoration: none;font-weight: bold;'>geekgadget.2019@gmail.com</a> | <a href='#' style='margin: 0;padding: 0;font-size: 100%;font-family: 'Avenir Next', &quot;Helvetica Neue&quot;, &quot;Helvetica&quot;, Helvetica, Arial, sans-serif;line-height: 1.65;color: #888;text-decoration: none;font-weight: bold;'>Unsubscribe</a></p>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+    ";
+ }
