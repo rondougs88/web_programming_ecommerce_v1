@@ -50,7 +50,7 @@
             <a class='nav-link' href='$siteroot/admin_area/create_user.php'>Create User</a>
           </li>
           <li class='nav-item'>
-            <a class='nav-link' href='$siteroot/admin_area/insert_product.php'>Admin</a>
+            <a class='nav-link' href='$siteroot/admin_area/Dashboard/dashboard.php'>Admin</a>
           </li>
           ";
           }
