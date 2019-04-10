@@ -34,14 +34,14 @@
                     </li>
                 </ul>
 
-                <form class="card p-2">
+                <!-- <form class="card p-2">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Promo code">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-secondary">Redeem</button>
                         </div>
                     </div>
-                </form>
+                </form> -->
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Billing address</h4>
@@ -50,7 +50,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="firstName">First name</label>
-                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="">
+                                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php echo isset($_SESSION['firstName']) ? $_SESSION['firstName'] : '' ?>">
                                 <!-- <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div> -->
@@ -59,7 +59,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="lastName">Last name</label>
-                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="">
+                                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php echo isset($_SESSION['lastName']) ? $_SESSION['lastName'] : '' ?>">
                                 <!-- <div class="invalid-feedback">
                                 Valid last name is required.
                             </div> -->
@@ -79,7 +79,7 @@
                     <div class="mb-3">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="you@example.com">
+                            <input type="email" class="form-control" name="email" id="email" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : '' ?>" placeholder="you@example.com">
                             <!-- <div class="invalid-feedback">
                             Please enter a valid email address for shipping updates.
                         </div> -->
@@ -88,8 +88,15 @@
 
                     <div class="mb-3">
                         <div class="form-group">
+                            <label for="phone">Mobile number</label>
+                            <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo isset($_SESSION['phone']) ? $_SESSION['phone'] : '' ?>" placeholder="021 123 4567">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-group">
                             <label for="address">Address</label>
-                            <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St">
+                            <input type="text" class="form-control" name="address" id="address" value="<?php echo isset($_SESSION['address']) ? $_SESSION['address'] : '' ?>" placeholder="1234 Main St">
                             <!-- <div class="invalid-feedback">
                             Please enter your shipping address.
                         </div> -->
@@ -107,7 +114,11 @@
                                 <label for="country">Country</label>
                                 <select class="custom-select d-block w-100" name="country" id="country">
                                     <option value="">Choose...</option>
-                                    <option>United States</option>
+                                    <option value="United States" <?php if (isset($_SESSION['country'])) {
+                                                                        if ($_SESSION['country'] === 'United States') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }  ?>>United States</option>
                                 </select>
                                 <!-- <div class="invalid-feedback">
                                 Please select a valid country.
@@ -117,9 +128,13 @@
                         <div class="col-md-4 mb-3">
                             <div class="form-group">
                                 <label for="state">State</label>
-                                <select class="custom-select d-block w-100" name="state" id="state">
+                                <select class="custom-select d-block w-100" name="state" value="<?php echo isset($_SESSION['state']) ? $_SESSION['state'] : '' ?>" id="state">
                                     <option value="">Choose...</option>
-                                    <option>California</option>
+                                    <option value="California" <?php if (isset($_SESSION['state'])) {
+                                                                        if ($_SESSION['state'] === 'California') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }  ?>>California</option>
                                 </select>
                                 <!-- <div class="invalid-feedback">
                                 Please provide a valid state.
@@ -129,7 +144,7 @@
                         <div class="col-md-3 mb-3">
                             <div class="form-group">
                                 <label for="zip">Zip</label>
-                                <input type="text" class="form-control" name="zip" id="zip" placeholder="">
+                                <input type="text" class="form-control" name="zip" id="zip" value="<?php echo isset($_SESSION['zip']) ? $_SESSION['zip'] : '' ?>" placeholder="">
                                 <!-- <div class="invalid-feedback">
                                 Zip code required.
                             </div> -->
@@ -138,12 +153,15 @@
                     </div>
                     <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="same-address">
+                        <input type="checkbox" class="custom-control-input" id="same-address" name="same-address"  value="same_address" checked>
                         <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
                     </div>
-                    <div class="custom-control custom-checkbox">
+                    <!-- <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="save-info">
                         <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                    </div> -->
+                    <div class="shipping-address">
+                        <?php include "./includes/shipping_address.php" ?>
                     </div>
                     <hr class="mb-4">
 
@@ -151,51 +169,21 @@
 
                     <div class="d-block my-3">
                         <div class="custom-control custom-radio">
-                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked>
+                            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="creditcard" checked>
                             <label class="custom-control-label" for="credit">Credit card</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input">
+                            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" value="debitcard">
                             <label class="custom-control-label" for="debit">Debit card</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input">
+                            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" value="paypal">
                             <label class="custom-control-label" for="paypal">Paypal</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-name">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="">
-                            <small class="text-muted">Full name as displayed on card</small>
-                            <div class="invalid-feedback">
-                                Name on card is required
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="">
-                            <div class="invalid-feedback">
-                                Credit card number is required
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="">
-                            <div class="invalid-feedback">
-                                Expiration date required
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="">
-                            <div class="invalid-feedback">
-                                Security code required
-                            </div>
-                        </div>
-                    </div>
+
+                    <?php include "./payment_options/payment_options.php" ?>
+
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" name="create-order" type="submit">Place my order</button>
                 </form>
@@ -203,6 +191,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('input[type="radio"]').click(function() {
+            var rdbutton = $(this).val();
+            if (rdbutton == "creditcard") {
+                $("div.creditcardDetails").show();
+            } else {
+                $("div.creditcardDetails").hide();
+            }
+            // $("div.myDiv").hide();
+            // $("#show" + demovalue).show();
+        });
+    });
+</script>
 
 <?php include "../footer.php"; ?>
 

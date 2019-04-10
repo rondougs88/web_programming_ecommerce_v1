@@ -99,6 +99,15 @@ jQuery(document).ready(function () {
     });
 
     // Validate the checkout form
+    //     $.validator.addMethod("phoneNZ", function(phone_number, element) {
+    //         // phone_number = phone_number.replace(/\s+/g, ""); 
+    //         return this.optional(element) || phone_number.length > 9 &&
+    // phone_number.match(/^(0|(\+64(\s|-)?)){1}\d{1}(\s|-)?\d{3}(\s|-)?\d{4}$/);
+    //     }, "Please specify a valid phone number");
+    jQuery.validator.addMethod('mobileNZ', function (phone_number, element) {
+        return this.optional(element) || phone_number.length > 9 &&
+            phone_number.match(/^(0|(\+64(\s|-)?)){1}(21|22|27){1}(\s|-)?\d{3}(\s|-)?\d{4}$/);
+    }, 'Please specify a valid mobile number');
     $('#checkout-form').validate({
         rules: {
             firstName: {
@@ -117,6 +126,13 @@ jQuery(document).ready(function () {
                 required: true,
                 email: true
             },
+            phone: {
+                required: true,
+                mobileNZ: true,
+                // regex: "[0-9\-\(\)\s]+",  // <-- no such method called "matches"!
+                // minlength: 10,
+                // maxlength: 10
+            },
             address: {
                 required: true,
             },
@@ -129,10 +145,70 @@ jQuery(document).ready(function () {
             zip: {
                 required: true,
             },
-            // message: {
-            //     minlength: 2,
-            //     required: true
-            // }
+            sh_firstName: {
+                minlength: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                }
+            },
+            sh_lastName: {
+                minlength: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                }
+            },
+            sh_email: {
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+                email: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                }
+            },
+            sh_address: {
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+            },
+            sh_country: {
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+            },
+            sh_state: {
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+            },
+            sh_zip: {
+                required: {
+                    depends: function () {
+                        return !$('#my_select_checkbox').is(':checked')
+                    }
+                },
+            },
         },
         highlight: function (element) {
             $(element)
@@ -178,6 +254,28 @@ jQuery(document).ready(function () {
             }
 
         });
+    }
+
+    // Toggle div for shipping address
+    var same_address = $("#same-address").is(':checked');
+    if (same_address) {
+        $(".shipping-address").hide();
+    }
+    else {
+        $(".shipping-address").show();
+    }
+    $("#same-address").change(function () {
+        var ischecked = $(this).is(':checked');
+        if (ischecked) {
+            $(".shipping-address").hide();
+        }
+        else {
+            $(".shipping-address").show();
+        }
+    });
+    // Validate the shipping address if it is visible.
+    if ($('.shipping-address').is(':visible')) {
+
     }
 });
 
