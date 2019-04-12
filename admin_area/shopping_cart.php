@@ -35,7 +35,7 @@
         </div>
         <div class="card-footer">
             <div class="pull-right" style="margin: 10px">
-                <a href="<?= $siteroot ?>/admin_area/checkout.php" class="btn btn-success pull-right">Checkout</a>
+                <a href="<?= $siteroot ?>/admin_area/checkout.php" class="btn btn-success pull-right" role="button">Checkout</a>
                 <div class="pull-right" style="margin: 5px">
                     Total price: <b>$ <?= get_cart_total_price() ?></b>
                 </div>

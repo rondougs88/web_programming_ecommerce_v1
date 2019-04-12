@@ -1,5 +1,5 @@
 <?php include "./includes/db.php"; ?>
-<?php $pagetitle = "Shopping Cart"; ?>
+<?php $pagetitle = "Order Confirmation"; ?>
 <?php include "../header.php"; ?>
 
 <!-- Save the form values from checkout page. -->
@@ -14,41 +14,31 @@ $_SESSION['state'] = isset($_POST['state']) ? $_POST['state'] : "";
 $_SESSION['zip'] = isset($_POST['zip']) ? $_POST['zip'] : "";
 ?>
 
+<?php $paymentmethod = isset($_POST['paymentMethod']) ? $_POST['paymentMethod'] : ""; ?>
 <script type="text/javascript">
     $(document).ready(function() {
-                $(".my-cart-badge").html(""); // This will reset the cart badge to none.
+        $(".my-cart-badge").html(""); // This will reset the cart badge to none.
+        <?php if ($paymentmethod === "creditcard") : ?>
+            $('.loading').show(); // show loading spinner
+            $('.json-overlay').show(); // disable screen
+        <?php endif; ?>
     });
 </script>
 
 <?php include "../navigation.php"; ?>
 
 <div class="container">
-    <div id="create-order" style="margin-top: 40px">
+    <?php
+    $cart_count = cart_items_count() == "" ? "0" : cart_items_count();
+    if ($cart_count === "0") :
+        include "./includes/page_not_available.php";
+    elseif ([isset($_POST['create-order'])] && $paymentmethod !== "creditcard") : ?>
         <?php
-        // if (isset($_POST['checkout-form'])) {
-        //     creating orde r...
-        // }
-        $order_details = create_order();
-        $order_number = $order_details->getOrderid();
-        if (!empty($order_number)) {
-            $email_body = create_email_body($order_details);
-            send_email($order_details, $email_body);
-        }
+        include "./includes/order_created.php";
         ?>
-        <div class="jumbotron text-xs-center">
-            <h1 class="display-3">Thank You!</h1>
-            <p class="lead">Your order placement is successful.</strong></p>
-            <p class="lead">Reference number is <strong>GG-<?= $order_number ?></strong>.</p>
-            <p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>
-            <hr>
-            <p>
-                Having trouble? <a href="">Contact us</a>
-            </p>
-            <p class="lead">
-                <a class="btn btn-primary btn-sm" href="https://bootstrapcreative.com/" role="button">Continue to homepage</a>
-            </p>
-        </div>
-    </div>
+    <?php elseif ($paymentmethod === "creditcard") : ?>
+        <?php include "./includes/charge_credit_card.php"; ?>
+    <?php endif; ?>
 </div>
 
 <?php include "../footer.php"; ?>

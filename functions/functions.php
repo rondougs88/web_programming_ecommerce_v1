@@ -329,18 +329,20 @@ function display_shopping_cart_items()
     $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
 
     $run_q = mysqli_query($con, $get_items);
-    while ($row_pro = mysqli_fetch_array($run_q)) {
 
-        $pro_id = $row_pro['product_id'];
-        $pro_image = $row_pro['product_image'];
-        $pro_title = $row_pro['product_title'];
-        $pro_desc = $row_pro['product_desc'];
-        $pro_price = $row_pro['product_price'];
-        $pro_qty = $row_pro['qty'];
-        $total_price += $pro_price * $pro_qty;
-        $pro_price_formatted = number_format($pro_price, 2); // Format this to have 2 decimal places.
+    if (mysqli_num_rows($run_q) > 0) {
+        while ($row_pro = mysqli_fetch_array($run_q)) {
 
-        echo "
+            $pro_id = $row_pro['product_id'];
+            $pro_image = $row_pro['product_image'];
+            $pro_title = $row_pro['product_title'];
+            $pro_desc = $row_pro['product_desc'];
+            $pro_price = $row_pro['product_price'];
+            $pro_qty = $row_pro['qty'];
+            $total_price += $pro_price * $pro_qty;
+            $pro_price_formatted = number_format($pro_price, 2); // Format this to have 2 decimal places.
+
+            echo "
         <div class='row' id='cart_$pro_id'>
                 <div class='col-12 col-sm-12 col-md-2 text-center'>
                     <img class='img-responsive' src='$siteroot/admin_area/uploads/product_images/$pro_image' alt='prewiew' width='120' height='80'>
@@ -373,6 +375,14 @@ function display_shopping_cart_items()
                 </div>
             </div>
             <hr>
+        ";
+        }
+    }
+    else {
+        echo "
+        <div class='row'>
+            <h2>Your cart is empty.</h2>
+        </div>
         ";
     }
 }
@@ -426,7 +436,7 @@ function get_cart_total_price()
 //Create order after checkout
 function create_order()
 {
-    require_once "../classes/order_details.php";
+    // require_once "../classes/order_details.php";
 
     if (isset($_POST['create-order'])) {
         global $con;
