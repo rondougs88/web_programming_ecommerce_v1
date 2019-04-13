@@ -6,10 +6,18 @@
     // $('.json-overlay').show(); // disable screen
     // alert("loading...");
     // }
+    var success = false;
     var handler = StripeCheckout.configure({
         key: 'pk_test_bTvk82dYQkAekGQpYYp4J0il008fiA0MgB',
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
+        closed: function(result) {
+            $('.loading').hide(); // show loading spinner
+            $('.json-overlay').hide(); // disable screen
+            if (!success) {
+                window.location.href = '<?= $siteroot ?>';
+            }
+        },
         token: function(token) {
             // You can access the token ID with `token.id`.
             // Get the token ID to your server-side code for use.
@@ -20,7 +28,7 @@
                 url: siteroot + "/admin_area/create_order_paidby_cc.php",
                 async: false,
                 data: {
-                    token_id : token.id,
+                    token_id: token.id,
                     username: '<?= $_SESSION['user']['username'] ?>',
                     firstName: '<?= $_POST['firstName'] ?>',
                     lastName: '<?= $_POST['lastName'] ?>',
@@ -46,8 +54,9 @@
                     // Do stuff
                     // $('.loading').hide();
                     // $('.json-overlay').hide();
-                    alert("Update Cart Ajax Success: " + result);
-                    window.location.href = "./includes/order_created.php?order_number=" + result;
+                    alert("Credit card payment has been processed.");
+                    success = true;
+                    window.location.href = '<?= $siteroot ?>' + "/admin_area/includes/order_created.php?order_number=" + result;
                 },
                 error: function(request, status, errorThrown) {
                     // There's been an error, do something with it!
@@ -62,9 +71,9 @@
     });
     // Open Checkout with further options:
     handler.open({
-        name: 'Demo Site',
-        description: '2 widgets',
+        name: 'Geek Gadget',
+        description: 'Pay using your credit card.',
         currency: 'nzd',
-        amount: 2000
+        amount: parseFloat('<?= get_cart_total_price(false) ?>' + '00').toFixed(2)
     });
 </script>

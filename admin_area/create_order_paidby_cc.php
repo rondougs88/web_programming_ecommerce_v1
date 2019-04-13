@@ -5,6 +5,7 @@
 require_once "./includes/db.php";
 require_once "../classes/order_details.php";
 require_once "../functions/functions.php"; 
+require_once('../vendor/stripe-php/init.php');
 global $con;
 // $user_type = e($_POST['user_type']);
 $token_id = $_POST['token_id'];
@@ -15,7 +16,7 @@ $token_id = $_POST['token_id'];
 
 // Token is created using Checkout or Elements!
 // Get the payment token ID submitted by the form:
-$token = $_POST['stripeToken'];
+$token = $_POST['token_id'];
 
 $charge = \Stripe\Charge::create([
     'amount' => 999,

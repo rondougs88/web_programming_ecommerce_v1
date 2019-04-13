@@ -377,8 +377,7 @@ function display_shopping_cart_items()
             <hr>
         ";
         }
-    }
-    else {
+    } else {
         echo "
         <div class='row'>
             <h2>Your cart is empty.</h2>
@@ -394,7 +393,10 @@ function display_checkout_cart_items()
 
     $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
 
-    $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
+    $get_items = "SELECT * 
+                    FROM cart 
+                    INNER JOIN products ON cart.p_id = products.product_id 
+                    WHERE cart.username = '$uname'";
 
     $run_q = mysqli_query($con, $get_items);
     while ($row_pro = mysqli_fetch_array($run_q)) {
@@ -425,10 +427,30 @@ function display_checkout_cart_items()
 }
 
 //Compute for the total price in the cart
-function get_cart_total_price()
+function get_cart_total_price($conv = true)
 {
     global $total_price;
-    $total_price = number_format($total_price, 2);
+    if (!$total_price) {
+        global $con, $siteroot, $total_price;
+
+        $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
+
+        $get_items = "SELECT * 
+                    FROM cart 
+                    INNER JOIN products ON cart.p_id = products.product_id 
+                    WHERE cart.username = '$uname'";
+
+        $run_q = mysqli_query($con, $get_items);
+        while ($row_pro = mysqli_fetch_array($run_q)) {
+
+            $pro_price = $row_pro['product_price'];
+            $pro_qty = $row_pro['qty'];
+            $total_price += $pro_price * $pro_qty;
+        }
+    }
+    if ($conv) {
+            $total_price = number_format($total_price, 2);
+        }
     return $total_price;
 }
 
