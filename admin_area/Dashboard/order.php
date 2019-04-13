@@ -9,5 +9,12 @@
                   <th>Total</th>
                 </tr>
               </thead>
+              <?php
+              include("./includes/db.php");
+              $get_order="select order_header.order_id, order_items.p_id,products.inserted_on
+                             from ((order_header 
+                             inner join ";///balance dont understand
+
+              >
             </table>
           </div>
