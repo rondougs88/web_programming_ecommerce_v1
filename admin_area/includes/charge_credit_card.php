@@ -14,11 +14,13 @@
             // You can access the token ID with `token.id`.
             // Get the token ID to your server-side code for use.
             handler.close();
+
             $.ajax({
                 type: "POST",
                 url: siteroot + "/admin_area/create_order_paidby_cc.php",
                 async: false,
                 data: {
+                    token_id : token.id,
                     username: '<?= $_SESSION['user']['username'] ?>',
                     firstName: '<?= $_POST['firstName'] ?>',
                     lastName: '<?= $_POST['lastName'] ?>',
