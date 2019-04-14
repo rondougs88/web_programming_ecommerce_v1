@@ -27,11 +27,14 @@
     //     }
     // });
     $(document).ready(function() {
+        $("div.cod").hide();
         $('input[type="radio"]').click(function() {
             var rdbutton = $(this).val();
             if (rdbutton == "creditcard") {
                 $("div.creditcardDetails").show();
+                $("div.cod").hide();
             } else {
+                $("div.cod").show();
                 $("div.creditcardDetails").hide();
             }
             // $("div.myDiv").hide();

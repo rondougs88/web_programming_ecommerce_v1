@@ -34,7 +34,7 @@ $phone    = $_POST['phone'];
 $address1 = $_POST['address'];
 $address2 = $_POST['address2'];
 $country  = $_POST['country'];
-$state_c  = $_POST['state'];
+$state_c  = mysqli_real_escape_string($con,$_POST['state']);
 $zip      = $_POST['zip'];
 // Shipping address details
 $sh_fname    = $_POST['sh_firstName'];
@@ -43,45 +43,14 @@ $sh_lname    = $_POST['sh_lastName'];
 $sh_address1 = $_POST['sh_address'];
 $sh_address2 = $_POST['sh_address2'];
 $sh_country  = $_POST['sh_country'];
-$sh_state_c  = $_POST['sh_state'];
+$sh_state_c  = mysqli_real_escape_string($con,$_POST['sh_state']);
 $sh_zip      = $_POST['sh_zip'];
-$query = "INSERT INTO order_header (
-                        username, 
-                        fname, 
-                        lname, 
-                        email, 
-                        phone, 
-                        address1, 
-                        address2, 
-                        country, 
-                        state_c, 
-                        zip,
-                        sh_fname,
-                        sh_lname,
-                        sh_address1,
-                        sh_address2,
-                        sh_country,
-                        sh_state_c,
-                        sh_zip
-                        ) 
+date_default_timezone_set('NZ');
+$created_on = date("Y-m-d H:i:s");
+$created_on = mysqli_real_escape_string($con,$created_on);
+$query = "INSERT INTO order_header (status,created_on,username, payment, fname,lname,email, phone, address1, address2, country, state_c, zip,sh_fname,sh_lname,sh_address1,sh_address2,sh_country,sh_state_c,sh_zip) 
                   VALUES(
-                  '$username', 
-                  '$fname', 
-                  '$lname', 
-                  '$email', 
-                  '$phone', 
-                  '$address1', 
-                  '$address2', 
-                  '$country', 
-                  '$state_c', 
-                  '$zip',
-                  '$sh_fname',
-                  '$sh_lname',
-                  '$sh_address1',
-                  '$sh_address2',
-                  '$sh_country',
-                  '$sh_state_c',
-                  '$sh_zip'
+                  'Processing','$created_on','$username','Credit Card','$fname', '$lname', '$email', '$phone', '$address1', '$address2', '$country', '$state_c', '$zip','$sh_fname','$sh_lname','$sh_address1','$sh_address2','$sh_country','$sh_state_c','$sh_zip'
                   )";
 mysqli_query($con, $query);
 $order_id = mysqli_insert_id($con);

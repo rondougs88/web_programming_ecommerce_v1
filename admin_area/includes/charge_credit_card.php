@@ -11,7 +11,7 @@
         key: 'pk_test_bTvk82dYQkAekGQpYYp4J0il008fiA0MgB',
         image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
         locale: 'auto',
-        closed: function(result) {
+        closed: function() {
             $('.loading').hide(); // show loading spinner
             $('.json-overlay').hide(); // disable screen
             if (!success) {
@@ -29,23 +29,23 @@
                 async: false,
                 data: {
                     token_id: token.id,
-                    username: '<?= $_SESSION['user']['username'] ?>',
-                    firstName: '<?= $_POST['firstName'] ?>',
-                    lastName: '<?= $_POST['lastName'] ?>',
-                    email: '<?= $_POST['email'] ?>',
-                    phone: '<?= $_POST['phone'] ?>',
-                    address: '<?= $_POST['address'] ?>',
-                    address2: '<?= $_POST['address2'] ?>',
-                    country: '<?= $_POST['country'] ?>',
-                    state: '<?= $_POST['state'] ?>',
-                    zip: '<?= $_POST['zip'] ?>',
-                    sh_firstName: '<?= $_POST['sh_firstName'] ?>',
-                    sh_lastName: '<?= $_POST['sh_lastName'] ?>',
-                    sh_address: '<?= $_POST['sh_address'] ?>',
-                    sh_address2: '<?= $_POST['sh_address2'] ?>',
-                    sh_country: '<?= $_POST['sh_country'] ?>',
-                    sh_state: '<?= $_POST['sh_state'] ?>',
-                    sh_zip: '<?= $_POST['sh_zip'] ?>',
+                    username: "<?= $_SESSION["user"]["username"] ?>",
+                    firstName: "<?= $_POST["firstName"] ?>",
+                    lastName: "<?= $_POST["lastName"] ?>",
+                    email: "<?= $_POST["email"] ?>",
+                    phone: "<?= $_POST["phone"] ?>",
+                    address: "<?= $_POST["address"] ?>",
+                    address2: "<?= $_POST["address2"] ?>",
+                    country: "<?= $_POST["country"] ?>",
+                    state: "<?= $_POST["state"] ?>",
+                    zip: "<?= $_POST["zip"] ?>",
+                    sh_firstName: "<?= $_POST["sh_firstName"] ?>",
+                    sh_lastName: "<?= $_POST["sh_lastName"] ?>",
+                    sh_address: "<?= $_POST["sh_address"] ?>",
+                    sh_address2: "<?= $_POST["sh_address2"] ?>",
+                    sh_country: "<?= $_POST["sh_country"] ?>",
+                    sh_state: "<?= $_POST["sh_state"] ?>",
+                    sh_zip: "<?= $_POST["sh_zip"] ?>"
                 },
                 success: function(result) {
                     // alert(result);

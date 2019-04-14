@@ -20,6 +20,13 @@
                         </div>
                         <span class="text-success">-$5</span>
                     </li> -->
+            <li class='list-group-item d-flex justify-content-between lh-condensed'>
+                <div>
+                    <h6 class='my-0'>Shipping</h6>
+                    <small class='text-muted'>Free Shipping</small>
+                </div>
+                <span class='text-muted'>$0.00</span>
+            </li>
             <li class="list-group-item d-flex justify-content-between">
                 <span>Total</span>
                 <strong>$<?= get_cart_total_price() ?></strong>
@@ -106,11 +113,12 @@
                         <label for="country">Country</label>
                         <select class="custom-select d-block w-100" name="country" id="country">
                             <option value="">Choose...</option>
-                            <option value="United States" <?php if (isset($_SESSION['country'])) {
-                                                                if ($_SESSION['country'] === 'United States') {
-                                                                    echo 'selected';
-                                                                }
-                                                            }  ?>>United States</option>
+                            <option value="New Zealand" <?php if (isset($_SESSION['country'])) {
+                                                            if ($_SESSION['country'] === 'New Zealand') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>New Zealand</option>
+
                         </select>
                         <!-- <div class="invalid-feedback">
                                 Please select a valid country.
@@ -122,15 +130,92 @@
                         <label for="state">State</label>
                         <select class="custom-select d-block w-100" name="state" value="<?php echo isset($_SESSION['state']) ? $_SESSION['state'] : '' ?>" id="state">
                             <option value="">Choose...</option>
-                            <option value="California" <?php if (isset($_SESSION['state'])) {
-                                                            if ($_SESSION['state'] === 'California') {
+                            <option value="Northland" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Northland') {
                                                                 echo 'selected';
                                                             }
-                                                        }  ?>>California</option>
+                                                        }  ?>>Northland</option>
+                            <option value="Auckland" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Auckland') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Auckland</option>
+                            <option value="Waikato" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Waikato') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Waikato</option>
+                            <option value="Bay of Plenty" <?php if (isset($_SESSION['state'])) {
+                                                                if ($_SESSION['state'] === 'Bay of Plenty') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Bay of Plenty</option>
+                            <option value="Gisborne" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Gisborne') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Gisborne</option>
+                            <option value="Hawke's Bay" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Hawke\'s Bay') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Hawke's Bay</option>
+                            <option value="Auckland" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Auckland') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Auckland</option>
+                            <option value="Taranaki" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Taranaki') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Taranaki</option>
+                            <option value="Manawatu-Wanganui" <?php if (isset($_SESSION['state'])) {
+                                                                    if ($_SESSION['state'] === 'Manawatu-Wanganui') {
+                                                                        echo 'selected';
+                                                                    }
+                                                                }  ?>>Manawatu-Wanganui</option>
+                            <option value="Wellington" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Wellington') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Wellington</option>
+                            <option value="Tasman" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Tasman') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Tasman</option>
+                            <option value="Nelson" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Nelson') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Nelson</option>
+                            <option value="Marlborough" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Marlborough') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Marlborough</option>
+                            <option value="West Coast" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'West Coast') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>West Coast</option>
+                            <option value="Canterbury" <?php if (isset($_SESSION['state'])) {
+                                                            if ($_SESSION['state'] === 'Canterbury') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Canterbury</option>
+                            <option value="Otago" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Otago') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Otago</option>
+                            <option value="Southland" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Southland') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Southland</option>
                         </select>
-                        <!-- <div class="invalid-feedback">
-                                Please provide a valid state.
-                            </div> -->
                     </div>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -157,8 +242,21 @@
             </div>
             <hr class="mb-4">
 
-            <h4 class="mb-3">Payment</h4>
+            <h4 class="mb-3">Shipping</h4>
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="freeshipping" name="shipping" type="radio" class="custom-control-input" value="freeshipping" checked>
+                    <label class="custom-control-label" for="freeshipping">Free Shipping (NZ$ 0.00)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 mb-3">
+                    <p>All local orders are shipped free using a standard service.</p>
+                </div>
+            </div>
+            <hr class="mb-4">
 
+            <h4 class="mb-3">Payment</h4>
             <div class="d-block my-3">
                 <div class="custom-control custom-radio">
                     <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="creditcard" checked>

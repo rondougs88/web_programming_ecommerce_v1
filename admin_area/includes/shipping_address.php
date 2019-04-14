@@ -42,11 +42,11 @@
             <label for="sh_country">Country</label>
             <select class="custom-select d-block w-100" name="sh_country" id="sh_country">
                 <option value="">Choose...</option>
-                <option value="United States" <?php if (isset($_SESSION['country'])) {
-                                                    if ($_SESSION['country'] === 'United States') {
-                                                        echo 'selected';
-                                                    }
-                                                }  ?>>United States</option>
+                <option value="New Zealand" <?php if (isset($_SESSION['country'])) {
+                                                if ($_SESSION['country'] === 'New Zealand') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>New Zealand</option>
             </select>
             <!-- <div class="invalid-feedback">
                                 Please select a valid country.
@@ -58,11 +58,91 @@
             <label for="sh_state">State</label>
             <select class="custom-select d-block w-100" name="sh_state" id="sh_state" value="<?php echo isset($_SESSION['state']) ? $_SESSION['state'] : '' ?>" id="state">
                 <option value="">Choose...</option>
-                <option value="California" <?php if (isset($_SESSION['state'])) {
-                                                if ($_SESSION['state'] === 'California') {
+                <option value="Northland" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Northland') {
                                                     echo 'selected';
                                                 }
-                                            }  ?>>California</option>
+                                            }  ?>>Northland</option>
+                <option value="Auckland" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Auckland') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Auckland</option>
+                <option value="Waikato" <?php if (isset($_SESSION['state'])) {
+                                            if ($_SESSION['state'] === 'Waikato') {
+                                                echo 'selected';
+                                            }
+                                        }  ?>>Waikato</option>
+                <option value="Bay of Plenty" <?php if (isset($_SESSION['state'])) {
+                                                    if ($_SESSION['state'] === 'Bay of Plenty') {
+                                                        echo 'selected';
+                                                    }
+                                                }  ?>>Bay of Plenty</option>
+                <option value="Gisborne" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Gisborne') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Gisborne</option>
+                <option value="Hawke's Bay" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Hawke\'s Bay') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Hawke's Bay</option>
+                <option value="Auckland" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Auckland') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Auckland</option>
+                <option value="Taranaki" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Taranaki') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Taranaki</option>
+                <option value="Manawatu-Wanganui" <?php if (isset($_SESSION['state'])) {
+                                                        if ($_SESSION['state'] === 'Manawatu-Wanganui') {
+                                                            echo 'selected';
+                                                        }
+                                                    }  ?>>Manawatu-Wanganui</option>
+                <option value="Wellington" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Wellington') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Wellington</option>
+                <option value="Tasman" <?php if (isset($_SESSION['state'])) {
+                                            if ($_SESSION['state'] === 'Tasman') {
+                                                echo 'selected';
+                                            }
+                                        }  ?>>Tasman</option>
+                <option value="Nelson" <?php if (isset($_SESSION['state'])) {
+                                            if ($_SESSION['state'] === 'Nelson') {
+                                                echo 'selected';
+                                            }
+                                        }  ?>>Nelson</option>
+                <option value="Marlborough" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Marlborough') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Marlborough</option>
+                <option value="West Coast" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'West Coast') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>West Coast</option>
+                <option value="Canterbury" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Canterbury') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Canterbury</option>
+                <option value="Otago" <?php if (isset($_SESSION['state'])) {
+                                            if ($_SESSION['state'] === 'Otago') {
+                                                echo 'selected';
+                                            }
+                                        }  ?>>Otago</option>
+                <option value="Southland" <?php if (isset($_SESSION['state'])) {
+                                                if ($_SESSION['state'] === 'Southland') {
+                                                    echo 'selected';
+                                                }
+                                            }  ?>>Southland</option>
             </select>
             <!-- <div class="invalid-feedback">
                                 Please provide a valid state.
