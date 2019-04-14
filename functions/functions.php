@@ -34,7 +34,7 @@ $cart_count = cart_items_count();
 // LOGIN USER
 function login()
 {
-    global $con, $username, $errors, $siteroot;
+    global $con, $username, $errors, $siteroot, $checkout_login;
 
     // grap form values
     $username = e($_POST['username']);
@@ -63,13 +63,22 @@ function login()
                 $_SESSION['user'] = $logged_in_user;
                 $uname = $_SESSION['user']['username'];
                 $_SESSION['success']  = "You are now logged in as $uname.";
-                header("location: $siteroot/index.php");
+                if (!$checkout_login) {
+                    header("location: $siteroot/index.php");
+                } else {
+                    update_cart_from_checkoutlogin();
+                    header("location: $siteroot/admin_area/checkout.php");
+                }
             } else {
                 $_SESSION['user'] = $logged_in_user;
                 $uname = $_SESSION['user']['username'];
                 $_SESSION['success']  = "You are now logged in as $uname.";
-
-                header("location: $siteroot/index.php");
+                if (!$checkout_login) {
+                    header("location: $siteroot/index.php");
+                } else {
+                    update_cart_from_checkoutlogin();
+                    header("location: $siteroot/admin_area/checkout.php");
+                }
             }
         } else {
             array_push($errors, "Wrong username/password combination");
@@ -126,6 +135,7 @@ function register()
             $_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
             $un = $_SESSION['user']['username'];
             $_SESSION['success']  = "You are now logged in as $un.";
+            update_cart_from_checkoutlogin();
             header("location: $siteroot/index.php");
         }
     }
@@ -303,6 +313,35 @@ function cart()
             echo "<script>alert('Product has been added to cart!')</script>";
         }
     }
+}
+
+function update_cart_from_checkoutlogin()
+{
+    // Select first items based on IP Address.
+    global $con;
+
+    $uname = $_SESSION['user']['username'];
+    $ipaddress = getIp();
+
+    // Delete first the cart items of username.
+    $del_q = "DELETE FROM cart WHERE username = '$uname';";
+    mysqli_query($con, $del_q);
+
+    $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$ipaddress'";
+
+    $run_q = mysqli_query($con, $get_items);
+
+    if (mysqli_num_rows($run_q) > 0) {
+        while ($row_pro = mysqli_fetch_array($run_q)) {
+            $prod_id = $row_pro['product_id'];
+            $qty = $row_pro['qty'];
+            $insert_pro = "INSERT INTO cart (username, p_id, qty) VALUES('$uname', '$prod_id', '$qty')";
+
+            mysqli_query($con, $insert_pro);
+        }
+    }
+
+    // Overwrite the cart of the logged in user with the items selected.
 }
 
 //Get items count for cart
@@ -487,7 +526,7 @@ function create_order()
         $sh_state_c  = mysqli_real_escape_string($con, $_POST['sh_state']);
         $sh_zip      = $_POST['sh_zip'];
         $created_on = date("Y-m-d H:i:s");
-        $created_on = mysqli_real_escape_string($con,$created_on);
+        $created_on = mysqli_real_escape_string($con, $created_on);
         $query = "INSERT INTO order_header (status,created_on,username, payment, fname,lname,email, phone, address1, address2, country, state_c, zip,sh_fname,sh_lname,sh_address1,sh_address2,sh_country,sh_state_c,sh_zip) 
                           VALUES(
                           'Processing','$created_on','$username','COD','$fname', '$lname', '$email', '$phone', '$address1', '$address2', '$country', '$state_c', '$zip','$sh_fname','$sh_lname','$sh_address1','$sh_address2','$sh_country','$sh_state_c','$sh_zip'
