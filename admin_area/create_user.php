@@ -18,7 +18,16 @@ if (!isLoggedIn() || !isAdmin()) {
     <form method="post" action="create_user.php">
         <h1> Create User </h1>
         <?php echo display_error(); ?>
-
+        <?php
+        $reg_error = isset($_SESSION['reg_error']) ? $_SESSION['reg_error'] : "";
+        if (isset($_GET['reg_error'])) {
+            echo "
+        <div class='alert alert-danger'>
+            <strong>Error!</strong> $reg_error
+        </div>
+        ";
+        }
+        ?>
         <div class="form-group">
             <label>Username</label>
             <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">

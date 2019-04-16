@@ -15,6 +15,17 @@
             error messages should be displayed guiding them to do it correctly. -->
         <?php echo display_error(); ?>
 
+        <?php
+        $reg_error = isset($_SESSION['reg_error']) ? $_SESSION['reg_error'] : "";
+        if (isset($_GET['reg_error'])) {
+            echo "
+        <div class='alert alert-danger'>
+            <strong>Error!</strong> $reg_error
+        </div>
+        ";
+        }
+        ?>
+
         <h1>Register</h1>
         <div class="form-group">
             <label>Username</label>

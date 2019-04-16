@@ -92,6 +92,8 @@ function register()
     // call these variables with the global keyword to make them available in function
     global $con, $errors, $username, $email, $siteroot;
 
+    unset($_SESSION['reg_error']);
+
     // receive all input values from the form. Call the e() function
     // defined below to escape form values
     $username    =  e($_POST['username']);
@@ -122,21 +124,33 @@ function register()
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', '$user_type', '$password')";
             mysqli_query($con, $query);
-            $_SESSION['success']  = "New user successfully created!!";
-            header("location: $siteroot/admin_area/create_user.php");
+            $error_msg = mysqli_error($con);
+            if ($error_msg == "") {
+                $_SESSION['success']  = "New user successfully created!!";
+                header("location: $siteroot/admin_area/create_user.php");
+            } else {
+                // An error occured.
+                $_SESSION['reg_error'] = "Either username or email has already been registered.";
+                header("location: $siteroot/admin_area/create_user.php?reg_error=1");
+            }
         } else {
             $query = "INSERT INTO users (username, email, user_type, password) 
 					  VALUES('$username', '$email', 'user', '$password')";
             mysqli_query($con, $query);
-
+            $error_msg = mysqli_error($con);
             // get id of the created user
             $logged_in_user_id = mysqli_insert_id($con);
-
-            $_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
-            $un = $_SESSION['user']['username'];
-            $_SESSION['success']  = "You are now logged in as $un.";
-            update_cart_from_checkoutlogin();
-            header("location: $siteroot/index.php");
+            if ($error_msg == "") {
+                $_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
+                $un = $_SESSION['user']['username'];
+                $_SESSION['success']  = "You are now logged in as $un.";
+                update_cart_from_checkoutlogin();
+                header("location: $siteroot/index.php");
+            } else {
+                // An error occured.
+                $_SESSION['reg_error'] = "Either username or email has already been registered.";
+                header("location: $siteroot/admin_area/register.php?reg_error=1");
+            }
         }
     }
 }
