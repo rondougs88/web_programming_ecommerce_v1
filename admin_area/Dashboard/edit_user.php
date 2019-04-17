@@ -7,12 +7,17 @@ if (!isLoggedIn() || !isAdmin()) {
 }
 ?>
 
+<?php
+if (isset($_GET['userid'])) {
+    set_user_details($_GET['userid']);
+}
+?>
+
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="row justify-content-center">
-        <!-- <div class="card"> -->
-        <form class="col-md-6" method="post" action="">
-            <!-- <div class="card col-md-6" method="post" action=""> -->
-            <h1> Create User </h1>
+        <!-- <div class="col-md-6" method="post" action=""> -->
+        <div class="card col-md-6" style="margin-bottom:40px" method="post" action="">
+            <h1> Edit User </h1>
             <?php echo display_error(); ?>
             <?php
             $reg_error = isset($_SESSION['reg_error']) ? $_SESSION['reg_error'] : "";
@@ -26,41 +31,51 @@ if (!isLoggedIn() || !isAdmin()) {
             ?>
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                <input disabled type="text" name="username" class="form-control" value="<?php echo $eu_username; ?>">
             </div>
             <div class="form-group">
                 <label>First name</label>
-                <input type="text" class="form-control" name="firstname" ?>
+                <input type="text" class="form-control" id="fname" name="firstname" ? value="<?php echo $eu_fname; ?>">
             </div>
             <div class="form-group">
                 <label>Last name</label>
-                <input type="text" class="form-control" name="lastname" ?>
+                <input type="text" class="form-control" id="lname" name="lastname" value="<?php echo $eu_lname; ?>"?>
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo $eu_email; ?>">
             </div>
             <div class="form-group">
                 <label>User type</label>
-                <select class="form-control" name="user_type" id="user_type">
-                    <option value=""></option>
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
+                <select class="form-control" id="user_type" name="user_type" id="user_type">
+                    <?php 
+                    if ($eu_user_type === 'admin') {
+                        echo "<option selected value='admin'>Admin</option>";
+                        echo "<option value='user'>User</option>";
+                    }
+                    else {
+                        echo "<option value='admin'>Admin</option>";
+                        echo "<option selected value='user'>User</option>";
+                    }
+                    ?>
+                    
+                    
                 </select>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password_1">
             </div>
             <div class="form-group">
                 <label>Confirm password</label>
                 <input type="password" class="form-control" name="password_2">
-            </div>
+            </div> -->
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="register_btn">Create user</button>
+                <button type="submit" class="btn btn-primary" id="edit_user_btn" name="edit_user_btn">Save changes</button>
             </div>
-        </form>
-        <!-- </div> -->
+            <!-- </form> -->
+
+        </div>
     </div>
 </main>
 

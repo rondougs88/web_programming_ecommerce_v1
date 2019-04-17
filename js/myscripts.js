@@ -1,6 +1,5 @@
 jQuery(document).ready(function () {
 
-
     $('.loading').hide();
     $('.json-overlay').hide();
 

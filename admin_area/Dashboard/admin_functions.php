@@ -1,5 +1,11 @@
 <?php
 
+$eu_username = "";
+$eu_fname = "";
+$eu_lname = "";
+$eu_usertype = "";
+$eu_email = "";
+
 function get_users() 
 {
    
@@ -11,6 +17,7 @@ function get_users()
 
         while ($row_user = mysqli_fetch_array($run_q)) {
 
+            $userid = $row_user['id'];
             $username = $row_user['username'];
             $email = $row_user['email'];
             $user_type = $row_user['user_type'];
@@ -24,11 +31,31 @@ function get_users()
                     <td>$email</td>
                     <td>$user_type</td>
                     
-                    <td><a href='#'>Edit</a></td>
+                    <td><a href='./edit_user.php?userid=$userid'>Edit</a></td>
                 </tr>
             ";
         }
 
+}
+
+function set_user_details($userid) {
+
+    global $con, $eu_username,  $eu_email, $eu_user_type, $eu_fname, $eu_lname;
+
+        $get_user = "SELECT * from users WHERE id = '$userid'";
+
+        $run_q = mysqli_query($con, $get_user);
+
+        while ($row_user = mysqli_fetch_array($run_q)) {
+
+            // $userid = $row_user['id'];
+            $eu_username = $row_user['username'];
+            $eu_email = $row_user['email'];
+            $eu_user_type = $row_user['user_type'];
+            $eu_fname = $row_user['fname'];
+            $eu_lname = $row_user['lname'];
+
+        }
 }
 
 function get_orders()

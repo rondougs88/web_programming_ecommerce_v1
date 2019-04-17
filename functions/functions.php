@@ -136,7 +136,7 @@ function register()
             $error_msg = mysqli_error($con);
             if ($error_msg == "") {
                 $_SESSION['success']  = "New user successfully created!!";
-                header("location: $siteroot/admin_area/Dashboard/admin_create_user.php");
+                header("location: $siteroot/admin_area/Dashboard/users.php");
             } else {
                 // An error occured.
                 $_SESSION['reg_error'] = "Either username or email has already been registered.";
@@ -186,6 +186,8 @@ function display_error()
 {
     global $errors;
 
+    // $success_msg = isset($_SESSION['success']) ? $_SESSION['success'] : "";
+
     if (count($errors) > 0) {
         echo '<div class="alert alert-danger">';
         foreach ($errors as $error) {
@@ -193,9 +195,11 @@ function display_error()
         }
         echo '</div>';
     }
-    elseif (isset($_SESSION['success'])) {
-        echo $_SESSION['success'];
-    }
+    // elseif (!empty($success_msg)) {
+    //     echo '<div class="alert alert-success">';
+    //     echo $success_msg;
+    //     echo '</div>';
+    // }
 }
 
 function isLoggedIn()
