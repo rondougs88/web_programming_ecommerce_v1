@@ -39,12 +39,12 @@ function get_orders()
                                 order_header.*,
                                 products.*,
                     FROM order_items
-                            INNER JOIN order_header ON order_items.order_id = order_header.order_id
+                            INNER JOIN order_header ON order_items.order_id = order_header.order_id,
                             INNER JOIN products ON order_items.p_id = products.product_id";
 
-    $run_q = mysqli_query($con, $get_orders);
+    $run_query = mysqli_query($con, $get_orders);
 
-    while ($row_order = mysqli_fetch_array($run_q)) {
+    while ($row_order = mysqli_fetch_array($run_query)) {
         $order = $row_order['order_id'];
         $date = $row_order['inserted_on'];
         $status = $row_order['status'];
