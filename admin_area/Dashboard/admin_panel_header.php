@@ -1,4 +1,5 @@
 <?php include "../includes/db.php"; ?>
+<?php include_once "../../functions/functions.php"; ?>
 <?php include "./admin_functions.php"; ?>
 <!doctype html>
 <html lang="en">

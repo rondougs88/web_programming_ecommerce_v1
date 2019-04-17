@@ -2,7 +2,8 @@
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <h2>Users</h2>
-    <div class="table-responsive">
+    <button class="btn btn-primary" id="admin_create_user">Create user</button>
+    <div class="table-responsive" style="margin-top:20px">
         <table class="table table-striped table-sm">
             <thead>
                 <tr>

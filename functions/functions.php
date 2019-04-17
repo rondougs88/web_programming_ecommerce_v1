@@ -100,10 +100,19 @@ function register()
     $email       =  e($_POST['email']);
     $password_1  =  e($_POST['password_1']);
     $password_2  =  e($_POST['password_2']);
+    $firstname   =  e($_POST['firstname']);
+    $lastname    =  e($_POST['lastname']);
+    $created_on  = date("Y-m-d H:i:s");
 
     // form validation: ensure that the form is correctly filled
     if (empty($username)) {
         array_push($errors, "Username is required");
+    }
+    if (empty($firstname)) {
+        array_push($errors, "First name is required");
+    }
+    if (empty($lastname)) {
+        array_push($errors, "Last name is required");
     }
     if (empty($email)) {
         array_push($errors, "Email is required");
@@ -121,21 +130,21 @@ function register()
 
         if (isset($_POST['user_type'])) {
             $user_type = e($_POST['user_type']);
-            $query = "INSERT INTO users (username, email, user_type, password) 
-					  VALUES('$username', '$email', '$user_type', '$password')";
+            $query = "INSERT INTO users (username, email, user_type, password, fname, lname, created_on) 
+            VALUES('$username', '$email', '$user_type', '$password', '$firstname', '$lastname', '$created_on')";
             mysqli_query($con, $query);
             $error_msg = mysqli_error($con);
             if ($error_msg == "") {
                 $_SESSION['success']  = "New user successfully created!!";
-                header("location: $siteroot/admin_area/create_user.php");
+                header("location: $siteroot/admin_area/Dashboard/admin_create_user.php");
             } else {
                 // An error occured.
                 $_SESSION['reg_error'] = "Either username or email has already been registered.";
-                header("location: $siteroot/admin_area/create_user.php?reg_error=1");
+                header("location: $siteroot/admin_area/Dashboard/admin_create_user.php?reg_error=1");
             }
         } else {
-            $query = "INSERT INTO users (username, email, user_type, password) 
-					  VALUES('$username', '$email', 'user', '$password')";
+            $query = "INSERT INTO users (username, email, user_type, password, fname, lname, created_on) 
+                      VALUES('$username', '$email', 'user', '$password', '$firstname', '$lastname', '$created_on')";
             mysqli_query($con, $query);
             $error_msg = mysqli_error($con);
             // get id of the created user
@@ -178,11 +187,14 @@ function display_error()
     global $errors;
 
     if (count($errors) > 0) {
-        echo '<div class="error">';
+        echo '<div class="alert alert-danger">';
         foreach ($errors as $error) {
             echo $error . '<br>';
         }
         echo '</div>';
+    }
+    elseif (isset($_SESSION['success'])) {
+        echo $_SESSION['success'];
     }
 }
 

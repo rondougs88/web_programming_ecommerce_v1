@@ -32,6 +32,14 @@
             <input type="username" class="form-control" name="username" value="<?php echo $username; ?>">
         </div>
         <div class="form-group">
+            <label>First name</label>
+            <input type="text" class="form-control" name="firstname" ?>
+        </div>
+        <div class="form-group">
+            <label>Last name</label>
+            <input type="text" class="form-control" name="lastname" ?>
+        </div>
+        <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
         </div>

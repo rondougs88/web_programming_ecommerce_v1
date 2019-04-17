@@ -3,7 +3,7 @@
 function get_users() 
 {
    
-    global $con, $siteroot;
+    global $con;
 
         $get_users = "SELECT * from users";
 

@@ -1,14 +1,4 @@
-<?php
-include "./includes/db.php";
-$pagetitle = "Create User";
-include "../header.php"; 
-// include "./Dashboard/";
-?>
-
-<!-- Custom styling for this page. -->
-<link rel="stylesheet" href="<?= $siteroot; ?>/css/register_style.css">
-
-<?php include "../navigation.php"; ?>
+<?php include "./admin_panel_header.php"; ?>
 
 <?php
 if (!isLoggedIn() || !isAdmin()) {
@@ -16,9 +6,18 @@ if (!isLoggedIn() || !isAdmin()) {
     exit();
 }
 ?>
-<div class="container">
 
-    <form method="post" action="create_user.php">
+<?php
+// if (isset($_SESSION['success'])) {
+//     $msg = $_SESSION['success'];
+//     unset($_SESSION['success']);
+//     echo '<script type="text/javascript">alert("' . $msg . '");</script>';
+// }
+?>
+
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<div class="row justify-content-center">
+    <form class="col-md-6" method="post" >
         <h1> Create User </h1>
         <?php echo display_error(); ?>
         <?php
@@ -67,9 +66,8 @@ if (!isLoggedIn() || !isAdmin()) {
             <button type="submit" class="btn btn-primary" name="register_btn">Create user</button>
         </div>
     </form>
-
 </div>
+</main>
 
-<?php include "../footer.php"; ?>
 
-</html>
+<?php include "./admin_panel_footer.php"; ?>
