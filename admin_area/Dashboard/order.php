@@ -1,6 +1,9 @@
-<h2>View all Orders Here..</h2>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
+<?php include "./admin_panel_header.php" ?>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+  <h2>View all Orders Here..</h2>
+  <div class="table-responsive" style="margin-top:20px">
+          <table class="table table-striped table-sm">
               <thead>
                 <tr>
                   <th>Order</th>
@@ -9,12 +12,15 @@
                   <th>Total</th>
                 </tr>
               </thead>
-              <?php
-              include("./includes/db.php");
-              $get_order="select order_header.order_id, order_items.p_id,products.inserted_on
-                             from ((order_header 
-                             inner join ";///balance dont understand
 
-              >
+              <tbody>
+              <?php get_orders(); ?>
+              </tbody>
+
             </table>
-          </div>
+    </div>
+  </main>
+
+
+
+ <?php include "./admin_panel_footer.php"; ?>
