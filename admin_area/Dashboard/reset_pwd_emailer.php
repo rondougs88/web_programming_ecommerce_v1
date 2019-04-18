@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 //Load composer's autoloader
-require_once '../vendor/autoload.php';
+require_once '../../vendor/autoload.php';
 
 $mail = new PHPMailer(true);                              // Passing `true` enables exceptions
 try {
@@ -33,7 +33,7 @@ try {
 
     //Content
     $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Order Confirmation @GeekGadget';
+    $mail->Subject = 'Password Reset @GeekGadget';
     $mail->Body    = $email_body;
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 

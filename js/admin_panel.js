@@ -1,6 +1,5 @@
 jQuery(document).ready(function () {
 
-
     var siteroot = "http://localhost/web_programming_ecommerce_v1";
 
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -81,6 +80,35 @@ jQuery(document).ready(function () {
                 alert("Update Cart Ajax Error: " + status + errorThrown);
             }
         });
+    });
+
+    $("#admin_reset_pwd").click(function() {
+        var response = confirm("Are you sure you want to reset the password for this user?");
+        if (response == true) {
+            var userid = getUrlParameter('userid');
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/admin_area/Dashboard/admin_functions.php",
+                async: false,
+                data: { admin_reset_pwd: "", userid: userid},
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Success: " + result);
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Error: " + status + errorThrown);
+                }
+            });
+          } else {
+            console.log("You pressed Cancel!");
+          }
     });
 
 }); // end of jQuery(document)
