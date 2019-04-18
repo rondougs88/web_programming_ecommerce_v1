@@ -6,7 +6,7 @@
     left: 50%;
     margin-left: -50px;
     margin-top: -50px;
-    z-index: 2000;
+    z-index: 5000;
     /* background: url(/link/to/your/image);
     background-size: 100%; */
   }
@@ -17,7 +17,7 @@
     position: fixed;
     left: 0px;
     top: 0px;
-    z-index: 1999;
+    z-index: 4000;
     height: 100%;
     width: 100%;
     overflow: hidden;

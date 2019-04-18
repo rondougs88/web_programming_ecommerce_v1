@@ -21,7 +21,12 @@ if (isset($_POST['register_btn'])) {
 if (isset($_GET['logout'])) {
     session_destroy();
     unset($_SESSION['user']);
-    header("location: ./index.php");
+    $code = $_GET['logout'];
+    if ($code == 5) {
+        header("location: ./login.php");
+    } else {
+        header("location: ./index.php");
+    }
 }
 
 if (isset($_POST['login_btn'])) {
@@ -140,7 +145,7 @@ function register()
             } else {
                 // An error occured.
                 $_SESSION['reg_error'] = "Either username or email has already been registered.";
-                header("location: $siteroot/admin_area/Dashboard/admin_create_user.php?reg_error=1");
+                // header("location: $siteroot/admin_area/Dashboard/admin_create_user.php?reg_error=1");
             }
         } else {
             $query = "INSERT INTO users (username, email, user_type, password, fname, lname, created_on) 

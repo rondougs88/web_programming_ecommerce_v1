@@ -30,7 +30,7 @@ jQuery(document).ready(function () {
     });
 
     $("#admin_create_user").click(function () {
-        window.location.href = siteroot + '/admin_area/create_user.php';
+        window.location.href = siteroot + '/admin_area/Dashboard/admin_create_user.php';
     });
 
     if (location.pathname.indexOf("users.php") != -1) {
@@ -63,7 +63,7 @@ jQuery(document).ready(function () {
         $.ajax({
             type: "POST",
             url: siteroot + "/admin_area/Dashboard/save_edited_user.php",
-            async: false,
+            async: true,
             data: { userid: userid, fname: fname, lname: lname, email: email, user_type: user_type },
             success: function (result) {
                 // Do stuff
@@ -83,13 +83,15 @@ jQuery(document).ready(function () {
     });
 
     $("#admin_reset_pwd").click(function() {
+        $('.loading').show();
+        $('.json-overlay').show();
         var response = confirm("Are you sure you want to reset the password for this user?");
         if (response == true) {
             var userid = getUrlParameter('userid');
             $.ajax({
                 type: "POST",
                 url: siteroot + "/admin_area/Dashboard/admin_functions.php",
-                async: false,
+                async: true,
                 data: { admin_reset_pwd: "", userid: userid},
                 success: function (result) {
                     // Do stuff

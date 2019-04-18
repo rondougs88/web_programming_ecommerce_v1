@@ -318,5 +318,97 @@ jQuery(document).ready(function () {
         //     amount: 2000
         // });
     }
+    $("#edit_user_btn").click(function () {
+
+        $('.loading').show();
+        $('.json-overlay').show();
+
+        var username, fname, lname, email, user_type, id;
+        // var userid = getUrlParameter('userid');
+        username = $("#username").val();
+        fname = $("#fname").val();
+        lname = $("#lname").val();
+        email = $("#email").val();
+        user_type = $("#user_type option:selected").val();
+
+        $.ajax({
+            type: "POST",
+            url: siteroot + "/admin_area/Dashboard/save_edited_user.php",
+            async: true,
+            data: { username: username, fname: fname, lname: lname, email: email, user_type: user_type },
+            success: function (result) {
+                // Do stuff
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert("Update Cart Ajax Success: " + result);
+            },
+            error: function (request, status, errorThrown) {
+                // There's been an error, do something with it!
+                // Only use status and errorThrown.
+                // Chances are request will not have anything in it.
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert("Update Cart Ajax Error: " + status + errorThrown);
+            }
+        });
+    });
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    $("#admin_reset_pwd").click(function () {
+        window.location = siteroot + "/change_password.php";
+    });
+
+    $("#change_pwd_btn").click(function () {
+        var username = $("#username").val();
+        var curr_pwd = $("#curr_pwd").val();
+        var new_pwd = $("#new_pwd").val();
+        var new_pwd2 = $("#new_pwd2").val();
+        if (new_pwd != new_pwd2) {
+            alert("The two passwords do not match.");
+        }
+        else if (curr_pwd == "" || new_pwd == "") {
+            alert("Please fill in all parameters.");
+        }
+        else {
+            $('.loading').show();
+            $('.json-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/submit_password.php",
+                async: true,
+                data: { username: username, curr_pwd: curr_pwd, new_pwd: new_pwd },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result == "Password has been updated.") {
+                        window.location = siteroot + "/admin_area/logout.php";
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Error: " + status + errorThrown);
+                }
+            });
+        }
+    });
 });
 

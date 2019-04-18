@@ -23,12 +23,12 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Services</a>
-          </li>
+          </li> -->
 
 
           <?php
@@ -47,9 +47,6 @@
           if (isLoggedIn() && isAdmin()) {
             echo "
           <li class='nav-item'>
-            <a class='nav-link' href='$siteroot/admin_area/create_user.php'>Create User</a>
-          </li>
-          <li class='nav-item'>
             <a class='nav-link' href='$siteroot/admin_area/Dashboard/dashboard.php'>Admin</a>
           </li>
           ";
@@ -62,8 +59,7 @@
                     <li class='dropdown'>
                       <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>Welcome, $username <b class='caret'></b></a>
                         <ul class='dropdown-menu'>
-                            <li class='dropdown-item'><a href='/user/preferences'><i class='icon-cog'></i> Preferences</a></li>
-                            <li class='dropdown-item'><a href='/help/support'><i class='icon-envelope'></i> Contact Support</a></li>
+                            <li class='dropdown-item'><a href='$siteroot/myaccount.php'><i class='icon-cog'></i>My Account</a></li>
                             <li class='dropdown-divider'></li>
                             <li class='dropdown-item'><a href='$siteroot/index.php?logout='1''><i class='icon-off'></i> Logout</a></li>
                         </ul>

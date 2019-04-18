@@ -22,7 +22,7 @@
             </a>
             <div class="collapse" id="submenu1" aria-expanded="false">
               <ul class="flex-column pl-2 nav">
-                <li class="nav-item"><a class="nav-link py-0 sub-item" id="viewusers" href="../Dashboard/users.php">View users</a></li>
+                <li class="nav-item"><a class="nav-link py-0 sub-item" id="viewusers" href="../Dashboard/users.php">View / Edit users</a></li>
                 <li class="nav-item"><a class="nav-link py-0 sub-item" id="createuser" href="./admin_create_user.php">Create User</a></li>
               </ul>
             </div>
