@@ -15,6 +15,9 @@
         <button type="submit" class="btn btn-primary" name="login_btn">Login</button>
     </div>
     <p>
-        Not yet a member? <a href="register.php">Sign up</a>
+        Not yet a member? <a href="./register.php">Sign up</a>
+    </p>
+    <p>
+        Forgot password? <a href="./reset_pwd.php">Reset it here</a>
     </p>
 </form>

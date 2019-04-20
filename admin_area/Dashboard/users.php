@@ -1,6 +1,10 @@
 <?php include "./admin_panel_header.php" ?>
 
 <?php
+if (!isLoggedIn() || !isAdmin()) {
+    echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
+    exit();
+}
 if (isset($_SESSION['success'])) {
     $msg = $_SESSION['success'];
     unset($_SESSION['success']);

@@ -228,33 +228,6 @@ jQuery(document).ready(function () {
         }
     });
 
-    // Update the shopping cart badge.
-    // function update_cart_count() {
-    //     $('.loading').show();           // show loading spinner
-    //     $('.json-overlay').show();      // disable screen
-    //     $.ajax({
-    //         type: "POST",
-    //         url: siteroot + "/get_cart_count.php",
-    //         async: false,
-    //         // data: { update_cart: filtered_array },
-    //         success: function (count) {
-    //             // Do stuff
-    //             $('.loading').hide();
-    //             $('.json-overlay').hide();
-    //             $(".my-cart-badge").html(count);
-    //         },
-    //         error: function (request, status, errorThrown) {
-    //             // There's been an error, do something with it!
-    //             // Only use status and errorThrown.
-    //             // Chances are request will not have anything in it.
-    //             $('.loading').hide();
-    //             $('.json-overlay').hide();
-    //             alert("Update Cart Count Ajax Error: " + status + errorThrown);
-    //         }
-
-    //     });
-    // }
-
     // Toggle div for shipping address
     var same_address = $("#same-address").is(':checked');
     if (same_address) {
@@ -277,47 +250,6 @@ jQuery(document).ready(function () {
 
     }
 
-    function charge_cc() {
-        // var handler = StripeCheckout.configure({
-        //     key: 'pk_test_bTvk82dYQkAekGQpYYp4J0il008fiA0MgB',
-        //     image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-        //     locale: 'auto',
-        //     token: function (token) {
-        //         // You can access the token ID with `token.id`.
-        //         // Get the token ID to your server-side code for use.
-        //         alert("Token Received: " + token.id);
-        //         handler.close();
-
-        //         $.ajax({
-        //             type: "POST",
-        //             url: siteroot + "./create_order.php",
-        //             async: false,
-        //             data: { paid_via_cc: true },
-        //             success: function (result) {
-        //                 // Do stuff
-        //                 // $('.loading').hide();
-        //                 // $('.json-overlay').hide();
-        //                 // alert("Update Cart Ajax Success: " + result);
-        //             },
-        //             error: function (request, status, errorThrown) {
-        //                 // There's been an error, do something with it!
-        //                 // Only use status and errorThrown.
-        //                 // Chances are request will not have anything in it.
-        //                 // $('.loading').hide();
-        //                 // $('.json-overlay').hide();
-        //                 // alert("Update Cart Ajax Error: " + status + errorThrown);
-        //             }
-        //         });
-        //     }
-        // });
-        // // Open Checkout with further options:
-        // handler.open({
-        //     name: 'Demo Site',
-        //     description: '2 widgets',
-        //     currency: 'nzd',
-        //     amount: 2000
-        // });
-    }
     $("#edit_user_btn").click(function () {
 
         $('.loading').show();
@@ -410,5 +342,80 @@ jQuery(document).ready(function () {
             });
         }
     });
+
+    $("#reset_pwd_btn").click(function () {
+        // window.location = siteroot + "/admin_area/logout.php";
+        // return false;
+        // window.location = "localhost";
+        var email = $("#rst_email").val();
+        if (email) {
+            var result = confirm("Are you sure you want to reset password?");
+            if (result) {
+                //Call ajax
+                $('.loading').show();
+                $('.json-overlay').show();
+                // var userid = getUrlParameter('userid');
+
+                $.ajax({
+                    type: "POST",
+                    url: siteroot + "/admin_area/Dashboard/admin_functions.php",
+                    async: false,
+                    data: { user_reset_pwd: "", email: email },
+                    success: function (result) {
+                        // Do stuff
+                        $('.loading').hide();
+                        $('.json-overlay').hide();
+                        alert(result);
+                        if (result.includes("new password has been sent")) {
+                            window.location = siteroot + "/admin_area/logout.php";
+                            // window.location.assign(siteroot + "/admin_area/logout.php");
+                            return false; // To open in new window
+                        }
+                    },
+                    // done: function (result) {
+                    //     // Do stuff
+                    //     $('.loading').hide();
+                    //     $('.json-overlay').hide();
+                    //     alert(result);
+                    //     if (result == "A new password has been sent to the email you provided.") {
+                    //         window.location = siteroot + "/admin_area/logout.php";
+                    //     }
+                    // },
+                    error: function (request, status, errorThrown) {
+                        // There's been an error, do something with it!
+                        // Only use status and errorThrown.
+                        // Chances are request will not have anything in it.
+                        $('.loading').hide();
+                        $('.json-overlay').hide();
+                        alert("Update Error: " + status + errorThrown);
+                    }
+                })
+                // .done(function (result) {
+                //     // Do stuff
+                //     $('.loading').hide();
+                //     $('.json-overlay').hide();
+                //     alert(result);
+                //     if (result.includes("new password has been sent")) {
+                //         // window.location = siteroot + "/admin_area/logout.php";
+                //         // window.location.href = "./logout.php";
+                //         // window.location.assign(siteroot + "/admin_area/logout.php");
+                //     }
+                // });
+                // if (gotourl) {
+
+                // }
+
+            }
+            else {
+                // Do nothing
+                console.log("Password reset cancelled.");
+            }
+        }
+        else {
+            alert("Email is required.");
+        }
+        return false;
+    });
+
 });
 

@@ -4,6 +4,10 @@ if (isset($_POST['admin_reset_pwd'])) {
     reset_password($_POST['userid']);
 }
 
+if (isset($_POST['user_reset_pwd'])) {
+    user_reset_password($_POST['email']);
+}
+
 $eu_username = "";
 $eu_fname = "";
 $eu_lname = "";
@@ -20,6 +24,38 @@ function randomPassword()
         $pass[] = $alphabet[$n];
     }
     return implode($pass); //turn the array into a string
+}
+
+function user_reset_password($email)
+{
+    include_once "../includes/db.php";
+
+    $gen_pwd = randomPassword();
+    $new_password = sha1($gen_pwd);
+
+    $set_password = "UPDATE users SET password = '$new_password' WHERE email = '$email'";
+
+    mysqli_query($con, $set_password);
+
+    $get_user = "SELECT * from users WHERE email = '$email'";
+
+    $run_q = mysqli_query($con, $get_user);
+    $user_count = $run_q->num_rows;
+    // $error = mysqli_error($con);
+    if ($user_count > 0) {
+        while ($row_user = mysqli_fetch_array($run_q)) {
+
+            // $email = $row_user['email'];
+            $username = $row_user['username'];
+        };
+        // Send email to user for his new password.
+        // $email = $order_details->getEmail();
+        $email_body = create_rstpwd_email_body($gen_pwd, $username);
+        require_once "./reset_pwd_emailer.php";
+        echo "A new password has been sent to the email you provided.";
+    } else {
+        echo "Email provided is either invalid or not yet registered.";
+    }
 }
 
 function reset_password($userid)
@@ -41,7 +77,6 @@ function reset_password($userid)
 
         $email = $row_user['email'];
         $username = $row_user['username'];
-
     };
 
     // Send email to user for his new password.
@@ -170,7 +205,7 @@ p, ul, ol { font-size: 16px; font-weight: normal; margin-bottom: 20px; }
 </body>
 </html>
     ";
- }
+}
 
 function get_users()
 {
