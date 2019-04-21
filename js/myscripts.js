@@ -372,15 +372,6 @@ jQuery(document).ready(function () {
                             return false; // To open in new window
                         }
                     },
-                    // done: function (result) {
-                    //     // Do stuff
-                    //     $('.loading').hide();
-                    //     $('.json-overlay').hide();
-                    //     alert(result);
-                    //     if (result == "A new password has been sent to the email you provided.") {
-                    //         window.location = siteroot + "/admin_area/logout.php";
-                    //     }
-                    // },
                     error: function (request, status, errorThrown) {
                         // There's been an error, do something with it!
                         // Only use status and errorThrown.
@@ -390,20 +381,6 @@ jQuery(document).ready(function () {
                         alert("Update Error: " + status + errorThrown);
                     }
                 })
-                // .done(function (result) {
-                //     // Do stuff
-                //     $('.loading').hide();
-                //     $('.json-overlay').hide();
-                //     alert(result);
-                //     if (result.includes("new password has been sent")) {
-                //         // window.location = siteroot + "/admin_area/logout.php";
-                //         // window.location.href = "./logout.php";
-                //         // window.location.assign(siteroot + "/admin_area/logout.php");
-                //     }
-                // });
-                // if (gotourl) {
-
-                // }
 
             }
             else {
@@ -415,6 +392,85 @@ jQuery(document).ready(function () {
             alert("Email is required.");
         }
         return false;
+    });
+
+    $("#contact-us-btn").click(function () {
+        if ($('#contact-form').valid()) {
+            //Call ajax
+            $('.loading').show();
+            $('.json-overlay').show();
+            var fname = $("#con_fname").val();
+            var lname = $("#con_lname").val();
+            var email = $("#con_email").val();
+            var message = $("#con_message").val();
+            // var userid = getUrlParameter('userid');
+
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/admin_area/Dashboard/admin_functions.php",
+                async: false,
+                data: { contact_us: "", fname: fname, lname: lname, email: email, message: message },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("message has been sent")) {
+                        window.location = siteroot + "/index.php";
+                        // window.location.assign(siteroot + "/admin_area/logout.php");
+                        // return false; // To open in new window
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+            return false;            
+        }
+    });
+
+    $('#contact-form').validate({
+        rules: {
+            con_fname: {
+                minlength: 2,
+                required: true
+            },
+            con_lname: {
+                minlength: 2,
+                required: true
+            },
+            con_email: {
+                required: true,
+                email: true
+            },
+            con_message: {
+                minlength: 5,
+                required: true
+            },
+        },
+        highlight: function (element) {
+            $(element)
+                .closest('.form-group')
+                // .siblings('input')
+                .removeClass('alert alert-success')
+                .addClass('alert alert-danger text-danger');
+        },
+        success: function (element) {
+            element
+                // .text('Ok!')
+                // .removeClass('error')
+                // .addClass('alert alert-success')
+                .closest('.form-group')
+                // .siblings('input')
+                .removeClass('alert alert-danger text-danger')
+                .addClass('alert alert-success');
+                // return false;
+        }
     });
 
 });
