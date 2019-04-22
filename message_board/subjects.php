@@ -1,5 +1,5 @@
 <?php include "../admin_area/includes/db.php"; ?>
-<?php 
+<?php
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     global $con, $siteroot;
@@ -18,7 +18,10 @@ if (isset($_GET['id'])) {
 ?>
 <?php $pagetitle = "Topic subjects"; ?>
 <?php include "../header.php"; ?>
-
+<script>
+    var isLoggedIn = '<?= isLoggedIn() ?>';
+    var topic_id = '<?php echo $id ?>';
+</script>
 <link href="<?= $siteroot; ?>/css/forum.css" rel="stylesheet">
 
 <?php include "../navigation.php"; ?>
@@ -29,15 +32,19 @@ if (isset($_GET['id'])) {
             <div class="wrapper wrapper-content animated fadeInRight">
 
                 <div class="ibox-content m-b-sm border-bottom">
+                    <span>
+                        <button class="btn btn-primary float-right" id="create_post_btn" name="create_post_btn">Create a new post</button>
+                    </span>
                     <div class="p-xs">
                         <div class="pull-left m-r-md">
                             <i class="fa fa-commenting text-navy mid-icon" aria-hidden="true"></i>
                         </div>
-                        <h2><?php global $catname; echo $catname ?></h2>
-                        <span><?php global $catdesc; echo $catdesc ?></span>
+                        <h2><?php global $catname;
+                            echo $catname ?></h2>
+                        <span><?php global $catdesc;
+                                echo $catdesc ?></span>
                     </div>
                 </div>
-
                 <div class="ibox-content forum-container">
                     <?php get_forum_subjects($id); ?>
                 </div>

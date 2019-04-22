@@ -208,6 +208,19 @@ a.forum-item-title:hover {
   padding: 10px 15px;
 }
 
+.img-fluid {
+  max-width: 50px;
+}
+
+form {
+	width: 60%;
+	margin: 40px auto;
+	padding: 20px;
+	border: 1px solid #B0C4DE;
+	background: white;
+	border-radius: 0px 0px 10px 10px;
+}
+
 .message-input {
   height: 90px !important;
 }

@@ -36,6 +36,24 @@ if (isset($_POST['login_btn'])) {
 // Get the total items to be displayed for the cart
 $cart_count = cart_items_count();
 
+function get_select_topics()
+{
+    global $con, $siteroot;
+
+    $get_topics = "SELECT * FROM forum_categories ORDER BY cat_name ASC";
+
+    $run_q = mysqli_query($con, $get_topics);
+
+    while ($topics = mysqli_fetch_array($run_q)) {
+        $topic_id = $topics['cat_id'];
+        $topic_name = $topics['cat_name'];
+        // $topic_id = $topics['cat_id'];
+        echo "
+    <option value='$topic_id'>$topic_name</option>
+    ";
+    }
+}
+
 // Get the forum topics
 function get_forum_topics()
 {
@@ -91,7 +109,7 @@ function get_forum_subjects($id)
                         <div class='forum-icon'>
                         <i class='fa fa-star' aria-hidden='true'></i>
                         </div>
-                        <a href='./messages.php?id=$topic_id' class='forum-item-title'>$topic_subject</a>
+                        <a href='./messages.php?id=$topic_id&subject_id=$id' class='forum-item-title'>$topic_subject</a>
                         <div class='forum-sub-title'>Created on: $topic_date</div>
                     </div>
                 </div>
@@ -123,7 +141,7 @@ function get_subject_messages($id)
         <div class='row'>
         <div class='col-md-2'>
             <img src='https://image.ibb.co/jw55Ex/def_face.jpg' class='img img-rounded img-fluid' />
-            <p class='text-secondary text-center'>$topic_date</p>
+            <p class='text-secondary'>$topic_date</p>
         </div>
         <div class='col-md-10'>
             <p>

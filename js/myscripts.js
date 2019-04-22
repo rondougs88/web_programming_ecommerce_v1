@@ -512,5 +512,13 @@ jQuery(document).ready(function () {
         return false;
     });
 
+    $("#create_post_btn").click(function() {
+        if (isLoggedIn != '1') {
+            alert("You must be logged in to create a new post.");
+        }
+        else {
+            window.location = siteroot + "/message_board/create_post.php?topic_id=" + topic_id;
+        }
+    });
 });
 
