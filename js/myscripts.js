@@ -430,7 +430,7 @@ jQuery(document).ready(function () {
                     alert("Update Error: " + status + errorThrown);
                 }
             })
-            return false;            
+            return false;
         }
     });
 
@@ -456,21 +456,60 @@ jQuery(document).ready(function () {
         highlight: function (element) {
             $(element)
                 .closest('.form-group')
-                // .siblings('input')
                 .removeClass('alert alert-success')
                 .addClass('alert alert-danger text-danger');
         },
         success: function (element) {
             element
-                // .text('Ok!')
-                // .removeClass('error')
-                // .addClass('alert alert-success')
                 .closest('.form-group')
-                // .siblings('input')
                 .removeClass('alert alert-danger text-danger')
                 .addClass('alert alert-success');
-                // return false;
         }
+    });
+
+    $("#post_reply_btn").click(function () {
+        var message = $("#post_msg").val();
+
+        if (!message) {
+            alert("Message cannot be empty."); 
+        }
+        else {
+            //Call ajax
+            $('.loading').show();
+            $('.json-overlay').show();
+            // var fname = $("#con_fname").val();
+            // var lname = $("#con_lname").val();
+            // var email = $("#con_email").val();
+            // var message = $("#con_message").val();
+            // var userid = getUrlParameter('userid');
+
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: false,
+                data: { post_reply: "", subject_id: subject_id, message: message, userid: userid }, // Subject id is passed from messages.php
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("successfully")) {
+                        window.location = siteroot + "/message_board/messages.php?id=" + subject_id;
+                        // window.location.assign(siteroot + "/admin_area/logout.php");
+                        // return false; // To open in new window
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+        }
+        return false;
     });
 
 });

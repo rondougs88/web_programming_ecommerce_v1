@@ -36,6 +36,109 @@ if (isset($_POST['login_btn'])) {
 // Get the total items to be displayed for the cart
 $cart_count = cart_items_count();
 
+// Get the forum topics
+function get_forum_topics()
+{
+
+    global $con, $siteroot;
+
+    $get_topics = "SELECT * FROM forum_categories ORDER BY cat_name ASC";
+
+    $run_q = mysqli_query($con, $get_topics);
+
+    while ($topics = mysqli_fetch_array($run_q)) {
+
+        $id = $topics['cat_id'];
+        $catname = $topics['cat_name'];
+        $catdesc = $topics['cat_description'];
+
+        echo "
+            <div class='forum-item '>
+                <div class='row'>
+                    <div class='col-md-9'>
+                        <div class='forum-icon'>
+                        <i class='fa fa-star' aria-hidden='true'></i>
+                        </div>
+                        <a href='./subjects.php?id=$id' class='forum-item-title'>$catname</a>
+                        <div class='forum-sub-title'>$catdesc</div>
+                    </div>
+                </div>
+            </div>
+    ";
+    }
+}
+
+// Get the forum subjects
+function get_forum_subjects($id)
+{
+
+    global $con, $siteroot;
+
+    $get_topics = "SELECT * FROM topics WHERE topic_cat = '$id' ORDER BY topic_date DESC";
+
+    $run_q = mysqli_query($con, $get_topics);
+
+    while ($topics = mysqli_fetch_array($run_q)) {
+
+        $topic_id = $topics['topic_id'];
+        $topic_subject = $topics['topic_subject'];
+        $topic_date = $topics['topic_date'];
+
+        echo "
+            <div class='forum-item '>
+                <div class='row'>
+                    <div class='col-md-9'>
+                        <div class='forum-icon'>
+                        <i class='fa fa-star' aria-hidden='true'></i>
+                        </div>
+                        <a href='./messages.php?id=$topic_id' class='forum-item-title'>$topic_subject</a>
+                        <div class='forum-sub-title'>Created on: $topic_date</div>
+                    </div>
+                </div>
+            </div>
+    ";
+    }
+}
+
+// Get the forum subjects
+function get_subject_messages($id)
+{
+
+    global $con, $siteroot;
+
+    $get_posts = "SELECT * FROM posts INNER JOIN users ON posts.post_by = users.id WHERE posts.post_topic = '$id' ORDER BY posts.post_date DESC";
+
+    $run_q = mysqli_query($con, $get_posts);
+
+    while ($posts = mysqli_fetch_array($run_q)) {
+
+        $topic_id = $posts['post_id'];
+        $post_content = $posts['post_content'];
+        $topic_date = $posts['post_date'];
+        $username = $posts['username'];
+        $fname = $posts['fname'];
+        $lname = $posts['lname'];
+
+        echo "
+        <div class='row'>
+        <div class='col-md-2'>
+            <img src='https://image.ibb.co/jw55Ex/def_face.jpg' class='img img-rounded img-fluid' />
+            <p class='text-secondary text-center'>$topic_date</p>
+        </div>
+        <div class='col-md-10'>
+            <p>
+                <a class='float-left' href='#'><strong>$fname $lname ($username)</strong></a>
+
+            </p>
+            <div class='clearfix'></div>
+            <p>$post_content</p>
+        </div>
+    </div>
+    <hr>
+    ";
+    }
+}
+
 // LOGIN USER
 function login()
 {

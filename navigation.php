@@ -26,6 +26,9 @@
           <li class="nav-item">
             <a class="nav-link" href="<?= $siteroot ?>/contact_form.php"><i class="fa fa-envelope" aria-hidden="true"></i> Contact Us</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= $siteroot ?>/message_board/topics.php"><i class="fa fa-comments" aria-hidden="true"></i> Message Board</a>
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
@@ -39,7 +42,7 @@
           if (!isLoggedIn()) {
             echo "
           <li class='nav-item'>
-            <a class='nav-link' href='$siteroot/admin_area/register.php'><i class='fa fa-user-plus'></i>Register</a>
+            <a class='nav-link' href='$siteroot/admin_area/register.php'><i class='fa fa-user-plus'></i> Register</a>
           </li>
           <li class='nav-item'>
             <a class='nav-link' href='$siteroot/admin_area/login.php'><i class='fa fa-fw fa-user'></i>Login</a>
