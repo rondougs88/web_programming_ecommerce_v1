@@ -35,6 +35,23 @@ if (isset($_POST['get_topic_det'])) {
     get_topic_details($_POST['topic_id']);
 }
 
+// Delete topic
+if (isset($_POST['del_topic'])) {
+    del_topic($_POST['topic_id']);
+}
+
+// Delete topic
+function del_topic($topic_id) {
+    include_once "../admin_area/includes/db.php";
+    $del_topic = "DELETE FROM forum_categories WHERE cat_id = '$topic_id'";
+    $run_q = mysqli_query($con, $del_topic);
+    if (empty($run_q->error)) {
+        echo "Topic has been deleted.";
+    } else {
+        echo "Topic cannot be deleted.";
+    }
+}
+
 // Edit topic
 function change_topic($topic_name, $topic_desc, $topic_id)
 {

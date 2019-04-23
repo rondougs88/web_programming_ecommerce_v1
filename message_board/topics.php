@@ -78,7 +78,7 @@
                                 </div>
                                 <p style="margin-bottom:60px">
                                     <button type="submit" class="btn btn-primary float-left" name="ch_topic_btn" id="ch_topic_btn">Save</button>
-                                    <button type="submit" class="btn btn-danger float-right" name="del_topic_btn" id="del_topic_btn">Delete</button>
+                                    <button class="btn btn-danger float-right" name="del_topic_btn" id="del_topic_btn">Delete</button>
                                 </p>
                             </form>
                         </div>

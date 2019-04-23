@@ -788,5 +788,37 @@ jQuery(document).ready(function () {
 
         }
     });
+
+    $("#del_topic_btn").click(function () {
+        var topic_id = $("#existing_topic option:selected").val();
+        if (topic_id) {
+            $('.loading').show();
+            $('.json-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: false,
+                data: { del_topic: "", topic_id: topic_id }, // Subject id is passed from messages.php
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("has been deleted")) {
+                        location.reload();
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+            return false;
+        }
+    });
 });
 
