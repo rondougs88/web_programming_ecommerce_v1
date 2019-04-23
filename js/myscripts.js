@@ -467,21 +467,84 @@ jQuery(document).ready(function () {
         }
     });
 
+    $("#submit-post").click(function () {
+        if ($("#new-post-form").valid()) {
+            //Call ajax
+            $('.loading').show();
+            $('.json-overlay').show();
+            var topic = $("#topic option:selected").val();
+            var subject = $("#subject").val();
+            var message = $("#message").val();
+            // var lname = $("#con_lname").val();
+            // var email = $("#con_email").val();
+            // var message = $("#con_message").val();
+            // var userid = getUrlParameter('userid');
+
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: true,
+                data: { new_post: "", topic: topic, subject: subject, message: message, userid: userid },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("has been posted")) {
+                        window.location = siteroot + "/message_board/topics.php";
+                        // window.location.assign(siteroot + "/admin_area/logout.php");
+                        // return false; // To open in new window
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+            return false;
+        }
+    });
+
+    $("#new-post-form").validate({
+        rules: {
+            topic: {
+                required: true
+            },
+            subject: {
+                required: true
+            },
+            message: {
+                required: true,
+            },
+        },
+        highlight: function (element) {
+            $(element)
+                .closest('.form-group')
+                .removeClass('alert alert-success')
+                .addClass('alert alert-danger text-danger');
+        },
+        success: function (element) {
+            element
+                .closest('.form-group')
+                .removeClass('alert alert-danger text-danger')
+                .addClass('alert alert-success');
+        }
+    });
+
     $("#post_reply_btn").click(function () {
         var message = $("#post_msg").val();
 
         if (!message) {
-            alert("Message cannot be empty."); 
+            alert("Message cannot be empty.");
         }
         else {
             //Call ajax
             $('.loading').show();
             $('.json-overlay').show();
-            // var fname = $("#con_fname").val();
-            // var lname = $("#con_lname").val();
-            // var email = $("#con_email").val();
-            // var message = $("#con_message").val();
-            // var userid = getUrlParameter('userid');
 
             $.ajax({
                 type: "POST",
@@ -494,7 +557,7 @@ jQuery(document).ready(function () {
                     $('.json-overlay').hide();
                     alert(result);
                     if (result.includes("successfully")) {
-                        window.location = siteroot + "/message_board/messages.php?id=" + subject_id;
+                        window.location = siteroot + "/message_board/messages.php?topic_id=" + topic_id + "&subject_id=" + subject_id;
                         // window.location.assign(siteroot + "/admin_area/logout.php");
                         // return false; // To open in new window
                     }
@@ -512,12 +575,217 @@ jQuery(document).ready(function () {
         return false;
     });
 
-    $("#create_post_btn").click(function() {
-        if (isLoggedIn != '1') {
+    $(".create_post_btn").click(function () {
+        if (!isLoggedIn) {
             alert("You must be logged in to create a new post.");
         }
         else {
             window.location = siteroot + "/message_board/create_post.php?topic_id=" + topic_id;
+        }
+    });
+
+    $(".del_post_btn").click(function () {
+        // var del_post_id = $("#del_post_id_").val();
+        var del_post_id = $(this).attr("id");
+        //Call ajax
+        $('.loading').show();
+        $('.json-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: siteroot + "/message_board/post_message.php",
+            async: false,
+            data: { del_post: "", post_id: del_post_id }, // Subject id is passed from messages.php
+            success: function (result) {
+                // Do stuff
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert(result);
+                if (result.includes("Successfully")) {
+                    location.reload();
+                }
+            },
+            error: function (request, status, errorThrown) {
+                // There's been an error, do something with it!
+                // Only use status and errorThrown.
+                // Chances are request will not have anything in it.
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert("Update Error: " + status + errorThrown);
+            }
+        })
+    });
+
+    $(".del_subj_btn").click(function () {
+        // var del_post_id = $("#del_post_id_").val();
+        var del_subj_id = $(this).attr("id");
+        //Call ajax
+        $('.loading').show();
+        $('.json-overlay').show();
+        $.ajax({
+            type: "POST",
+            url: siteroot + "/message_board/post_message.php",
+            async: false,
+            data: { del_subj: "", subj_id: del_subj_id }, // Subject id is passed from messages.php
+            success: function (result) {
+                // Do stuff
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert(result);
+                if (result.includes("Successfully")) {
+                    location.reload();
+                }
+            },
+            error: function (request, status, errorThrown) {
+                // There's been an error, do something with it!
+                // Only use status and errorThrown.
+                // Chances are request will not have anything in it.
+                $('.loading').hide();
+                $('.json-overlay').hide();
+                alert("Update Error: " + status + errorThrown);
+            }
+        })
+    });
+
+    $("#new_topic_btn").click(function () {
+        var topic_name = $("#new_topic").val();
+        var topic_desc = $("#topic_desc").val();
+        if ($("#new_topic_form").valid()) {
+            $('.loading').show();
+            $('.json-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: false,
+                data: { new_topic: "", topic_name: topic_name, topic_desc: topic_desc }, // Subject id is passed from messages.php
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("has been posted")) {
+                        location.reload();
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+            return false;
+        }
+    });
+
+    $("#ch_topic_btn").click(function () {
+        var topic_name = $("#ch_topic_name").val();
+        var topic_desc = $("#ch_topic_desc").val();
+        var topic_id = $("#existing_topic option:selected").val();
+        if ($("#edit_topic_form").valid()) {
+            $('.loading').show();
+            $('.json-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: false,
+                data: { ch_topic: "", topic_name: topic_name, topic_desc: topic_desc, topic_id: topic_id }, // Subject id is passed from messages.php
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    if (result.includes("has been updated")) {
+                        location.reload();
+                    }
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+            return false;
+        }
+    });
+
+    $("#new_topic_form").validate({
+        rules: {
+            new_topic: {
+                required: true
+            },
+            topic_desc: {
+                required: true
+            },
+        },
+        highlight: function (element) {
+            $(element)
+                .closest('.form-group')
+                .removeClass('alert alert-success')
+                .addClass('alert alert-danger text-danger');
+        },
+        success: function (element) {
+            element
+                .closest('.form-group')
+                .removeClass('alert alert-danger text-danger')
+                .addClass('alert alert-success');
+        }
+    });
+
+    $("#edit_topic_form").validate({
+        rules: {
+            ch_topic_name: {
+                required: true
+            },
+            ch_topic_desc: {
+                required: true
+            },
+        },
+        highlight: function (element) {
+            $(element)
+                .closest('.form-group')
+                .removeClass('alert alert-success')
+                .addClass('alert alert-danger text-danger');
+        },
+        success: function (element) {
+            element
+                .closest('.form-group')
+                .removeClass('alert alert-danger text-danger')
+                .addClass('alert alert-success');
+        }
+    });
+
+    $("#existing_topic").change(function () {
+        if ($(this).val()) {
+            $('.loading').show();
+            $('.json-overlay').show();
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/message_board/post_message.php",
+                async: false,
+                data: { get_topic_det: "", topic_id: $(this).val() }, // Subject id is passed from messages.php
+                success: function (result) {
+                    // Do stuff
+                    var topic = $.parseJSON(result);
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    $("#ch_topic_name").val(topic['cat_name']);
+                    $("#ch_topic_desc").val(topic['cat_description']);
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Error: " + status + errorThrown);
+                }
+            })
+
         }
     });
 });

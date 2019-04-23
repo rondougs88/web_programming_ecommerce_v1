@@ -77,7 +77,7 @@ function get_forum_topics()
                         <div class='forum-icon'>
                         <i class='fa fa-star' aria-hidden='true'></i>
                         </div>
-                        <a href='./subjects.php?id=$id' class='forum-item-title'>$catname</a>
+                        <a href='./subjects.php?topic_id=$id' class='forum-item-title'>$catname</a>
                         <div class='forum-sub-title'>$catdesc</div>
                     </div>
                 </div>
@@ -96,11 +96,11 @@ function get_forum_subjects($id)
 
     $run_q = mysqli_query($con, $get_topics);
 
-    while ($topics = mysqli_fetch_array($run_q)) {
+    while ($subject = mysqli_fetch_array($run_q)) {
 
-        $topic_id = $topics['topic_id'];
-        $topic_subject = $topics['topic_subject'];
-        $topic_date = $topics['topic_date'];
+        $subject_id = $subject['topic_id'];
+        $subject_subject = $subject['topic_subject'];
+        $subject_date = $subject['topic_date'];
 
         echo "
             <div class='forum-item '>
@@ -109,8 +109,15 @@ function get_forum_subjects($id)
                         <div class='forum-icon'>
                         <i class='fa fa-star' aria-hidden='true'></i>
                         </div>
-                        <a href='./messages.php?id=$topic_id&subject_id=$id' class='forum-item-title'>$topic_subject</a>
-                        <div class='forum-sub-title'>Created on: $topic_date</div>
+                        ";
+        if (isAdmin()) {
+            echo "
+                        <span><button class='btn btn-danger float-right del_subj_btn' id='$subject_id' name='del_post_btn'>Delete</button></span>
+                        ";
+        }
+        echo "
+                        <a href='./messages.php?topic_id=$id&subject_id=$subject_id' class='forum-item-title'>$subject_subject</a>
+                        <div class='forum-sub-title'>Created on: $subject_date</div>
                     </div>
                 </div>
             </div>
@@ -119,18 +126,18 @@ function get_forum_subjects($id)
 }
 
 // Get the forum subjects
-function get_subject_messages($id)
+function get_subject_messages($subject_id)
 {
 
     global $con, $siteroot;
 
-    $get_posts = "SELECT * FROM posts INNER JOIN users ON posts.post_by = users.id WHERE posts.post_topic = '$id' ORDER BY posts.post_date DESC";
+    $get_posts = "SELECT * FROM posts INNER JOIN users ON posts.post_by = users.id WHERE posts.post_topic = '$subject_id' ORDER BY posts.post_date DESC";
 
     $run_q = mysqli_query($con, $get_posts);
 
     while ($posts = mysqli_fetch_array($run_q)) {
 
-        $topic_id = $posts['post_id'];
+        $post_id = $posts['post_id'];
         $post_content = $posts['post_content'];
         $topic_date = $posts['post_date'];
         $username = $posts['username'];
@@ -145,8 +152,14 @@ function get_subject_messages($id)
         </div>
         <div class='col-md-10'>
             <p>
-                <a class='float-left' href='#'><strong>$fname $lname ($username)</strong></a>
-
+                <a class='float-left' href='#'><strong>$fname $lname ($username)</strong></a> 
+                ";
+        if (isAdmin()) {
+            echo
+                "<span><button class='btn btn-danger float-right del_post_btn' id='$post_id' name='del_post_btn'>Delete</button></span>
+                ";
+        }
+        echo "
             </p>
             <div class='clearfix'></div>
             <p>$post_content</p>

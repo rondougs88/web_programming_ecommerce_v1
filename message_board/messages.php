@@ -1,37 +1,38 @@
 <?php include "../admin_area/includes/db.php"; ?>
 <?php $pagetitle = "Message Board"; ?>
 <?php
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $subject_id = $_GET['subject_id'];
+if (isset($_GET['topic_id'])) {
+    $topic_id = $_GET['topic_id'];
+    $subject_id = $_GET['subject_id']; 
     global $con, $siteroot;
 
-    $get_topic = "SELECT * FROM topics WHERE topic_id = '$id'";
+    $get_subjects = "SELECT * FROM topics WHERE topic_id = '$subject_id'";
 
-    $run_q = mysqli_query($con, $get_topic);
+    $run_q = mysqli_query($con, $get_subjects);
 
-    while ($topic = mysqli_fetch_array($run_q)) {
+    while ($subject = mysqli_fetch_array($run_q)) {
 
-        $topic_subject = $topic['topic_subject'];
+        $subject_subject = $subject['topic_subject'];
         // $catname = $topic['cat_name'];
         // $catdesc = $topic['cat_description'];
     }
 
-    $get_topic = "SELECT * FROM forum_categories WHERE cat_id = '$subject_id'";
+    $get_topics = "SELECT * FROM forum_categories WHERE cat_id = '$topic_id'";
 
-    $run_q = mysqli_query($con, $get_topic);
+    $run_q = mysqli_query($con, $get_topics);
 
-    while ($topics = mysqli_fetch_array($run_q)) {
+    while ($topic = mysqli_fetch_array($run_q)) {
 
         // $id = $topics['cat_id'];
-        $catname = $topics['cat_name'];
-        $catdesc = $topics['cat_description'];
+        $catname = $topic['cat_name'];
+        $catdesc = $topic['cat_description'];
     }
 }
 ?>
 <?php include "../header.php"; ?>
 <script>
-    var subject_id = '<?php echo $_GET['id'] ?>';
+    var subject_id = '<?php echo $_GET['subject_id'] ?>';
+    var topic_id = '<?php echo $_GET['topic_id'] ?>';
     <?php if (isLoggedIn()) : ?>
         var userid = '<?php echo $_SESSION['user']['id'] ?>';
     <?php endif; ?>
@@ -47,16 +48,16 @@ if (isset($_GET['id'])) {
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?= $siteroot; ?>/index.php">Home</a></li>
             <li class="breadcrumb-item"><a href="<?= $siteroot; ?>/message_board/topics.php">Message Board</a></li>
-            <li class="breadcrumb-item"><a href="<?= $siteroot; ?>/message_board/subjects.php?id=<?= $subject_id; ?>"><?= $catname; ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $topic_subject ?></li>
+            <li class="breadcrumb-item"><a href="<?= $siteroot; ?>/message_board/subjects.php?topic_id=<?php global $topic_id; echo $topic_id; ?>"><?php global $catname; echo $catname; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?php global $subject_subject; echo $subject_subject; ?></li>
         </ol>
     </nav>
 
-    <h2 class="text-center"><?= $topic_subject ?></h2>
+    <h2 class="text-center"><?php global $subject_subject; echo $subject_subject; ?></h2>
 
     <div class="card">
         <div class="card-body">
-            <?php get_subject_messages($id); ?>
+            <?php global $subject_id; get_subject_messages($subject_id); ?>
             <div id="post_reply">
                 <?php if (isLoggedIn()) : ?>
                     <textarea type="text" cols="100" rows="5" id="post_msg" name="post_msg" placeholder="Post a message here."></textarea>

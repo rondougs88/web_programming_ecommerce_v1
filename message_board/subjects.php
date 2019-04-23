@@ -1,16 +1,15 @@
 <?php include "../admin_area/includes/db.php"; ?>
 <?php
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+if (isset($_GET['topic_id'])) {
+    $topic_id = $_GET['topic_id'];
     global $con, $siteroot;
 
-    $get_topic = "SELECT * FROM forum_categories WHERE cat_id = '$id'";
+    $get_topic = "SELECT * FROM forum_categories WHERE cat_id = '$topic_id'";
 
     $run_q = mysqli_query($con, $get_topic);
 
     while ($topics = mysqli_fetch_array($run_q)) {
 
-        // $id = $topics['cat_id'];
         $catname = $topics['cat_name'];
         $catdesc = $topics['cat_description'];
     }
@@ -20,7 +19,7 @@ if (isset($_GET['id'])) {
 <?php include "../header.php"; ?>
 <script>
     var isLoggedIn = '<?= isLoggedIn() ?>';
-    var topic_id = '<?php echo $id ?>';
+    var topic_id = '<?php echo $topic_id ?>';
 </script>
 <link href="<?= $siteroot; ?>/css/forum.css" rel="stylesheet">
 
@@ -33,7 +32,7 @@ if (isset($_GET['id'])) {
 
                 <div class="ibox-content m-b-sm border-bottom">
                     <span>
-                        <button class="btn btn-primary float-right" id="create_post_btn" name="create_post_btn">Create a new post</button>
+                        <button class="btn btn-primary float-right create_post_btn" name="create_post_btn">Create a new post</button>
                     </span>
                     <div class="p-xs">
                         <div class="pull-left m-r-md">
@@ -46,7 +45,7 @@ if (isset($_GET['id'])) {
                     </div>
                 </div>
                 <div class="ibox-content forum-container">
-                    <?php get_forum_subjects($id); ?>
+                    <?php get_forum_subjects($topic_id); ?>
                 </div>
             </div>
         </div>
