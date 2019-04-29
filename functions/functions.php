@@ -372,6 +372,13 @@ function getPro()
 
         $run_pro = mysqli_query($con, $get_pro);
 
+        // Get also the product images from product_images table
+
+        $get_pro_img = "SELECT * from product_images where product_id = $pro_id";
+
+        $run_pro_img = mysqli_query($con, $get_pro_img);
+        $run_pro_img2 = mysqli_query($con, $get_pro_img);
+
         while ($row_pro = mysqli_fetch_array($run_pro)) {
 
             $pro_id = $row_pro['product_id'];
@@ -385,54 +392,88 @@ function getPro()
 
             echo "
                 
-            <div class='container'>
-            <div class='card'>
-            <div class='container-fliud'>
-                <div class='wrapper row'>
-                    <div class='preview col-md-6'>
+            <div class='preview col-md-6'>
+            <div id='slider'>
+                <div id='myCarousel' class='carousel slide'>
 
-                        <div class='preview-pic tab-content'>
-                            <div class='tab-pane active' id='pic-1'><img src='$siteroot/admin_area/uploads/product_images/$pro_image' /></div>
-                            <div class='tab-pane' id='pic-2'><img src='http://placekitten.com/400/252' /></div>
-                            <div class='tab-pane' id='pic-3'><img src='http://placekitten.com/400/252' /></div>
-                            <div class='tab-pane' id='pic-4'><img src='http://placekitten.com/400/252' /></div>
-                            <div class='tab-pane' id='pic-5'><img src='http://placekitten.com/400/252' /></div>
+                    <!-- main slider carousel items -->
+                    <div class='carousel-inner'>
+                        <div class='active item carousel-item' data-slide-number='0'>
+                            <img src='$siteroot/admin_area/uploads/product_images/$pro_image' class='img-fluid'>
+                        </div>";
+
+            $iteration = 0;
+            while ($row_pro_img = mysqli_fetch_array($run_pro_img)) {
+                $iteration += 1;
+                $image = $row_pro_img['image_name'];
+                echo "
+                        <div class='item carousel-item' data-slide-number='$iteration'>
+                            <img src='$siteroot/admin_area/uploads/product_images/$image' class='img-fluid'>
                         </div>
-                        <ul class='preview-thumbnail nav nav-tabs'>
-                            <li class='active'><a data-target='#pic-1' data-toggle='tab'><img src='http://placekitten.com/200/126' /></a></li>
-                            <li><a data-target='#pic-2' data-toggle='tab'><img src='http://placekitten.com/200/126' /></a></li>
-                            <li><a data-target='#pic-3' data-toggle='tab'><img src='http://placekitten.com/200/126' /></a></li>
-                            <li><a data-target='#pic-4' data-toggle='tab'><img src='http://placekitten.com/200/126' /></a></li>
-                            <li><a data-target='#pic-5' data-toggle='tab'><img src='http://placekitten.com/200/126' /></a></li>
-                        </ul>
+                        ";
+            }
+
+            echo "
+                        <a class='carousel-control-prev' href='#myCarousel' role='button' data-slide='prev'>
+                            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Previous</span>
+                        </a>
+                        <a class='carousel-control-next' href='#myCarousel' role='button' data-slide='next'>
+                            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                            <span class='sr-only'>Next</span>
+                        </a>
 
                     </div>
-                    <div class='details col-md-6'>
-                        <h3 class='product-title'>$pro_title</h3>
-                        <div class='rating'>
-                            <div class='stars'>
-                                <span class='fa fa-star checked'></span>
-                                <span class='fa fa-star checked'></span>
-                                <span class='fa fa-star checked'></span>
-                                <span class='fa fa-star'></span>
-                                <span class='fa fa-star'></span>
-                            </div>
-                            <span class='review-no'>41 reviews</span>
-                        </div>
-                        <p class='product-description'>$pro_desc</p>
-                        <h4 class='price'>current price: <span>$$pro_price</span></h4>
-                        <p class='vote'><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
-                        
-                        <div class='action'>
-                            <button class='add-to-cart btn btn-default my-cart-btn' 
-                            type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</button>
-                            <button class='like btn btn-default' type='button'><span class='fa fa-heart'></span></button>
-                        </div>
-                    </div>
+                    <!-- main slider carousel nav controls -->
+
+
+                    <ul class='carousel-indicators list-inline'>
+                        <li class='list-inline-item active'>
+                            <a id='carousel-selector-0' class='selected' data-slide-to='0' data-target='#myCarousel'>
+                                <img src='$siteroot/admin_area/uploads/product_images/$pro_image' class='img-fluid'>
+                            </a>
+                        </li>";
+
+            $iteration = 0;
+            while ($row_pro_img = mysqli_fetch_array($run_pro_img2)) {
+                $iteration += 1;
+                $image = $row_pro_img['image_name'];
+                echo "
+                        <li class='list-inline-item'>
+                            <a id='carousel-selector-$iteration' data-slide-to='$iteration' data-target='#myCarousel'>
+                                <img src='$siteroot/admin_area/uploads/product_images/$image' class='img-fluid'>
+                            </a>
+                        </li>
+                        ";
+            }
+
+            echo "
+                    </ul>
                 </div>
             </div>
+
         </div>
-    </div>
+        <div class='details col-md-6'>
+            <h3 class='product-title'>$pro_title</h3>
+            <div class='rating'>
+                <div class='stars'>
+                    <span class='fa fa-star checked'></span>
+                    <span class='fa fa-star checked'></span>
+                    <span class='fa fa-star checked'></span>
+                    <span class='fa fa-star'></span>
+                    <span class='fa fa-star'></span>
+                </div>
+                <span class='review-no'>41 reviews</span>
+            </div>
+            <p class='product-description'>$pro_desc</p>
+            <h4 class='price'>current price: <span>$$pro_price</span></h4>
+            <p class='vote'><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+
+            <div class='action'>
+                <button class='add-to-cart btn btn-default my-cart-btn' type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</button>
+                <button class='like btn btn-default' type='button'><span class='fa fa-heart'></span></button>
+            </div>
+        </div>
 		
 		
 		";

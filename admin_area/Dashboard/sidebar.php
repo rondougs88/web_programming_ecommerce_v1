@@ -29,10 +29,16 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" id="products" href="#submenu2" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
+            <div class="collapse" id="submenu2" aria-expanded="false">
+              <ul class="flex-column pl-2 nav">
+                <li class="nav-item"><a class="nav-link py-0 sub-item" id="create_product" href="../insert_product.php">Create product</a></li>
+                <!-- <li class="nav-item"><a class="nav-link py-0 sub-item" id="createuser" href="./admin_create_user.php">Create User</a></li> -->
+              </ul>
+            </div>
           </li>
 
           <li class="nav-item">

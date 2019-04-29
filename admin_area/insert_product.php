@@ -98,8 +98,13 @@ if (!isLoggedIn() || !isAdmin()) {
 			</tr>
 
 			<tr>
-				<td align="right"><b>Product Image:</b></td>
-				<td><input type="file" name="product_image" /></td>
+				<td align="right"><b>Primary Product Image:</b></td>
+				<td><input type="file" name="product_image"></td>
+			</tr>
+
+			<tr>
+				<td align="right"><b>Product Images:</b></td>
+				<td><input type="file" name="product_images[]" multiple></td>
 			</tr>
 
 			<tr>
@@ -133,6 +138,9 @@ if (!isLoggedIn() || !isAdmin()) {
 
 if (isset($_POST['insert_post'])) {
 
+	$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
+	$targetDir = "uploads/product_images/";
+
 	//getting the text data from the fields
 	$product_title = $_POST['product_title'];
 	$product_cat = $_POST['product_cat'];
@@ -142,33 +150,63 @@ if (isset($_POST['insert_post'])) {
 	$product_keywords = $_POST['product_keywords'];
 	$product_keywords = $_POST['product_keywords'];
 	$inserted_on = date("Y-m-d H:i:s");
+	$last_id = '';
+
+	// Get the highest id number from products table
+	$get_last_id = "SELECT product_id FROM products ORDER BY product_id DESC LIMIT 0, 1";
+	$run_q = mysqli_query($con, $get_last_id);
+	if (mysqli_num_rows($run_q) > 0) {
+		while ($row_pro = mysqli_fetch_array($run_q)) {
+			$last_id = $row_pro['product_id'];
+		}
+	}
+	if (empty($last_id)) {
+		$last_id = 1;
+	}
 
 	//getting the image from the field
-	$product_image = $_FILES['product_image']['name'];
+	$ext = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+	$product_image = "image_" . $last_id . '.' . $ext;
 	$product_image_tmp = $_FILES['product_image']['tmp_name'];
 
-	move_uploaded_file($product_image_tmp, "uploads/product_images/$product_image");
+	move_uploaded_file($product_image_tmp, $targetDir . $product_image);
 
-	$insert_product = "insert into products
-								 (product_cat,
-								 product_brand,
-								 product_title,
-								 product_price,
-								 product_desc,
-								 product_image,
-								 product_keywords,
-								 inserted_on)
-								 values
-								 ('$product_cat',
-								 '$product_brand',
-								 '$product_title',
-								 '$product_price',
-								 '$product_desc',
-								 '$product_image',
-								 '$product_keywords',
-								 '$inserted_on')";
+	$insert_product = "insert into products".
+								 "(product_cat,product_brand,product_title,product_price,product_desc,product_image,product_keywords,inserted_on)"
+								 ."values"
+								 ."('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_image','$product_keywords','$inserted_on')";
 
 	$insert_pro = mysqli_query($con, $insert_product);
+
+	$prod_id = $con->insert_id;
+
+	// Process the product images being uploaded
+	if (!empty(array_filter($_FILES['product_images']['name']))) {
+		foreach ($_FILES['product_images']['name'] as $key => $val) {
+			// File upload path
+			// $fileName = basename($_FILES['product_images']['name'][$key]);
+			// $targetFilePath = $targetDir . $fileName;
+
+			$ext = pathinfo($_FILES['product_images']['name'][$key], PATHINFO_EXTENSION);
+			$fileName = "image" . $key . "_" . $last_id . '.' . $ext;
+
+			// Check whether file type is valid
+			// $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+			if (in_array($ext, $allowTypes)) {
+				// Upload file to server
+				if (move_uploaded_file($_FILES["product_images"]["tmp_name"][$key], $targetDir . $fileName)) {
+					// Image db insert sql
+					// $insertValuesSQL .= "('" . $fileName . "', NOW()),";
+					$insert_images = "INSERT into product_images (product_id, image_name) values ('$prod_id', '$fileName')";
+					mysqli_query($con, $insert_images);
+				} else {
+					$errorUpload .= $_FILES['product_images']['name'][$key] . ', ';
+				}
+			} else {
+				$errorUploadType .= $_FILES['product_images']['name'][$key] . ', ';
+			}
+		}
+	}
 
 	if ($insert_pro) {
 

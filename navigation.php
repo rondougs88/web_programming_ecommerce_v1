@@ -10,19 +10,18 @@
 
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="<?= $siteroot ?>">Geek Gadget</a>
+
+      <a class="navbar-brand" href="<?= $siteroot ?>">
+          <img style="height:40px" src="<?= $siteroot ?>/img/logo.png" alt="">
+        </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="<?= $siteroot ?>/">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="<?= $siteroot ?>/contact_form.php"><i class="fa fa-envelope" aria-hidden="true"></i> Contact Us</a>
           </li>
@@ -53,7 +52,7 @@
           if (isLoggedIn() && isAdmin()) {
             echo "
           <li class='nav-item'>
-            <a class='nav-link' href='$siteroot/admin_area/Dashboard/dashboard.php'>Admin</a>
+            <a class='nav-link' href='$siteroot/admin_area/Dashboard/dashboard.php'><i class='fa fa-shield' aria-hidden='true'></i> Admin</a>
           </li>
           ";
           }

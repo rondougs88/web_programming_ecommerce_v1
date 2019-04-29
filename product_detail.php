@@ -1,6 +1,7 @@
 <?php include "./admin_area/includes/db.php"; ?>
 <?php $pagetitle = "Product Details"; ?>
 <?php include "header.php"; ?>
+<link href="<?= $siteroot; ?>/css/prod-carousel.css" rel="stylesheet">
 
 <!-- This script is to update the cart count on this page every time add to cart button is clicked. -->
 <script>
@@ -39,7 +40,15 @@
 
 <?php include "navigation.php"; ?>
 <?php cart(); ?>
-<?php getPro(); ?>
+<div class='container'>
+    <div class='card'>
+        <div class='container-fliud'>
+            <div class='wrapper row'>
+                <?php getPro();?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php include "footer.php"; ?>
 
