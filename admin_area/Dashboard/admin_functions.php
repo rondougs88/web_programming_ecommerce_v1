@@ -101,7 +101,7 @@ function reset_password($userid)
 }
 
 function create_contact_email_body($fname, $lname, $email, $message)
-{ 
+{
     return "
     <html xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' xmlns='http://www.w3.org/TR/REC-html40'>
 
@@ -1048,22 +1048,40 @@ function get_orders()
 {
     global $con;
 
-    $get_orders = "SELECT from  order_items.*,
+    $get_orders = "SELECT order_items.*,
                                 order_header.*,
-                                products.*,
+                                products.*
                     FROM order_items
-                            INNER JOIN order_header ON order_items.order_id = order_header.order_id,
-                            INNER JOIN products ON order_items.p_id = products.product_id";
+                            INNER JOIN order_header ON order_items.order_id = order_header.order_id
+                            INNER JOIN products ON order_items.p_id = products.product_id ORDER BY order_items.order_id ASC";
 
     $run_query = mysqli_query($con, $get_orders);
 
-    while ($row_order = mysqli_fetch_array($run_query)) {
+    $prev_id = '';
+    $num_rows = $run_query->num_rows;
+    $counter = 0;
+    while ($row = $run_query->fetch_assoc()) {
+        $data[] = $row;
+    }
+    for ($i = 0; $i < count($data); $i++) {
+        $row_order = $data[$i];
+        $counter += 1;
         $order = $row_order['order_id'];
-        $date = $row_order['inserted_on'];
+        $date = $row_order['created_on'];
         $status = $row_order['status'];
-        $total = $row_order['product_price'];
-
-        echo "
+        if (isset($data[$counter])) {
+            $next_id = $data[$counter]['order_id'];
+        }
+        if ($order == $prev_id) {
+            $total = $total + $row_order['product_price'] * $row_order['qty'];
+        } else {
+            $total = $row_order['product_price'] * $row_order['qty'];
+        }
+        if ($order != $prev_id) {
+            $prev_id = $order;
+        }
+        if ($counter == $num_rows || ($next_id != $order)) {
+            echo "
                 <tr>
                     <td>$order</td>
                     <td>$date</td>
@@ -1071,5 +1089,6 @@ function get_orders()
                     <td>$total</td>
                 </tr>
         ";
+        }
     }
 }

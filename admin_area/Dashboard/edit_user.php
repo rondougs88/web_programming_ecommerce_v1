@@ -31,7 +31,7 @@ if (isset($_GET['userid'])) {
             ?>
             <div class="form-group">
                 <label>Username (Cannot be changed)</label>
-                <input disabled type="text" name="username" class="form-control" value="<?php echo $eu_username; ?>">
+                <input disabled type="text" name="username" id="username" class="form-control" value="<?php echo $eu_username; ?>">
             </div>
             <div class="form-group">
                 <label>First name</label>

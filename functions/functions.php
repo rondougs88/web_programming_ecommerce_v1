@@ -430,7 +430,7 @@ function getPro()
                     <ul class='carousel-indicators list-inline'>
                         <li class='list-inline-item active'>
                             <a id='carousel-selector-0' class='selected' data-slide-to='0' data-target='#myCarousel'>
-                                <img src='$siteroot/admin_area/uploads/product_images/$pro_image' class='img-fluid'>
+                                <img style='height:50px;' src='$siteroot/admin_area/uploads/product_images/$pro_image' class='img-fluid'>
                             </a>
                         </li>";
 
@@ -441,7 +441,7 @@ function getPro()
                 echo "
                         <li class='list-inline-item'>
                             <a id='carousel-selector-$iteration' data-slide-to='$iteration' data-target='#myCarousel'>
-                                <img src='$siteroot/admin_area/uploads/product_images/$image' class='img-fluid'>
+                                <img style='height:50px;' src='$siteroot/admin_area/uploads/product_images/$image' class='img-fluid'>
                             </a>
                         </li>
                         ";

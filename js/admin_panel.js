@@ -55,6 +55,7 @@ jQuery(document).ready(function () {
 
         var fname, lname, email, user_type, id;
         var userid = getUrlParameter('userid');
+        var username = $("#username").val();
         fname = $("#fname").val();
         lname = $("#lname").val();
         email = $("#email").val();
@@ -64,7 +65,7 @@ jQuery(document).ready(function () {
             type: "POST",
             url: siteroot + "/admin_area/Dashboard/save_edited_user.php",
             async: true,
-            data: { userid: userid, fname: fname, lname: lname, email: email, user_type: user_type },
+            data: { userid: userid, username: username, fname: fname, lname: lname, email: email, user_type: user_type },
             success: function (result) {
                 // Do stuff
                 $('.loading').hide();
