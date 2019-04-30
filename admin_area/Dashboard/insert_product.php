@@ -20,7 +20,7 @@ if (!isLoggedIn() || !isAdmin()) {
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
-		<h2 style="text-align: center">Create New Product</h2>
+		<h2>Create New Product</h2>
 
 		<div class="form-group row">
 			<label for="protitle" class="col-sm-2 col-form-label">Product Title</label>

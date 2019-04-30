@@ -469,7 +469,7 @@ function getPro()
             if ($available_qty > 0) {
                 echo "
             <div class='action'>
-                <button class='add-to-cart btn btn-default my-cart-btn' type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</button>
+                <button class='add-to-cart btn btn-default my-cart-btn' type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</a></button>
             </div>
             <p style='color:black; margin-top:10px'>Available Stock: $available_qty</p>";
             } else {
@@ -748,6 +748,7 @@ function create_order()
         mysqli_query($con, $query);
         $order_id = mysqli_insert_id($con);
         if (!empty($order_id)) {
+            // Populate details for newly created order
             $order_details = new OrderDetails(
                 $username,
                 $fname,
@@ -784,6 +785,15 @@ function create_order()
             $query = "INSERT INTO order_items (order_id, p_id, qty)
 					  VALUES('$order_id', '$pro_id', '$pro_qty')";
             mysqli_query($con, $query);
+
+            // Update the inventory
+            $query_stk = "SELECT * FROM products_inventory WHERE product_id = '$pro_id'";
+            $prod_stock = mysqli_query($con, $query_stk);
+            while ($row_pro_stk = mysqli_fetch_array($prod_stock)) {
+                $new_qty = $row_pro_stk['qty'] - $pro_qty;
+                $query_stk = "UPDATE products_inventory SET qty = $new_qty WHERE product_id = '$pro_id'";
+                mysqli_query($con, $query_stk);
+            }
 
             // Now, delete that item from the cart.
             $del_item = "DELETE FROM cart WHERE username = '$uname' AND p_id = '$pro_id'";
@@ -933,4 +943,28 @@ p, ul, ol { font-size: 16px; font-weight: normal; margin-bottom: 20px; }
 </body>
 </html>
     ";
+}
+
+function get_categories()
+{
+    global $con;
+    $get_categories = "SELECT * from categories";
+    $run_q = mysqli_query($con, $get_categories);
+    while ($category = mysqli_fetch_array($run_q)) {
+        $title = $category['cat_title'];
+        $id = $category['cat_id'];
+        echo "<a href='./category.php?cat=$id' id='cat_$id' class='list-group-item'>$title</a>";
+    }
+}
+
+function get_brands()
+{
+    global $con;
+    $get_brands = "SELECT * from brands";
+    $run_q = mysqli_query($con, $get_brands);
+    while ($brand = mysqli_fetch_array($run_q)) {
+        $title = $brand['brand_title'];
+        $id = $brand['brand_id'];
+        echo "<a href='./brand.php?brand=$id' id='brand_$id' class='list-group-item'>$title</a>";
+    }
 }
