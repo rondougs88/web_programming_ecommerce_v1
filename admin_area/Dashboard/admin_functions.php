@@ -1087,8 +1087,14 @@ function get_orders()
                     <td>$date</td>
                     <td>$status</td>
                     <td>$total</td>
+                    <td><a href='edit_order.php?order=$order'> Edit..</td>
                 </tr>
         ";
         }
     }
+}
+
+function edit_orders()
+{
+    global $con;
 }
