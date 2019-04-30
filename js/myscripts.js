@@ -861,5 +861,15 @@ jQuery(document).ready(function () {
         }
     });
     
+$("#search-btn").click(function() {
+    var search_text = $("#search-name").val();
+    if (search_text) {
+    window.location = siteroot + "/search_items.php?terms=" + search_text;
+    }
+    else {
+        alert("Please provide keywords in the search parameter.");
+    }
+});
+
 });
 

@@ -1,10 +1,10 @@
 <div class="col-lg-3">
 
     <div class="input-group" id="adv-search" style="margin-top:40px">
-        <input type="text" class="form-control" placeholder="Search for products" />
+        <input type="text" id="search-name" class="form-control" placeholder="Search for products" />
         <div class="input-group-btn">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="search-btn">
                     <span class="fa fa-search" aria-hidden="true"></span>
                 </button>
             </div>
