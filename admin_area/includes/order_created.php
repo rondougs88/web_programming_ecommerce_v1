@@ -40,6 +40,7 @@
 
     <?php if (isset($_GET["order_number"])) : ?>
     </div>
+    <?php include_once "../../footer.php"; ?>
+<?php else : ?>
+    <?php include_once "../footer.php"; ?>
 <?php endif; ?>
-
-<?php include_once "../../footer.php"; ?>

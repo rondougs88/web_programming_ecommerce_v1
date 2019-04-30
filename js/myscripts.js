@@ -8,6 +8,20 @@ jQuery(document).ready(function () {
         $('.json-overlay').show();
     });
 
+    if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+        $("footer").show();
+    } else {
+        $("footer").hide();
+    }
+
+    $(window).scroll(function() {
+        if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+            $("footer").fadeIn(150);
+        } else {
+            $("footer").fadeOut(150);
+        }
+    });
+
     $(".list-group a").click(function () {
         $(this).addClass('active').siblings().removeClass('active');
     });
@@ -17,12 +31,52 @@ jQuery(document).ready(function () {
 
     // Call this only after creating an order or adding to cart.
     // update_cart_count();
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    if (location.pathname.indexOf("all_products.php") != -1) {
+        $("a#all").addClass('active').siblings().removeClass('active');
+    }
+
+    if (location.pathname.indexOf("category.php") != -1) {
+        var category = getUrlParameter('cat');
+        $("a#cat_"+category).addClass('active').siblings().removeClass('active');
+    }
+
+    if (location.pathname.indexOf("brand.php") != -1) {
+        var brand = getUrlParameter('brand');
+        $("a#brand_"+brand).addClass('active').siblings().removeClass('active');
+    }
 
     // This part is for handling the shopping cart amount events.
     var array_update_cart = [];
+    $('.cartqty').on('focusin', function(){
+        // console.log("Saving value " + $(this).val());
+        $(this).data('val', $(this).val());
+    });
     $(".cartqty").change(function () {
         var prod_id = $(this).attr("data-id");
         var newVal = $(this).val();
+        var prevVal = $(this).data('val');
+        var available_qty = $("#available_qty span").html();
+        // Check first if there is enough stock.
+        if (available_qty < newVal) {
+            alert("Quantity cannot be set to more than the available stock.");
+            $(this).val(prevVal);
+            return;
+        }
         // if it already exists, just update qty
         var exists = false;
         exists = array_update_cart.find(x => x.prod_id === prod_id);
@@ -82,7 +136,7 @@ jQuery(document).ready(function () {
         }
         else {
             alert("Nothing to update in this cart.");
-            exit
+            return;
         }
         array_update_cart = [];
     });
@@ -284,20 +338,6 @@ jQuery(document).ready(function () {
             }
         });
     });
-    var getUrlParameter = function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(1),
-            sURLVariables = sPageURL.split('&'),
-            sParameterName,
-            i;
-
-        for (i = 0; i < sURLVariables.length; i++) {
-            sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-            }
-        }
-    };
 
     $("#admin_reset_pwd").click(function () {
         window.location = siteroot + "/change_password.php";
@@ -820,5 +860,6 @@ jQuery(document).ready(function () {
             return false;
         }
     });
+    
 });
 

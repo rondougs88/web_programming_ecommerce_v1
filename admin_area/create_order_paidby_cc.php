@@ -4,7 +4,7 @@
 // }
 require_once "./includes/db.php";
 require_once "../classes/order_details.php";
-require_once "../functions/functions.php"; 
+require_once "../functions/functions.php";
 require_once('../vendor/stripe-php/init.php');
 global $con;
 // $user_type = e($_POST['user_type']);
@@ -34,7 +34,7 @@ $phone    = $_POST['phone'];
 $address1 = $_POST['address'];
 $address2 = $_POST['address2'];
 $country  = $_POST['country'];
-$state_c  = mysqli_real_escape_string($con,$_POST['state']);
+$state_c  = mysqli_real_escape_string($con, $_POST['state']);
 $zip      = $_POST['zip'];
 // Shipping address details
 $sh_fname    = $_POST['sh_firstName'];
@@ -43,11 +43,11 @@ $sh_lname    = $_POST['sh_lastName'];
 $sh_address1 = $_POST['sh_address'];
 $sh_address2 = $_POST['sh_address2'];
 $sh_country  = $_POST['sh_country'];
-$sh_state_c  = mysqli_real_escape_string($con,$_POST['sh_state']);
+$sh_state_c  = mysqli_real_escape_string($con, $_POST['sh_state']);
 $sh_zip      = $_POST['sh_zip'];
 date_default_timezone_set('NZ');
 $created_on = date("Y-m-d H:i:s");
-$created_on = mysqli_real_escape_string($con,$created_on);
+$created_on = mysqli_real_escape_string($con, $created_on);
 $query = "INSERT INTO order_header (status,created_on,username, payment, fname,lname,email, phone, address1, address2, country, state_c, zip,sh_fname,sh_lname,sh_address1,sh_address2,sh_country,sh_state_c,sh_zip) 
                   VALUES(
                   'Processing','$created_on','$username','Credit Card','$fname', '$lname', '$email', '$phone', '$address1', '$address2', '$country', '$state_c', '$zip','$sh_fname','$sh_lname','$sh_address1','$sh_address2','$sh_country','$sh_state_c','$sh_zip'
@@ -91,6 +91,15 @@ while ($row_pro = mysqli_fetch_array($run_q)) {
     $query = "INSERT INTO order_items (order_id, p_id, qty)
                   VALUES('$order_id', '$pro_id', '$pro_qty')";
     mysqli_query($con, $query);
+
+    // Update the inventory
+    $query_stk = "SELECT * FROM products_inventory WHERE product_id = '$pro_id'";
+    $prod_stock = mysqli_query($con, $query_stk);
+    while ($row_pro_stk = mysqli_fetch_array($prod_stock)) {
+        $new_qty = $row_pro_stk['qty'] - $pro_qty;
+        $query_stk = "UPDATE products_inventory SET qty = $new_qty WHERE product_id = '$pro_id'";
+        mysqli_query($con, $query_stk);
+    }
 
     // Now, delete that item from the cart.
     $del_item = "DELETE FROM cart WHERE username = '$uname' AND p_id = '$pro_id'";

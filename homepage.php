@@ -3,17 +3,7 @@
 
     <div class="row">
 
-        <div class="col-lg-3">
-
-            <h3 class="my-4">Shop by category</h3>
-            <div class="list-group">
-                <a href="#" class="list-group-item">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
-            </div>
-
-        </div>
-        <!-- /.col-lg-3 -->
+        <?php include "./shop_sidebar.php"; ?>
 
         <div class="col-lg-9">
 
@@ -44,6 +34,7 @@
                 </a>
             </div>
 
+            <h1 style="margin-top:40px; padding-bottom:10px; text-align:center">Latest Gadgets</h1>
             <div class="row">
 
                 <?php
@@ -68,13 +59,13 @@
                           src='./admin_area/uploads/product_images/$pro_image' alt=''></a>
                           <div class='card-body'>
                             <h4 class='card-title'>
-                              <a href='#'>$pro_title</a>
+                              <a href='product_detail.php?pro_id=$pro_id'>$pro_title</a>
                             </h4>
-                            <h5>$pro_price</h5>
+                            
                             <p class='card-text'>$pro_desc</p>
                           </div>
                           <div class='card-footer'>
-                            <small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                          <h5>$$pro_price</h5>
                           </div>
                         </div>
                       </div>

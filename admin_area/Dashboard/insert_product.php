@@ -1,9 +1,8 @@
-<?php include "./includes/db.php"; ?>
-<?php $pagetitle = "Insert Product"; ?>
-<?php include "../header.php"; ?>
+<?php include "./admin_panel_header.php" ?>
+
 
 <!-- Custom styles for this template -->
-<link href="../css/insert_product.css" rel="stylesheet">
+<link href="../../css/insert_product.css" rel="stylesheet">
 
 <!-- Script for Text area input -->
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
@@ -13,16 +12,15 @@
 	});
 </script>
 
-<?php include "../navigation.php"; ?>
 <?php
 if (!isLoggedIn() || !isAdmin()) {
 	echo '<script type="text/javascript">alert("You are not authorized to access this page.");</script>';
 	exit();
 }
 ?>
-<div class="container">
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
-		<h2>Insert New Product Here</h2>
+		<h2>Create New Product</h2>
 
 		<div class="form-group row">
 			<label for="protitle" class="col-sm-2 col-form-label">Product Title</label>
@@ -34,18 +32,6 @@ if (!isLoggedIn() || !isAdmin()) {
 
 
 		<table class="table" align="center" width="795">
-
-			<!-- <tr align="center">
-				<td colspan="7">
-					<h2>Insert New Product Here</h2>
-				</td>
-			</tr> -->
-
-			<!-- <tr>
-				<td align="right"><b>Product Title:</b></td>
-				<td><input type="text" name="product_title" size="60" required /></td>
-			</tr> -->
-
 
 			<tr>
 				<td align="right"><b>Product Category:</b></td>
@@ -109,7 +95,12 @@ if (!isLoggedIn() || !isAdmin()) {
 
 			<tr>
 				<td align="right"><b>Product Price:</b></td>
-				<td><input type="text" name="product_price" required /></td>
+				<td><input type="number" name="product_price" required /></td>
+			</tr>
+
+			<tr>
+				<td align="right"><b>Available Quantity:</b></td>
+				<td><input type="number" name="product_qty" required /></td>
 			</tr>
 
 			<tr>
@@ -130,22 +121,22 @@ if (!isLoggedIn() || !isAdmin()) {
 
 
 	</form>
-</div>
-<?php include "../footer.php"; ?>
+</main>
+<?php include "./admin_panel_footer.php"; ?>
 
-</html>
 <?php
 
 if (isset($_POST['insert_post'])) {
 
 	$allowTypes = array('jpg', 'png', 'jpeg', 'gif');
-	$targetDir = "uploads/product_images/";
+	$targetDir = "../uploads/product_images/";
 
 	//getting the text data from the fields
 	$product_title = $_POST['product_title'];
 	$product_cat = $_POST['product_cat'];
 	$product_brand = $_POST['product_brand'];
 	$product_price = $_POST['product_price'];
+	$product_qty = $_POST['product_qty'];
 	$product_desc = $_POST['product_desc'];
 	$product_keywords = $_POST['product_keywords'];
 	$product_keywords = $_POST['product_keywords'];
@@ -171,14 +162,19 @@ if (isset($_POST['insert_post'])) {
 
 	move_uploaded_file($product_image_tmp, $targetDir . $product_image);
 
-	$insert_product = "insert into products".
-								 "(product_cat,product_brand,product_title,product_price,product_desc,product_image,product_keywords,inserted_on)"
-								 ."values"
-								 ."('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_image','$product_keywords','$inserted_on')";
+	$insert_product = "insert into products" .
+		"(product_cat,product_brand,product_title,product_price,product_desc,product_image,product_keywords,inserted_on)"
+		. "values"
+		. "('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_image','$product_keywords','$inserted_on')";
 
 	$insert_pro = mysqli_query($con, $insert_product);
 
 	$prod_id = $con->insert_id;
+
+	// Update product inventory
+	$insert_product_qty = "INSERT into products_inventory" . "(product_id,qty)"."values"."('$prod_id','$product_qty')";
+
+	$insert_pro_qty = mysqli_query($con, $insert_product_qty);
 
 	// Process the product images being uploaded
 	if (!empty(array_filter($_FILES['product_images']['name']))) {

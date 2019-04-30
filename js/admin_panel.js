@@ -44,8 +44,18 @@ jQuery(document).ready(function () {
         $("a.nav-link#createuser").addClass('active').siblings().removeClass('active');
     }
 
+    if (location.pathname.indexOf("insert_product.php") != -1) {
+        $("#products").addClass('active').siblings().removeClass('active');
+        $("#create_product").addClass('active').siblings().removeClass('active');
+        $("a.nav-link#create_product").addClass('active').siblings().removeClass('active');
+    }
+
     if ($("#users").hasClass("active")) {
         $("#submenu1").collapse("show");
+    }
+
+    if ($("#products").hasClass("active")) {
+        $("#submenu2").collapse("show");
     }
 
     $("#edit_user_btn").click(function () {
