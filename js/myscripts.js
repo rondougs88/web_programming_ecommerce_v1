@@ -8,6 +8,20 @@ jQuery(document).ready(function () {
         $('.json-overlay').show();
     });
 
+    if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+        $("footer").show();
+    } else {
+        $("footer").hide();
+    }
+
+    $(window).scroll(function() {
+        if ($('body').height() <= ($(window).height() + $(window).scrollTop())) {
+            $("footer").fadeIn(150);
+        } else {
+            $("footer").fadeOut(150);
+        }
+    });
+
     $(".list-group a").click(function () {
         $(this).addClass('active').siblings().removeClass('active');
     });
