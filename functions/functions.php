@@ -373,11 +373,18 @@ function getPro()
         $run_pro = mysqli_query($con, $get_pro);
 
         // Get also the product images from product_images table
-
         $get_pro_img = "SELECT * from product_images where product_id = $pro_id";
 
         $run_pro_img = mysqli_query($con, $get_pro_img);
         $run_pro_img2 = mysqli_query($con, $get_pro_img);
+
+        // Get the available stock
+        $available_qty = 0;
+        $get_qty = "SELECT * from products_inventory where product_id = $pro_id";
+        $run_pro_qty = mysqli_query($con, $get_qty);
+        while ($qty = mysqli_fetch_array($run_pro_qty)) {
+            $available_qty = $qty['qty'];
+        }
 
         while ($row_pro = mysqli_fetch_array($run_pro)) {
 
@@ -455,27 +462,22 @@ function getPro()
         </div>
         <div class='details col-md-6'>
             <h3 class='product-title'>$pro_title</h3>
-            <div class='rating'>
-                <div class='stars'>
-                    <span class='fa fa-star checked'></span>
-                    <span class='fa fa-star checked'></span>
-                    <span class='fa fa-star checked'></span>
-                    <span class='fa fa-star'></span>
-                    <span class='fa fa-star'></span>
-                </div>
-                <span class='review-no'>41 reviews</span>
-            </div>
-            <p class='product-description'>$pro_desc</p>
-            <h4 class='price'>current price: <span>$$pro_price</span></h4>
-            <p class='vote'><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 
+            <p class='product-description'>$pro_desc</p>
+            <h4 class='price'>current price: <span>$$pro_price</span></h4>";
+
+            if ($available_qty > 0) {
+                echo "
             <div class='action'>
                 <button class='add-to-cart btn btn-default my-cart-btn' type='button'><a href='$self_page?pro_id=$pro_id&add_cart=$pro_id' style='color:white'>add to cart</button>
-                <button class='like btn btn-default' type='button'><span class='fa fa-heart'></span></button>
             </div>
+            <p style='color:black; margin-top:10px'>Available Stock: $available_qty</p>";
+            } else {
+                echo "<h4>(Out of stock)</h4>";
+            }
+
+            echo "
         </div>
-		
-		
 		";
         }
     }
@@ -578,7 +580,7 @@ function display_shopping_cart_items()
 
     $uname = isLoggedIn() ? $_SESSION['user']['username'] : getIp();
 
-    $get_items = "SELECT * FROM cart INNER JOIN products ON cart.p_id = products.product_id WHERE cart.username = '$uname'";
+    $get_items = "SELECT cart.*, products_inventory.*, products.*, products_inventory.qty as 'available_qty', cart.qty as 'cart_qty' FROM cart INNER JOIN products ON cart.p_id = products.product_id INNER JOIN products_inventory ON products_inventory.product_id = cart.p_id WHERE cart.username = '$uname'";
 
     $run_q = mysqli_query($con, $get_items);
 
@@ -590,7 +592,8 @@ function display_shopping_cart_items()
             $pro_title = $row_pro['product_title'];
             $pro_desc = $row_pro['product_desc'];
             $pro_price = $row_pro['product_price'];
-            $pro_qty = $row_pro['qty'];
+            $pro_qty = $row_pro['cart_qty'];
+            $available_qty = $row_pro['available_qty'];
             $total_price += $pro_price * $pro_qty;
             $pro_price_formatted = number_format($pro_price, 2); // Format this to have 2 decimal places.
 
@@ -615,6 +618,7 @@ function display_shopping_cart_items()
                         class='cartqty'
                         data-id='$pro_id'
                         min='0' max='99' step='1'/>
+                        <p id='available_qty'>Available stock: <span>$available_qty</span></p>
                     </div>
                     <div class='col-2 col-sm-2 col-md-2 text-right'>
                         <button type='button' 

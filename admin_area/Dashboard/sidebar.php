@@ -35,7 +35,7 @@
             </a>
             <div class="collapse" id="submenu2" aria-expanded="false">
               <ul class="flex-column pl-2 nav">
-                <li class="nav-item"><a class="nav-link py-0 sub-item" id="create_product" href="../insert_product.php">Create product</a></li>
+                <li class="nav-item"><a class="nav-link py-0 sub-item" id="create_product" href="../Dashboard/insert_product.php">Create product</a></li>
                 <!-- <li class="nav-item"><a class="nav-link py-0 sub-item" id="createuser" href="./admin_create_user.php">Create User</a></li> -->
               </ul>
             </div>

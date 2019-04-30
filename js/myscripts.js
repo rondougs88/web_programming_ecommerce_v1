@@ -20,9 +20,21 @@ jQuery(document).ready(function () {
 
     // This part is for handling the shopping cart amount events.
     var array_update_cart = [];
+    $('.cartqty').on('focusin', function(){
+        // console.log("Saving value " + $(this).val());
+        $(this).data('val', $(this).val());
+    });
     $(".cartqty").change(function () {
         var prod_id = $(this).attr("data-id");
         var newVal = $(this).val();
+        var prevVal = $(this).data('val');
+        var available_qty = $("#available_qty span").html();
+        // Check first if there is enough stock.
+        if (available_qty < newVal) {
+            alert("Quantity cannot be set to more than the available stock.");
+            $(this).val(prevVal);
+            return;
+        }
         // if it already exists, just update qty
         var exists = false;
         exists = array_update_cart.find(x => x.prod_id === prod_id);
@@ -82,7 +94,7 @@ jQuery(document).ready(function () {
         }
         else {
             alert("Nothing to update in this cart.");
-            exit
+            return;
         }
         array_update_cart = [];
     });
