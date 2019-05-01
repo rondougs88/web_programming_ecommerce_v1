@@ -26,6 +26,7 @@ if (isset($_GET['order'])) {
         $order_shfname = $row_order['sh_fname'];
         $order_shlname = $row_order['sh_lname'];
         $order_shaddress1 = $row_order['sh_address1'];
+        $order_shaddress2 = $row_order['sh_address2'];
         $order_shcountry = $row_order['sh_country'];
         $order_shstate = $row_order['sh_state_c'];
         $order_shzip = $row_order['sh_zip'];
@@ -36,8 +37,8 @@ if (isset($_GET['order'])) {
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="py-5 text-center">
         <!-- <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-        <h2>Checkout form</h2>
-        <p class="lead">Please fill out the details below to successfully place your order.</p>
+        <h2>Edit order form</h2>
+        <p class="lead">Please fill out the details below to edit order..</p>
     </div>
 
     <div class="row">
@@ -80,7 +81,7 @@ if (isset($_GET['order'])) {
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" method="post" id="checkout-form" action="./create_order.php" novalidate>
+            <form class="needs-validation" method="post" id="edit_order-form" action="./create_order.php" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -164,7 +165,197 @@ if (isset($_GET['order'])) {
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="state">State</label>
-                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_bstate['state'] ?>" id="state">
+                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_bstate['state_c'] ?>" id="state">
+                                <option value="">Choose...</option>
+                                <option value="Northland" <?php if ($order_bstate['state_c']) {
+                                                                if ($order_bstate['state_c'] === 'Northland') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Northland</option>
+                                <option value="Auckland" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Auckland') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Auckland</option>
+                                <option value="Waikato" <?php if ($order_bstate['state']) {
+                                                            if ($order_bstate['state'] === 'Waikato') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Waikato</option>
+                                <option value="Bay of Plenty" <?php if ($order_bstate['state']) {
+                                                                    if ($order_bstate['state'] === 'Bay of Plenty') {
+                                                                        echo 'selected';
+                                                                    }
+                                                                }  ?>>Bay of Plenty</option>
+                                <option value="Gisborne" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Gisborne') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Gisborne</option>
+                                <option value="Hawke's Bay" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Hawke\'s Bay') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Hawke's Bay</option>
+                                <option value="Auckland" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Auckland') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Auckland</option>
+                                <option value="Taranaki" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Taranaki') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Taranaki</option>
+                                <option value="Manawatu-Wanganui" <?php if ($order_bstate['state']) {
+                                                                        if ($order_bstate['state'] === 'Manawatu-Wanganui') {
+                                                                            echo 'selected';
+                                                                        }
+                                                                    }  ?>>Manawatu-Wanganui</option>
+                                <option value="Wellington" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Wellington') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Wellington</option>
+                                <option value="Tasman" <?php if ($order_bstate['state']) {
+                                                            if ($order_bstate['state'] === 'Tasman') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Tasman</option>
+                                <option value="Nelson" <?php if ($order_bstate['state']) {
+                                                            if ($order_bstate['state'] === 'Nelson') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Nelson</option>
+                                <option value="Marlborough" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Marlborough') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Marlborough</option>
+                                <option value="West Coast" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'West Coast') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>West Coast</option>
+                                <option value="Canterbury" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Canterbury') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Canterbury</option>
+                                <option value="Otago" <?php if ($order_bstate['state']) {
+                                                            if ($order_bstate['state'] === 'Otago') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>Otago</option>
+                                <option value="Southland" <?php if ($order_bstate['state']) {
+                                                                if ($order_bstate['state'] === 'Southland') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>>Southland</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label for="zip">Zip</label>
+                            <input type="text" class="form-control" name="zip" id="zip"  placeholder="">
+                            <!-- <div class="invalid-feedback">
+                                Zip code required.
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Shipping address</h4>
+            <form class="needs-validation" method="post" id="edit_order-form" action="./create_order.php" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php echo $order_shfname; ?>">
+                            <!-- <div class="invalid-feedback">
+                                    Valid first name is required.
+                                </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-group">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php echo $order_shlname;?>">
+                            <!-- <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="mb-3">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+
+                        </div>
+                    </div> -->
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" value="<?php echo $order_email; ?>" placeholder="you@example.com">
+                        <!-- <div class="invalid-feedback">
+                            Please enter a valid email address for shipping updates.
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="phone">Mobile number</label>
+                        <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo $order_phone; ?>" placeholder="021 123 4567">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" name="address" id="address" value="<?php echo $order_shaddress1; ?>" placeholder="1234 Main St">
+                        <!-- <div class="invalid-feedback">
+                            Please enter your shipping address.
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                    <input type="text" class="form-control" name="address2" id="address2" value="<?php echo $order_shaddress2; ?>" placeholder="Apartment or suite">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select class="custom-select d-block w-100" name="country" id="country">
+                                <option value="">Choose...</option>
+                                <option value=" <?php if ($order_shcountry['sh_country']) {
+                                                                if ($order_shcountry['sh_country'] === 'New Zealand') {
+                                                                    echo 'selected';
+                                                                }
+                                                            }  ?>">New Zealand</option>
+
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                                Please select a valid country.
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_shstate['sh_state_c'] ?>" id="state">
                                 <option value="">Choose...</option>
                                 <option value="Northland" <?php if ($order_bstate['state_c']) {
                                                                 if ($order_bstate['state_c'] === 'Northland') {
