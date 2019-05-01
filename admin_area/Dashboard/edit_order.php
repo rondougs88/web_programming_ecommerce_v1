@@ -11,11 +11,13 @@ if (isset($_GET['order'])) {
         $order_email = $row_order['email'];
         $order_user = $row_order['username'];
         $order_date = $row_order['created_on'];
+        $order_phone= $row_order['phone'];
 
         //billing
         $order_bfname = $row_order['fname'];
         $order_blname = $row_order['lname'];
         $order_baddress1 = $row_order['address1'];
+        $order_baddress2 = $row_order['address2'];
         $order_bcountry = $row_order['country'];
         $order_bstate = $row_order['state_c'];
         $order_bzip = $row_order['zip'];
@@ -83,7 +85,7 @@ if (isset($_GET['order'])) {
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php echo isset($_SESSION['firstName']) ? $_SESSION['firstName'] : '' ?>">
+                            <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php echo $order_bfname; ?>">
                             <!-- <div class="invalid-feedback">
                                     Valid first name is required.
                                 </div> -->
@@ -92,7 +94,7 @@ if (isset($_GET['order'])) {
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php echo isset($_SESSION['lastName']) ? $_SESSION['lastName'] : '' ?>">
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php echo $order_blname;?>">
                             <!-- <div class="invalid-feedback">
                                 Valid last name is required.
                             </div> -->
@@ -112,7 +114,7 @@ if (isset($_GET['order'])) {
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" value="<?php echo isset($_SESSION['email']) ? $_SESSION['email'] : '' ?>" placeholder="you@example.com">
+                        <input type="email" class="form-control" name="email" id="email" value="<?php echo $order_email; ?>" placeholder="you@example.com">
                         <!-- <div class="invalid-feedback">
                             Please enter a valid email address for shipping updates.
                         </div> -->
@@ -122,14 +124,14 @@ if (isset($_GET['order'])) {
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="phone">Mobile number</label>
-                        <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo isset($_SESSION['phone']) ? $_SESSION['phone'] : '' ?>" placeholder="021 123 4567">
+                        <input type="tel" class="form-control" name="phone" id="phone" value="<?php echo $order_phone; ?>" placeholder="021 123 4567">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address" value="<?php echo isset($_SESSION['address']) ? $_SESSION['address'] : '' ?>" placeholder="1234 Main St">
+                        <input type="text" class="form-control" name="address" id="address" value="<?php echo $order_baddress1; ?>" placeholder="1234 Main St">
                         <!-- <div class="invalid-feedback">
                             Please enter your shipping address.
                         </div> -->
@@ -138,7 +140,7 @@ if (isset($_GET['order'])) {
 
                 <div class="mb-3">
                     <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <input type="text" class="form-control" name="address2" id="address2" placeholder="Apartment or suite">
+                    <input type="text" class="form-control" name="address2" id="address2" value="<?php echo $order_baddress1; ?>" placeholder="Apartment or suite">
                 </div>
 
                 <div class="row">
