@@ -3,12 +3,12 @@
     <nav class="col-md-2 d-none d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" id="home" href="./dashboard.php">
               <span data-feather="home"></span>
               Dashboard <span class="sr-only"></span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" id="orders" href="./order.php">
               <span data-feather="file"></span>
@@ -35,6 +35,7 @@
             </a>
             <div class="collapse" id="submenu2" aria-expanded="false">
               <ul class="flex-column pl-2 nav">
+                <li class="nav-item"><a class="nav-link py-0 sub-item" id="view_products" href="../Dashboard/view_products.php">View / Edit products</a></li>
                 <li class="nav-item"><a class="nav-link py-0 sub-item" id="create_product" href="../Dashboard/insert_product.php">Create product</a></li>
                 <!-- <li class="nav-item"><a class="nav-link py-0 sub-item" id="createuser" href="./admin_create_user.php">Create User</a></li> -->
               </ul>

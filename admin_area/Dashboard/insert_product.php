@@ -20,19 +20,22 @@ if (!isLoggedIn() || !isAdmin()) {
 ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 	<form action="insert_product.php" method="post" enctype="multipart/form-data">
-		<h2>Create New Product</h2>
+		<h2 style="text-align: center">Create New Product</h2>
 
-		<div class="form-group row">
+		<!-- <div class="form-group row">
 			<label for="protitle" class="col-sm-2 col-form-label">Product Title</label>
 			<div class="col-sm-10">
 				<input type="text" name="product_title" id="protitle" size="60" class="form-control" required>
 			</div>
-		</div>
-
-
+		</div> -->
 
 		<table class="table" align="center" width="795">
-
+			<tr>
+				<td align="right"><b>Product Title:</b></td>
+				<td>
+					<input type="text" name="product_title" id="protitle" size="60" class="form-control" required>
+				</td>
+			</tr>
 			<tr>
 				<td align="right"><b>Product Category:</b></td>
 				<td>
@@ -172,7 +175,7 @@ if (isset($_POST['insert_post'])) {
 	$prod_id = $con->insert_id;
 
 	// Update product inventory
-	$insert_product_qty = "INSERT into products_inventory" . "(product_id,qty)"."values"."('$prod_id','$product_qty')";
+	$insert_product_qty = "INSERT into products_inventory" . "(product_id,qty)" . "values" . "('$prod_id','$product_qty')";
 
 	$insert_pro_qty = mysqli_query($con, $insert_product_qty);
 

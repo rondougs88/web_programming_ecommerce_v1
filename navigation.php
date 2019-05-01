@@ -52,7 +52,7 @@
           if (isLoggedIn() && isAdmin()) {
             echo "
           <li class='nav-item'>
-            <a class='nav-link' href='$siteroot/admin_area/Dashboard/dashboard.php'><i class='fa fa-shield' aria-hidden='true'></i> Admin</a>
+            <a class='nav-link' href='$siteroot/admin_area/Dashboard/order.php'><i class='fa fa-shield' aria-hidden='true'></i> Admin</a>
           </li>
           ";
           }

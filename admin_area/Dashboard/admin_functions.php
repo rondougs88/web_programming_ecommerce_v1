@@ -1024,6 +1024,37 @@ function get_users()
     }
 }
 
+function get_products()
+{
+
+    global $con, $siteroot;
+
+    $get_products = "SELECT * from products";
+
+    $run_q = mysqli_query($con, $get_products);
+
+    while ($row_prod = mysqli_fetch_array($run_q)) {
+
+        $product_id = $row_prod['product_id'];
+        $product_title = $row_prod['product_title'];
+        $product_cat = $row_prod['product_cat'];
+        $product_brand = $row_prod['product_brand'];
+        $product_price = $row_prod['product_price'];
+        $product_image = $row_prod['product_image'];
+
+        echo "
+                <tr>
+                    <td><img src='$siteroot/admin_area/uploads/product_images/$product_image' border=3 width=50></img></td>
+                    <td>$product_title</td>
+                    <td>$product_cat</td>
+                    <td>$product_brand</td>
+                    <td>$product_price</td>
+                    <td><a href='./edit_product.php?product_id=$product_id'>Edit</a></td>
+                </tr>
+            ";
+    }
+}
+
 function set_user_details($userid)
 {
 
