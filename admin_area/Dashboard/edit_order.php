@@ -37,7 +37,7 @@ if (isset($_GET['order'])) {
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="py-5 text-center">
         <!-- <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-        <h2>Edit order form</h2>
+        <h2>Edit order form of Order <?php echo $id ?></h2>
         <p class="lead">Please fill out the details below to edit order..</p>
     </div>
 
