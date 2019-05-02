@@ -39,7 +39,6 @@ $zip      = $_POST['zip'];
 // Shipping address details
 $sh_fname    = $_POST['sh_firstName'];
 $sh_lname    = $_POST['sh_lastName'];
-// $sh_email    = $_POST['sh_email'];
 $sh_address1 = $_POST['sh_address'];
 $sh_address2 = $_POST['sh_address2'];
 $sh_country  = $_POST['sh_country'];

@@ -731,14 +731,23 @@ function create_order()
         $state_c  = mysqli_real_escape_string($con, $_POST['state']);
         $zip      = $_POST['zip'];
         // Shipping address details
-        $sh_fname    = $_POST['sh_firstName'];
-        $sh_lname    = $_POST['sh_lastName'];
-        // $sh_email    = $_POST['sh_email'];
-        $sh_address1 = $_POST['sh_address'];
-        $sh_address2 = $_POST['sh_address2'];
-        $sh_country  = $_POST['sh_country'];
-        $sh_state_c  = mysqli_real_escape_string($con, $_POST['sh_state']);
-        $sh_zip      = $_POST['sh_zip'];
+        if ($_POST['same-address'] == "same_address") { 
+            $sh_fname    = $_POST['firstName'];
+            $sh_lname    = $_POST['lastName'];
+            $sh_address1 = $_POST['address'];
+            $sh_address2 = $_POST['address2'];
+            $sh_country  = $_POST['country'];
+            $sh_state_c  = mysqli_real_escape_string($con, $_POST['state']);
+            $sh_zip      = $_POST['zip'];
+        } else {
+            $sh_fname    = $_POST['sh_firstName'];
+            $sh_lname    = $_POST['sh_lastName'];
+            $sh_address1 = $_POST['sh_address'];
+            $sh_address2 = $_POST['sh_address2'];
+            $sh_country  = $_POST['sh_country'];
+            $sh_state_c  = mysqli_real_escape_string($con, $_POST['sh_state']);
+            $sh_zip      = $_POST['sh_zip'];
+        }
         $created_on = date("Y-m-d H:i:s");
         $created_on = mysqli_real_escape_string($con, $created_on);
         $query = "INSERT INTO order_header (status,created_on,username, payment, fname,lname,email, phone, address1, address2, country, state_c, zip,sh_fname,sh_lname,sh_address1,sh_address2,sh_country,sh_state_c,sh_zip) 
@@ -966,5 +975,60 @@ function get_brands()
         $title = $brand['brand_title'];
         $id = $brand['brand_id'];
         echo "<a href='./brand.php?brand=$id' id='brand_$id' class='list-group-item'>$title</a>";
+    }
+}
+
+function get_my_orders()
+{
+    global $con;
+
+    $username = $_SESSION['user']['username'];
+
+    $get_orders = "SELECT order_items.*,
+                                order_header.*,
+                                products.*
+                    FROM order_items
+                            INNER JOIN order_header ON order_items.order_id = order_header.order_id
+                            INNER JOIN products ON order_items.p_id = products.product_id WHERE order_header.username = '$username' ORDER BY order_items.order_id ASC";
+
+    $run_query = mysqli_query($con, $get_orders);
+
+    $prev_id = '';
+    $num_rows = $run_query->num_rows;
+    $counter = 0;
+    while ($row = $run_query->fetch_assoc()) {
+        $data[] = $row;
+    }
+    if (!empty($data)) {
+        for ($i = 0; $i < count($data); $i++) {
+            $row_order = $data[$i];
+            $counter += 1;
+            $order = $row_order['order_id'];
+            $date = $row_order['created_on'];
+            $status = $row_order['status'];
+            if (isset($data[$counter])) {
+                $next_id = $data[$counter]['order_id'];
+            }
+            if ($order != $prev_id) {
+                $total = $row_order['product_price'] * $row_order['qty'];
+            } else {
+                $total += $row_order['product_price'] * $row_order['qty'];
+            }
+            if ($order != $prev_id) {
+                $prev_id = $order;
+            }
+            if ($counter == $num_rows || ($next_id != $order)) {
+                $formatted_number = number_format($total, 2);
+                echo "
+                <tr>
+                    <td>GG-$order</td>
+                    <td>$date</td>
+                    <td>$status</td>
+                    <td>$$formatted_number</td>
+                    <td><a href='myorder_details.php?order=$order'>Details</td>
+                </tr>
+        ";
+            }
+        }
     }
 }

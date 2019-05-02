@@ -64,6 +64,7 @@
                     <li class='dropdown'>
                       <a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>Welcome, $username <b class='caret'></b></a>
                         <ul class='dropdown-menu'>
+                            <li class='dropdown-item'><a href='$siteroot/myorders.php'><i class='icon-cog'></i>My Orders</a></li>
                             <li class='dropdown-item'><a href='$siteroot/myaccount.php'><i class='icon-cog'></i>My Account</a></li>
                             <li class='dropdown-divider'></li>
                             <li class='dropdown-item'><a href='$siteroot/index.php?logout='1''><i class='icon-off'></i> Logout</a></li>
