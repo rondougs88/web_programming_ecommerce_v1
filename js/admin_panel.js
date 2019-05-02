@@ -7,10 +7,10 @@ jQuery(document).ready(function () {
             sURLVariables = sPageURL.split('&'),
             sParameterName,
             i;
-    
+
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
-    
+
             if (sParameterName[0] === sParam) {
                 return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
             }
@@ -48,6 +48,11 @@ jQuery(document).ready(function () {
         $("#products").addClass('active').siblings().removeClass('active');
         $("#create_product").addClass('active').siblings().removeClass('active');
         $("a.nav-link#create_product").addClass('active').siblings().removeClass('active');
+    }
+
+    if ((location.pathname.indexOf("view_products.php") != -1) || (location.pathname.indexOf("edit_product.php") != -1)) {
+        $("#products").addClass('active').siblings().removeClass('active');
+        $("a.nav-link#view_products").addClass('active').siblings().removeClass('active');
     }
 
     if ($("#users").hasClass("active")) {
@@ -93,7 +98,7 @@ jQuery(document).ready(function () {
         });
     });
 
-    $("#admin_reset_pwd").click(function() {
+    $("#admin_reset_pwd").click(function () {
         $('.loading').show();
         $('.json-overlay').show();
         var response = confirm("Are you sure you want to reset the password for this user?");
@@ -103,7 +108,7 @@ jQuery(document).ready(function () {
                 type: "POST",
                 url: siteroot + "/admin_area/Dashboard/admin_functions.php",
                 async: true,
-                data: { admin_reset_pwd: "", userid: userid},
+                data: { admin_reset_pwd: "", userid: userid },
                 success: function (result) {
                     // Do stuff
                     $('.loading').hide();
@@ -119,9 +124,9 @@ jQuery(document).ready(function () {
                     alert("Update Cart Ajax Error: " + status + errorThrown);
                 }
             });
-          } else {
+        } else {
             console.log("You pressed Cancel!");
-          }
+        }
     });
 
 }); // end of jQuery(document)

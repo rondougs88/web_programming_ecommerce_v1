@@ -193,7 +193,7 @@ if (isset($_POST['edit_prod_btn'])) {
     $targetDir = "../uploads/product_images/";
 
     //getting the text data from the fields
-    $product_id = $_POST['product_id'];
+    $product_id = $_GET['product_id'];
     $product_title = $_POST['product_title'];
     $product_cat = $_POST['product_cat'];
     $product_brand = $_POST['product_brand'];
@@ -210,7 +210,7 @@ if (isset($_POST['edit_prod_btn'])) {
     $run_q = mysqli_query($con, $get_last_id);
     if (mysqli_num_rows($run_q) > 0) {
         while ($row_pro = mysqli_fetch_array($run_q)) {
-            $last_id = $row_pro['product_id'];
+            $last_id = number_format($row_pro['product_id']) + 1;
         }
     }
     if (empty($last_id)) {
@@ -218,28 +218,36 @@ if (isset($_POST['edit_prod_btn'])) {
     }
 
     //getting the image from the field
-    $ext = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
-    $product_image = "image_" . $last_id . '.' . $ext;
-    $product_image_tmp = $_FILES['product_image']['tmp_name'];
+    if (isset($_FILES['product_image']['tmp_name'])) {
+        $ext = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+        $product_image = "image_" . $last_id . '.' . $ext;
+        $product_image_tmp = $_FILES['product_image']['tmp_name'];
 
-    move_uploaded_file($product_image_tmp, $targetDir . $product_image);
+        move_uploaded_file($product_image_tmp, $targetDir . $product_image);
+        $update_product = "UPDATE products SET product_image='$product_image'"
+            . "WHERE product_id = '$product_id'";
 
-    $insert_product = "insert into products" .
-        "(product_cat,product_brand,product_title,product_price,product_desc,product_image,product_keywords,inserted_on)"
-        . "values"
-        . "('$product_cat','$product_brand','$product_title','$product_price','$product_desc','$product_image','$product_keywords','$inserted_on')";
+        mysqli_query($con, $update_product);
+    }
 
-    $insert_pro = mysqli_query($con, $insert_product);
+    $update_product = "UPDATE products SET product_cat = '$product_cat', product_brand = '$product_brand',product_title = '$product_title',product_price = '$product_price',product_desc='$product_desc',product_keywords='$product_keywords'"
+        . " WHERE product_id = '$product_id'";
 
-    $prod_id = $con->insert_id;
+    $update_pro = mysqli_query($con, $update_product);
+
+    // $prod_id = $con->insert_id;
 
     // Update product inventory
-    $insert_product_qty = "INSERT into products_inventory" . "(product_id,qty)" . "values" . "('$prod_id','$product_qty')";
+    $update_product_qty = "UPDATE products_inventory SET qty = '$product_qty' WHERE product_id = '$product_id'";
 
-    $insert_pro_qty = mysqli_query($con, $insert_product_qty);
+    mysqli_query($con, $update_product_qty);
 
     // Process the product images being uploaded
     if (!empty(array_filter($_FILES['product_images']['name']))) {
+        // Delete images
+        $del_img = "DELETE FROM product_images WHERE product_id = '$product_id'";
+        mysqli_query($con, $del_img);
+
         foreach ($_FILES['product_images']['name'] as $key => $val) {
             // File upload path
             // $fileName = basename($_FILES['product_images']['name'][$key]);
@@ -255,7 +263,7 @@ if (isset($_POST['edit_prod_btn'])) {
                 if (move_uploaded_file($_FILES["product_images"]["tmp_name"][$key], $targetDir . $fileName)) {
                     // Image db insert sql
                     // $insertValuesSQL .= "('" . $fileName . "', NOW()),";
-                    $insert_images = "INSERT into product_images (product_id, image_name) values ('$prod_id', '$fileName')";
+                    $insert_images = "INSERT into product_images (product_id, image_name) values ('$product_id', '$fileName')";
                     mysqli_query($con, $insert_images);
                 } else {
                     $errorUpload .= $_FILES['product_images']['name'][$key] . ', ';
@@ -266,10 +274,13 @@ if (isset($_POST['edit_prod_btn'])) {
         }
     }
 
-    if ($insert_pro) {
-
-        echo "<script>alert('Product Has been inserted!')</script>";
-        echo "<script>window.open('insert_product.php','_self')</script>";
-    }
+    echo "<script>alert('Product has been updated!')</script>";
+    echo "<script>window.open('edit_product.php?product_id=$product_id','_self')</script>";
+} elseif (isset($_POST['del_prod_btn'])) { 
+    // Update product inventory
+    $del_product = "DELETE FROM products WHERE product_id = '$product_id'";
+    mysqli_query($con, $del_product);
+    echo "<script>alert('Product has been deleted!')</script>";
+    echo "<script>window.open('view_products.php','_self')</script>";
 }
 ?>

@@ -1029,7 +1029,7 @@ function get_products()
 
     global $con, $siteroot;
 
-    $get_products = "SELECT * from products";
+    $get_products = "SELECT products.*, categories.*, brands.* from products INNER JOIN categories ON categories.cat_id = products.product_cat INNER JOIN brands ON brands.brand_id = products.product_brand";
 
     $run_q = mysqli_query($con, $get_products);
 
@@ -1038,7 +1038,9 @@ function get_products()
         $product_id = $row_prod['product_id'];
         $product_title = $row_prod['product_title'];
         $product_cat = $row_prod['product_cat'];
+        $cat_title = $row_prod['cat_title'];
         $product_brand = $row_prod['product_brand'];
+        $brand_title = $row_prod['brand_title'];
         $product_price = $row_prod['product_price'];
         $product_image = $row_prod['product_image'];
 
@@ -1046,10 +1048,56 @@ function get_products()
                 <tr>
                     <td><img src='$siteroot/admin_area/uploads/product_images/$product_image' border=3 width=50></img></td>
                     <td>$product_title</td>
-                    <td>$product_cat</td>
-                    <td>$product_brand</td>
+                    <td>$cat_title</td>
+                    <td>$brand_title</td>
                     <td>$product_price</td>
                     <td><a href='./edit_product.php?product_id=$product_id'>Edit</a></td>
+                </tr>
+            ";
+    }
+}
+
+function get_prod_categories()
+{
+
+    global $con, $siteroot;
+
+    $get_cat = "SELECT * FROM categories";
+
+    $run_q = mysqli_query($con, $get_cat);
+
+    while ($row_prod = mysqli_fetch_array($run_q)) {
+
+        $cat_id = $row_prod['cat_id'];
+        $cat_title = $row_prod['cat_title'];
+
+        echo "
+                <tr>
+                    <td>$cat_title</td>
+                    <td><a class='btn btn-danger float-right' href='./categories.php?del_cat_id=$cat_id'>Delete</a></td>
+                </tr>
+            ";
+    }
+}
+
+function get_prod_brands()
+{
+
+    global $con, $siteroot;
+
+    $get_brand = "SELECT * FROM brands";
+
+    $run_q = mysqli_query($con, $get_brand);
+
+    while ($row_prod = mysqli_fetch_array($run_q)) {
+
+        $brand_id = $row_prod['brand_id'];
+        $brand_title = $row_prod['brand_title'];
+
+        echo "
+                <tr>
+                    <td>$brand_title</td>
+                    <td><a class='btn btn-danger float-right' href='./brands.php?del_brand_id=$brand_id'>Delete</a></td>
                 </tr>
             ";
     }
@@ -1094,25 +1142,26 @@ function get_orders()
     while ($row = $run_query->fetch_assoc()) {
         $data[] = $row;
     }
-    for ($i = 0; $i < count($data); $i++) {
-        $row_order = $data[$i];
-        $counter += 1;
-        $order = $row_order['order_id'];
-        $date = $row_order['created_on'];
-        $status = $row_order['status'];
-        if (isset($data[$counter])) {
-            $next_id = $data[$counter]['order_id'];
-        }
-        if ($order == $prev_id) {
-            $total = $total + $row_order['product_price'] * $row_order['qty'];
-        } else {
-            $total = $row_order['product_price'] * $row_order['qty'];
-        }
-        if ($order != $prev_id) {
-            $prev_id = $order;
-        }
-        if ($counter == $num_rows || ($next_id != $order)) {
-            echo "
+    if (!empty($data)) {
+        for ($i = 0; $i < count($data); $i++) {
+            $row_order = $data[$i];
+            $counter += 1;
+            $order = $row_order['order_id'];
+            $date = $row_order['created_on'];
+            $status = $row_order['status'];
+            if (isset($data[$counter])) {
+                $next_id = $data[$counter]['order_id'];
+            }
+            if ($order == $prev_id) {
+                $total = $total + $row_order['product_price'] * $row_order['qty'];
+            } else {
+                $total = $row_order['product_price'] * $row_order['qty'];
+            }
+            if ($order != $prev_id) {
+                $prev_id = $order;
+            }
+            if ($counter == $num_rows || ($next_id != $order)) {
+                echo "
                 <tr>
                     <td>$order</td>
                     <td>$date</td>
@@ -1121,6 +1170,7 @@ function get_orders()
                     <td><a href='edit_order.php?order=$order'> Edit..</td>
                 </tr>
         ";
+            }
         }
     }
 }

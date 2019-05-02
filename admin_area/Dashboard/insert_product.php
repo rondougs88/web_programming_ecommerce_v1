@@ -88,7 +88,7 @@ if (!isLoggedIn() || !isAdmin()) {
 
 			<tr>
 				<td align="right"><b>Primary Product Image:</b></td>
-				<td><input type="file" name="product_image"></td>
+				<td><input required type="file" name="product_image"></td>
 			</tr>
 
 			<tr>
@@ -144,6 +144,7 @@ if (isset($_POST['insert_post'])) {
 	$product_keywords = $_POST['product_keywords'];
 	$product_keywords = $_POST['product_keywords'];
 	$inserted_on = date("Y-m-d H:i:s");
+
 	$last_id = '';
 
 	// Get the highest id number from products table
@@ -151,7 +152,7 @@ if (isset($_POST['insert_post'])) {
 	$run_q = mysqli_query($con, $get_last_id);
 	if (mysqli_num_rows($run_q) > 0) {
 		while ($row_pro = mysqli_fetch_array($run_q)) {
-			$last_id = $row_pro['product_id'];
+			$last_id = number_format($row_pro['product_id']) + 1;
 		}
 	}
 	if (empty($last_id)) {
