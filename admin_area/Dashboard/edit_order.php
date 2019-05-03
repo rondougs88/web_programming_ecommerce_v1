@@ -37,7 +37,7 @@ if (isset($_GET['order'])) {
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="py-5 text-center">
         <!-- <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> -->
-        <h2>Edit order form of Order <?php echo $id ?></h2>
+        <h2>Edit order form of Order <?php echo $id ?></h2> <h4> Created on:<?php echo $order_date ?></h4>
         <p class="lead">Please fill out the details below to edit order..</p>
     </div>
 
@@ -452,6 +452,9 @@ if (isset($_GET['order'])) {
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="edit_order_btn" name="edit_order_btn">Save changes</button>
+            </div>
             </form>
         </div>
     </div>
