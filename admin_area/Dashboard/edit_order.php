@@ -154,12 +154,9 @@ if (isset($_GET['order'])) {
                                                                 if ($order_bcountry['country'] === 'New Zealand') {
                                                                     echo 'selected';
                                                                 }
-                                                            }  ?>">New Zealand</option>
+                                                            }  ?> "> New Zealand</option>
 
                             </select>
-                            <!-- <div class="invalid-feedback">
-                                Please select a valid country.
-                            </div> -->
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
