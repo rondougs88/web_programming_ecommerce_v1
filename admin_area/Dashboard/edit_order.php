@@ -70,18 +70,12 @@ if (isset($_GET['order'])) {
                 </li>
             </ul>
 
-            <!-- <form class="card p-2">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Promo code">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-secondary">Redeem</button>
-                        </div>
-                    </div>
-                </form> -->
+    
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" method="post" id="edit_order-form" action="./create_order.php" novalidate>
+            <form class="needs-validation" method="post" id="edit_order-form" action="./edit_order.php" novalidate>
+               <input name="order_id" value="<?php echo $id?>" style="display:none">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -262,13 +256,11 @@ if (isset($_GET['order'])) {
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
 
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Shipping address</h4>
-            <form class="needs-validation" method="post" id="edit_order-form" action="./create_order.php" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
@@ -410,22 +402,22 @@ if (isset($_GET['order'])) {
                                                             }
                                                         }  ?>>Tasman</option>
                                 <option value="Nelson" <?php if ($order_shstate) {
-                                                            if ($order_shstate['state'] === 'Nelson') {
+                                                            if ($order_shstate === 'Nelson') {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Nelson</option>
                                 <option value="Marlborough" <?php if ($order_shstate) {
-                                                                if ($order_bstate['state'] === 'Marlborough') {
+                                                                if ($order_bstate === 'Marlborough') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Marlborough</option>
                                 <option value="West Coast" <?php if ($order_shstate) {
-                                                                if ($order_shstate['state'] === 'West Coast') {
+                                                                if ($order_shstate=== 'West Coast') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>West Coast</option>
                                 <option value="Canterbury" <?php if ($order_shstate) {
-                                                                if ($order_shstate['state'] === 'Canterbury') {
+                                                                if ($order_shstate === 'Canterbury') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Canterbury</option>
