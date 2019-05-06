@@ -129,4 +129,8 @@ jQuery(document).ready(function () {
         }
     });
 
+    $("#cancel_order_btn").click(function() {
+        location.reload(true);
+    });
+
 }); // end of jQuery(document)

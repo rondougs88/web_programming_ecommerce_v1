@@ -470,6 +470,7 @@ if (isset($_GET['order'])) {
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="edit_order_btn" name="edit_order_btn">Save changes</button>
+                <button type="button" class="btn btn-danger" id="cancel_order_btn" name="cancel_order_btn">Cancel changes</button>
             </div>
             </form>
         </div>
