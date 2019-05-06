@@ -162,7 +162,7 @@ if (isset($_GET['order'])) {
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="state">State</label>
-                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_bstate['state_c'] ?>" id="state">
+                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_bstate ?>" id="state">
                                 <option value="">Choose...</option>
                                 <option value="Northland" <?php if ($order_bstate) {
                                                                 if ($order_bstate === 'Northland') {
@@ -337,8 +337,8 @@ if (isset($_GET['order'])) {
                             <label for="country">Country</label>
                             <select class="custom-select d-block w-100" name="country" id="country">
                                 <!--<option value="">Choose...</option>-->
-                                <option value=" <?php if ($order_shcountry['sh_country']) {
-                                                                if ($order_shcountry['sh_country'] === 'New Zealand') {
+                                <option value=" <?php if ($order_shcountry) {
+                                                                if ($order_shcountry === 'New Zealand') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>">New Zealand</option>
@@ -352,90 +352,90 @@ if (isset($_GET['order'])) {
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="state">State</label>
-                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_shstate['sh_state_c'] ?>" id="state">
+                            <select class="custom-select d-block w-100" name="state" value="<?php echo $order_shstate ?>" id="state">
                                 <option value="">Choose...</option>
-                                <option value="Northland" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Northland') {
+                                <option value="Northland" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Northland') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Northland</option>
-                                <option value="Auckland" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Auckland') {
+                                <option value="Auckland" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Auckland') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Auckland</option>
-                                <option value="Waikato" <?php if ($order_shstate['sh_state_c']) {
-                                                            if ($order_shstate['sh_state_c'] === 'Waikato') {
+                                <option value="Waikato" <?php if ($order_shstate) {
+                                                            if ($order_shstate === 'Waikato') {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Waikato</option>
-                                <option value="Bay of Plenty" <?php if ($order_shstate['sh_state_c']) {
-                                                                    if ($order_shstate['sh_state_c'] === 'Bay of Plenty') {
+                                <option value="Bay of Plenty" <?php if ($order_shstate) {
+                                                                    if ($order_shstate === 'Bay of Plenty') {
                                                                         echo 'selected';
                                                                     }
                                                                 }  ?>>Bay of Plenty</option>
-                                <option value="Gisborne" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Gisborne') {
+                                <option value="Gisborne" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Gisborne') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Gisborne</option>
-                                <option value="Hawke's Bay" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Hawke\'s Bay') {
+                                <option value="Hawke's Bay" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Hawke\'s Bay') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Hawke's Bay</option>
-                                <option value="Auckland" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Auckland') {
+                                <option value="Auckland" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Auckland') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Auckland</option>
-                                <option value="Taranaki" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Taranaki') {
+                                <option value="Taranaki" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Taranaki') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Taranaki</option>
-                                <option value="Manawatu-Wanganui" <?php if ($order_shstate['sh_state_c']) {
-                                                                        if ($order_shstate['sh_state_c'] === 'Manawatu-Wanganui') {
+                                <option value="Manawatu-Wanganui" <?php if ($order_shstate) {
+                                                                        if ($order_shstate === 'Manawatu-Wanganui') {
                                                                             echo 'selected';
                                                                         }
                                                                     }  ?>>Manawatu-Wanganui</option>
-                                <option value="Wellington" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Wellington') {
+                                <option value="Wellington" <?php if ($order_shstate) {
+                                                                if ($order_shstate === 'Wellington') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Wellington</option>
-                                <option value="Tasman" <?php if ($order_shstate['sh_state_c']) {
-                                                            if ($order_shstate['sh_state_c'] === 'Tasman') {
+                                <option value="Tasman" <?php if ($order_shstate) {
+                                                            if ($order_shstate === 'Tasman') {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Tasman</option>
-                                <option value="Nelson" <?php if ($order_shstate['sh_state_c']) {
+                                <option value="Nelson" <?php if ($order_shstate) {
                                                             if ($order_shstate['state'] === 'Nelson') {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Nelson</option>
-                                <option value="Marlborough" <?php if ($order_shstate['sh_state_c']) {
+                                <option value="Marlborough" <?php if ($order_shstate) {
                                                                 if ($order_bstate['state'] === 'Marlborough') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Marlborough</option>
-                                <option value="West Coast" <?php if ($order_shstate['sh_state_c']) {
+                                <option value="West Coast" <?php if ($order_shstate) {
                                                                 if ($order_shstate['state'] === 'West Coast') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>West Coast</option>
-                                <option value="Canterbury" <?php if ($order_shstate['sh_state_c']) {
+                                <option value="Canterbury" <?php if ($order_shstate) {
                                                                 if ($order_shstate['state'] === 'Canterbury') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Canterbury</option>
-                                <option value="Otago" <?php if ($order_shstate['sh_state_c']) {
-                                                            if ($order_shstate['sh_state_c'] === 'Otago') {
+                                <option value="Otago" <?php if ($order_shstate) {
+                                                            if ($order_shstate === 'Otago') {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Otago</option>
-                                <option value="Southland" <?php if ($order_shstate['sh_state_c']) {
-                                                                if ($order_shstate['sh_state_c'] === 'Southland') {
+                                <option value="Southland" <?php if ($order_shstate {
+                                                                if ($order_shstate === 'Southland') {
                                                                     echo 'selected';
                                                                 }
                                                             }  ?>>Southland</option>
