@@ -1161,12 +1161,13 @@ function get_orders()
                 $prev_id = $order;
             }
             if ($counter == $num_rows || ($next_id != $order)) {
+                $formatted_number = number_format($total, 2);
                 echo "
                 <tr>
                     <td>$order</td>
                     <td>$date</td>
                     <td>$status</td>
-                    <td>$total</td>
+                    <td>$$formatted_number</td>
                     <td><a href='edit_order.php?order=$order'> Edit..</td>
                 </tr>
         ";

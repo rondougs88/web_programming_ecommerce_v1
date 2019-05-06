@@ -23,7 +23,7 @@
                             <i class="fa fa-globe text-navy mid-icon"></i>
                         </div>
                         <h2>Welcome to our message board</h2>
-                        <span>Feel free to choose topic you're interested in.</span>
+                        <span>Feel free to choose the topic you're interested in.</span>
                     </div>
                 </div>
 
