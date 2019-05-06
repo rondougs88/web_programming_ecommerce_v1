@@ -150,11 +150,11 @@ if (isset($_GET['order'])) {
                             <label for="country">Country</label>
                             <select class="custom-select d-block w-100" name="country" id="country">
                                 <option value="">Choose...</option>
-                                <option value=" <?php if ($order_bcountry) {
+                                <option value="New Zealand" <?php if ($order_bcountry) {
                                                                 if ($order_bcountry === 'New Zealand') {
                                                                     echo 'selected';
                                                                 }
-                                                            }  ?> "> New Zealand</option>
+                                                            }  ?>> New Zealand</option>
 
                             </select>
                         </div>
@@ -434,7 +434,7 @@ if (isset($_GET['order'])) {
                                                                 echo 'selected';
                                                             }
                                                         }  ?>>Otago</option>
-                                <option value="Southland" <?php if ($order_shstate {
+                                <option value="Southland" <?php if ($order_shstate) {
                                                                 if ($order_shstate === 'Southland') {
                                                                     echo 'selected';
                                                                 }
