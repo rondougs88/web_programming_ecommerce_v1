@@ -131,6 +131,7 @@ jQuery(document).ready(function () {
 
     $("#cancel_order_btn").click(function() {
         location.reload(true);
+        return false;
     });
 
 }); // end of jQuery(document)

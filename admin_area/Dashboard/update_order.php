@@ -13,7 +13,7 @@ if(isset($_POST['edit_order_btn'])){
         $order_baddress1 = $_POST['address'];
         $order_baddress2 = $_POST['address2'];
         $order_bcountry = $_POST['country'];
-        $order_bstate = $_POST['state'];
+        $order_bstate = mysqli_real_escape_string($con, $_POST['state']);
         $order_bzip = $_POST['zip'];
 
         //shipping
@@ -22,7 +22,7 @@ if(isset($_POST['edit_order_btn'])){
         $order_shaddress1 = $_POST['sh_address'];
         $order_shaddress2 = $_POST['sh_address2'];
         $order_shcountry = $_POST['sh_country'];
-        $order_shstate = $_POST['sh_state'];
+        $order_shstate = mysqli_real_escape_string($con, $_POST['sh_state']);
         $order_shzip = $_POST['sh_zip'];
         $update="UPDATE order_header set status = '$order_status', email='$order_email', phone='$order_phone',
         fname='$order_bfname', lname='$order_blname', address1='$order_baddress1', address2='$order_baddress2', country='$order_bcountry', state_c='$order_bstate', zip='$order_bzip', 

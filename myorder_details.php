@@ -17,6 +17,9 @@ if (isset($_GET['order'])) {
                             INNER JOIN products ON order_items.p_id = products.product_id WHERE order_header.order_id = '$orderid'";
     $run_q = mysqli_query($con, $get_order);
     while ($order = mysqli_fetch_array($run_q)) {
+        $order_date = $order['created_on'];
+        $order_date_frmt = new DateTime($order_date);
+        $order_status = $order['status'];
         $fname = $order['fname'];
         $lname = $order['lname'];
         $email = $order['email'];
@@ -45,6 +48,7 @@ if (isset($_GET['order'])) {
     <!-- <div class="row justify-content-center"> -->
     <div class="py-5 text-center">
         <h2 style="margin-top:10px">Details for Order GG-<?= $orderid ?></h2>
+        <h4> Created on: <?php echo $order_date_frmt->format('Y-m-d') ?></h4>
     </div>
 
     <div class="row">
@@ -89,19 +93,28 @@ if (isset($_GET['order'])) {
 
         </div>
         <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Billing address</h4>
+
             <form class="needs-validation" method="post" id="checkout-form" action="./create_order.php" novalidate>
+                <h4 class="mb-3">Order status</h4>
+                <div class="mb-3">
+                    <div class="form-group">
+                        <!-- <label for="orderStatus">Order Status</label> -->
+                        <input disabled type="text" class="form-control" name="orderStatus" id="orderStatus" placeholder="" value="<?= $order_status ?>">
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <h4 class="mb-3">Billing address</h4>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="firstName">First name</label>
-                            <input disabled type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?=$fname?>">
+                            <input disabled type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?= $fname ?>">
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-group">
                             <label for="lastName">Last name</label>
-                            <input disabled type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?=$lname?>">
+                            <input disabled type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?= $lname ?>">
                         </div>
                     </div>
                 </div>
@@ -109,46 +122,46 @@ if (isset($_GET['order'])) {
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input disabled type="email" class="form-control" name="email" id="email" value="<?=$email?>">
+                        <input disabled type="email" class="form-control" name="email" id="email" value="<?= $email ?>">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="phone">Mobile number</label>
-                        <input disabled type="tel" class="form-control" name="phone" id="phone" value="<?=$phone?>" placeholder="021 123 4567">
+                        <input disabled type="tel" class="form-control" name="phone" id="phone" value="<?= $phone ?>" placeholder="021 123 4567">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input disabled type="text" class="form-control" name="address" id="address" value="<?=$address1?>" placeholder="1234 Main St">
+                        <input disabled type="text" class="form-control" name="address" id="address" value="<?= $address1 ?>" placeholder="1234 Main St">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                    <input disabled type="text" class="form-control" name="address2" id="address2" value="<?=$address2?>">
+                    <input disabled type="text" class="form-control" name="address2" id="address2" value="<?= $address2 ?>">
                 </div>
 
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <div class="form-group">
                             <label for="country">Country</label>
-                            <input disabled type="text" class="form-control" name="country" id="country" value="<?=$country?>">
+                            <input disabled type="text" class="form-control" name="country" id="country" value="<?= $country ?>">
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-group">
                             <label for="state">State</label>
-                            <input disabled type="text" class="form-control" name="state" id="state" value="<?=$state_c?>">
+                            <input disabled type="text" class="form-control" name="state" id="state" value="<?= $state_c ?>">
                         </div>
                     </div>
                     <div class="col-md-3 mb-3">
                         <div class="form-group">
                             <label for="zip">Zip</label>
-                            <input disabled type="text" class="form-control" name="zip" id="zip" value="<?=$zip?>" placeholder="">
+                            <input disabled type="text" class="form-control" name="zip" id="zip" value="<?= $zip ?>" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -170,7 +183,7 @@ if (isset($_GET['order'])) {
 
                 <h4 class="mb-3">Payment</h4>
                 <div class="d-block my-3">
-                    <input type="text" disabled class="form-control" name="payment" id="payment" value="Paid via <?=$payment?>">
+                    <input type="text" disabled class="form-control" name="payment" id="payment" value="Paid via <?= $payment ?>">
                 </div>
 
 
