@@ -12,11 +12,33 @@ if (isset($_POST['contact_us'])) {
     send_contact_us();
 }
 
+if (isset($_POST['del_order'])) {
+    delete_order($_POST['order_id']);
+}
+
 $eu_username = "";
 $eu_fname = "";
 $eu_lname = "";
 $eu_usertype = "";
 $eu_email = "";
+
+function delete_order($order_id)
+{
+    include_once "../includes/db.php";
+
+    $del_order_items = "DELETE FROM order_items WHERE order_id = '$order_id'";
+    mysqli_query($con, $del_order_items);
+    if (empty($con->error)) {
+        $del_order_header = "DELETE FROM order_header WHERE order_id = '$order_id'";
+        mysqli_query($con, $del_order_header);
+        if (empty($con->error)) {
+            echo "Order has been deleted.";
+            return;
+        }
+    } else {
+        echo "Order cannot be deleted.";
+    }
+}
 
 function send_contact_us()
 {
@@ -1168,7 +1190,7 @@ function get_orders()
                     <td>$date</td>
                     <td>$status</td>
                     <td>$$formatted_number</td>
-                    <td><a href='edit_order.php?order=$order'> Edit..</td>
+                    <td><a href='edit_order.php?order=$order'> Edit / Delete</td>
                 </tr>
         ";
             }

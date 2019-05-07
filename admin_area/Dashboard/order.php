@@ -1,7 +1,7 @@
 <?php include "./admin_panel_header.php" ?>
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
-  <h2>View all Orders Here..</h2>
+  <h2>Displaying all orders</h2>
   <div class="table-responsive" style="margin-top:20px; width:70%">
           <table class="table table-striped table-sm">
               <thead>

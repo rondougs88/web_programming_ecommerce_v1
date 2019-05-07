@@ -156,7 +156,7 @@ if (isset($_GET['order'])) {
                         </select>
                     </div>
                     <h4 class="mb-3">Billing address</h4>
-                    <input name="order_id" value="<?php echo $id ?>" style="display:none">
+                    <input name="order_id" id="order_id" value="<?php echo $id ?>" style="display:none">
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -164,8 +164,8 @@ if (isset($_GET['order'])) {
                                 <label for="firstName">First name</label>
                                 <input type="text" class="form-control" name="firstName" id="firstName" placeholder="" value="<?php echo $order_bfname; ?>">
                                 <!-- <div class="invalid-feedback">
-                                                    Valid first name is required.
-                                                </div> -->
+                                                        Valid first name is required.
+                                                    </div> -->
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -173,28 +173,28 @@ if (isset($_GET['order'])) {
                                 <label for="lastName">Last name</label>
                                 <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="<?php echo $order_blname; ?>">
                                 <!-- <div class="invalid-feedback">
-                                                Valid last name is required.
-                                            </div> -->
+                                                    Valid last name is required.
+                                                </div> -->
                             </div>
                         </div>
                     </div>
 
                     <!-- <div class="mb-3">
-                                        <div class="form-group">
-                                            <label for="username">Username</label>
+                                            <div class="form-group">
+                                                <label for="username">Username</label>
 
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                                                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
 
-                                        </div>
-                                    </div> -->
+                                            </div>
+                                        </div> -->
 
                     <div class="mb-3">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" name="email" id="email" value="<?php echo $order_email; ?>" placeholder="you@example.com">
                             <!-- <div class="invalid-feedback">
-                                            Please enter a valid email address for shipping updates.
-                                        </div> -->
+                                                Please enter a valid email address for shipping updates.
+                                            </div> -->
                         </div>
                     </div>
 
@@ -210,8 +210,8 @@ if (isset($_GET['order'])) {
                             <label for="address">Address</label>
                             <input type="text" class="form-control" name="address" id="address" value="<?php echo $order_baddress1; ?>" placeholder="1234 Main St">
                             <!-- <div class="invalid-feedback">
-                                            Please enter your shipping address.
-                                        </div> -->
+                                                Please enter your shipping address.
+                                            </div> -->
                         </div>
                     </div>
 
@@ -333,8 +333,8 @@ if (isset($_GET['order'])) {
                                 <label for="zip">Zip</label>
                                 <input type="text" class="form-control" name="zip" id="zip" value="<?php echo $order_bzip ?>" placeholder="">
                                 <!-- <div class="invalid-feedback">
-                                                Zip code required.
-                                            </div> -->
+                                                    Zip code required.
+                                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -349,8 +349,8 @@ if (isset($_GET['order'])) {
                         <label for="firstName">First name</label>
                         <input type="text" class="form-control" name="sh_firstName" id="firstName" placeholder="" value="<?php echo $order_shfname; ?>">
                         <!-- <div class="invalid-feedback">
-                                                    Valid first name is required.
-                                                </div> -->
+                                                        Valid first name is required.
+                                                    </div> -->
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
@@ -358,28 +358,28 @@ if (isset($_GET['order'])) {
                         <label for="lastName">Last name</label>
                         <input type="text" class="form-control" name="sh_lastName" id="lastName" placeholder="" value="<?php echo $order_shlname; ?>">
                         <!-- <div class="invalid-feedback">
-                                                Valid last name is required.
-                                            </div> -->
+                                                    Valid last name is required.
+                                                </div> -->
                     </div>
                 </div>
             </div>
 
             <!-- <div class="mb-3">
-                                        <div class="form-group">
-                                            <label for="username">Username</label>
+                                            <div class="form-group">
+                                                <label for="username">Username</label>
 
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                                                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
 
-                                        </div>
-                                    </div> -->
+                                            </div>
+                                        </div> -->
 
             <div class="mb-3">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" name="sh_email" id="email" value="<?php echo $order_email; ?>" placeholder="you@example.com">
                     <!-- <div class="invalid-feedback">
-                                            Please enter a valid email address for shipping updates.
-                                        </div> -->
+                                                Please enter a valid email address for shipping updates.
+                                            </div> -->
                 </div>
             </div>
 
@@ -395,8 +395,8 @@ if (isset($_GET['order'])) {
                     <label for="address">Address</label>
                     <input type="text" class="form-control" name="sh_address" id="address" value="<?php echo $order_shaddress1; ?>" placeholder="1234 Main St">
                     <!-- <div class="invalid-feedback">
-                                            Please enter your shipping address.
-                                        </div> -->
+                                                Please enter your shipping address.
+                                            </div> -->
                 </div>
             </div>
 
@@ -412,15 +412,15 @@ if (isset($_GET['order'])) {
                         <select class="custom-select d-block w-100" name="sh_country" id="country">
                             <option value="">Choose...</option>
                             <option value="New Zealand" <?php if ($order_shcountry) {
-                                                if ($order_shcountry === 'New Zealand') {
-                                                    echo 'selected';
-                                                }
-                                            }  ?>>New Zealand</option>
+                                                            if ($order_shcountry === 'New Zealand') {
+                                                                echo 'selected';
+                                                            }
+                                                        }  ?>>New Zealand</option>
 
                         </select>
                         <!-- <div class="invalid-feedback">
-                                                Please select a valid country.
-                                            </div> -->
+                                                    Please select a valid country.
+                                                </div> -->
                     </div>
                 </div>
                 <div class="col-md-4 mb-3">
@@ -521,14 +521,17 @@ if (isset($_GET['order'])) {
                         <label for="zip">Zip</label>
                         <input type="text" class="form-control" name="sh_zip" id="zip" value="<?php echo $order_shzip ?>" placeholder="">
                         <!-- <div class="invalid-feedback">
-                                                Zip code required.
-                                            </div> -->
+                                                    Zip code required.
+                                                </div> -->
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="edit_order_btn" name="edit_order_btn">Save changes</button>
-                <button type="button" class="btn btn-danger" id="cancel_order_btn" name="cancel_order_btn">Cancel changes</button>
+                <button type="button" class="btn btn-secondary" id="cancel_order_btn" name="cancel_order_btn">Cancel changes</button>
+                <div class="float-right">
+                    <button type="button" class="btn btn-danger" id="del_order_btn" name="del_order_btn">Delete order</button>
+                </div>
             </div>
             </form>
         </div>

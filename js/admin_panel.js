@@ -133,5 +133,38 @@ jQuery(document).ready(function () {
         location.reload(true);
         return false;
     });
+    
+    $("#del_order_btn").click(function() {
+        $('.loading').show();
+        $('.json-overlay').show();
+        var response = confirm("Are you sure you want to delete order?");
+        if (response == true) {
+            var order_id = getUrlParameter('order');
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/admin_area/Dashboard/admin_functions.php",
+                async: false,
+                data: { del_order: "", order_id: order_id },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert(result);
+                    window.location.href = siteroot + '/admin_area/Dashboard/order.php';
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Error: " + status + errorThrown);
+                }
+            });
+        } else {
+            console.log("You pressed Cancel!");
+        }
+        return false;
+    });
 
 }); // end of jQuery(document)
