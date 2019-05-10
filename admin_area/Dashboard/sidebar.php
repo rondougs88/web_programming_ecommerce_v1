@@ -3,7 +3,9 @@
     <nav id="side_menu" class="col-md-2 d-none d-md-block bg-light sidebar">
         <div class="sidebar-sticky">
           <ul class="nav flex-column">
-            <li class="nav-item">
+            <li class="nav-item" 
+              id="first-item"
+            >
               <a class="nav-link" id="orders" href="./order.php">
                 <span data-feather="file"></span>
                 Orders

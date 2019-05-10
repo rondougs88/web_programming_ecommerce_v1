@@ -8,6 +8,10 @@ if (isset($_POST['user_reset_pwd'])) {
     user_reset_password($_POST['email']);
 }
 
+if (isset($_POST['del_user_btn'])) {
+    del_user_admin($_POST['userid']);
+}
+
 if (isset($_POST['contact_us'])) {
     send_contact_us();
 }
@@ -119,6 +123,22 @@ function reset_password($userid)
 
     if (empty(mysqli_error($con))) {
         echo "An email has been sent to the user containing his new password.";
+    }
+}
+
+function del_user_admin($userid)
+{
+    include_once "../includes/db.php";
+
+    $del_user = "DELETE FROM users WHERE id = '$userid'";
+
+    mysqli_query($con, $del_user);
+
+    if (empty(mysqli_error($con))) {
+        echo "User has been deleted.";
+    }
+    else {
+        echo "User cannot be deleted.";
     }
 }
 

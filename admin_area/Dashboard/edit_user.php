@@ -71,7 +71,8 @@ if (isset($_GET['userid'])) {
             </div> -->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="edit_user_btn" name="edit_user_btn">Save changes</button>
-                <button type="submit" class="btn btn-dark float-right" id="admin_reset_pwd" name="admin_reset_pwd">Reset user password</button>
+                <button type="button" class="btn btn-dark " id="admin_reset_pwd" name="admin_reset_pwd">Reset user password</button>
+                <button type="button" class="btn btn-danger float-right" id="del_user_btn" name="del_user_btn">Delete User</button>
             </div>
             <!-- </form> -->
 

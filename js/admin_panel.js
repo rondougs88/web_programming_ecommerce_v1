@@ -126,15 +126,51 @@ jQuery(document).ready(function () {
             });
         } else {
             console.log("You pressed Cancel!");
+            $('.loading').hide();
+            $('.json-overlay').hide();
         }
     });
 
-    $("#cancel_order_btn").click(function() {
+    $("#del_user_btn").click(function () {
+        $('.loading').show();
+        $('.json-overlay').show();
+        var response = confirm("Are you sure you want to delete this user?");
+        if (response == true) {
+            var userid = getUrlParameter('userid');
+            $.ajax({
+                type: "POST",
+                url: siteroot + "/admin_area/Dashboard/admin_functions.php",
+                async: true,
+                data: { del_user_btn: "", userid: userid },
+                success: function (result) {
+                    // Do stuff
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Success: " + result);
+                    window.location.href = siteroot + '/admin_area/Dashboard/users.php';
+                },
+                error: function (request, status, errorThrown) {
+                    // There's been an error, do something with it!
+                    // Only use status and errorThrown.
+                    // Chances are request will not have anything in it.
+                    $('.loading').hide();
+                    $('.json-overlay').hide();
+                    alert("Update Cart Ajax Error: " + status + errorThrown);
+                }
+            });
+        } else {
+            console.log("You pressed Cancel!");
+            $('.loading').hide();
+            $('.json-overlay').hide();
+        }
+    });
+
+    $("#cancel_order_btn").click(function () {
         location.reload(true);
         return false;
     });
-    
-    $("#del_order_btn").click(function() {
+
+    $("#del_order_btn").click(function () {
         $('.loading').show();
         $('.json-overlay').show();
         var response = confirm("Are you sure you want to delete order?");
@@ -163,8 +199,50 @@ jQuery(document).ready(function () {
             });
         } else {
             console.log("You pressed Cancel!");
+            $('.loading').hide();
+            $('.json-overlay').hide();
         }
         return false;
     });
+
+    if ($("#side_menu").is(":visible")) {
+        $("#toggle-sidebar-btn").css('visibility', 'hidden');
+    }
+    else {
+        $("#toggle-sidebar-btn").css('visibility', 'visible');
+    }
+
+    $("#toggle-sidebar-btn").click(function (event) {
+        event.preventDefault();
+        if ($("#side_menu").is(":visible")) {
+            $("#side_menu").addClass("d-none");
+        }
+        else {
+            $("#side_menu").removeClass("d-none");
+            $("#first-item").css("margin-top", "50px");
+        }
+    });
+
+    window.onresize = function () {
+        if ($("#side_menu").is(":visible")) {
+            $("#toggle-sidebar-btn").css('visibility', 'hidden');
+        }
+        else {
+            $("#toggle-sidebar-btn").css('visibility', 'visible');
+        }
+
+        $("#toggle-sidebar-btn").click(function (event) {
+            event.preventDefault();
+            if ($("#side_menu").is(":visible")) {
+                $("#side_menu").addClass("d-none");
+            }
+            else {
+                $("#side_menu").removeClass("d-none");
+                $("#first-item").css("margin-top", "50px");
+            }
+        });
+    }
+
+
 
 }); // end of jQuery(document)
