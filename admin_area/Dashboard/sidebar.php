@@ -34,7 +34,7 @@
                   <li class="nav-item"><a class="nav-link py-0 sub-item" id="view_products" href="../Dashboard/view_products.php">View / Edit products</a></li>
                   <li class="nav-item"><a class="nav-link py-0 sub-item" id="create_product" href="../Dashboard/insert_product.php">Create product</a></li>
                   <li class="nav-item"><a class="nav-link py-0 sub-item" id="manage_cat" href="../Dashboard/categories.php">Manage categories</a></li>
-                  <li class="nav-item"><a class="nav-link py-0 sub-item" id="manage_cat" href="../Dashboard/brands.php">Manage brands</a></li>
+                  <li class="nav-item"><a class="nav-link py-0 sub-item" id="manage_brand" href="../Dashboard/brands.php">Manage brands</a></li>
                 </ul>
               </div>
             </li>

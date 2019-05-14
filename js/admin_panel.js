@@ -50,6 +50,18 @@ jQuery(document).ready(function () {
         $("a.nav-link#create_product").addClass('active').siblings().removeClass('active');
     }
 
+    if (location.pathname.indexOf("categories.php") != -1) {
+        $("#products").addClass('active').siblings().removeClass('active');
+        // $("#create_product").addClass('active').siblings().removeClass('active');
+        $("a.nav-link#manage_cat").addClass('active').siblings().removeClass('active');
+    }
+
+    if (location.pathname.indexOf("brands.php") != -1) {
+        $("#products").addClass('active').siblings().removeClass('active');
+        // $("#create_product").addClass('active').siblings().removeClass('active');
+        $("a.nav-link#manage_brand").addClass('active').siblings().removeClass('active');
+    }
+
     if ((location.pathname.indexOf("view_products.php") != -1) || (location.pathname.indexOf("edit_product.php") != -1)) {
         $("#products").addClass('active').siblings().removeClass('active');
         $("a.nav-link#view_products").addClass('active').siblings().removeClass('active');
