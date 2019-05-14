@@ -259,6 +259,18 @@ function register()
     if (empty($password_1)) {
         array_push($errors, "Password is required");
     }
+    if (strlen($password_1) < 8) {
+        // $errors[] = "Password too short!";
+        array_push($errors, "Password is too short. Minimum of 8 characters.");
+    }
+    if (!preg_match("#[0-9]+#", $password_1)) {
+        // $errors[] = "Password must include at least one number!";
+        array_push($errors, "Password must include at least one number!");
+    }
+    if (!preg_match("#[a-zA-Z]+#", $password_1)) {
+        // $errors[] = "Password must include at least one letter!";
+        array_push($errors, "Password must include at least one letter!");
+    }  
     if ($password_1 != $password_2) {
         array_push($errors, "The two passwords do not match");
     }

@@ -221,6 +221,7 @@ jQuery(document).ready(function () {
             $("#side_menu").removeClass("d-none");
             $("#first-item").css("margin-top", "50px");
         }
+        // return false;
     });
 
     window.onresize = function () {
