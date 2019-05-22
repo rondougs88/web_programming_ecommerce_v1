@@ -71,7 +71,7 @@ if (!empty($order_id)) {
         $sh_country,
         $sh_state_c,
         $sh_zip,
-        $order_id,
+        $order_id
     );
 }
 // $_SESSION['success']  = "New user successfully created!!";

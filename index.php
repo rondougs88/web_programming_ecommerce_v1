@@ -6,7 +6,7 @@
 
 <?php include "homepage.php"; ?>
 
-<!-- Alert user he has been logged in -->
+<!-- Alert user the has been logged in -->
 <?php
 if (isset($_SESSION['success'])) {
     $msg = $_SESSION['success'];
